@@ -37,40 +37,36 @@ def fetch_from_kult():
         KULTURL = lib.conf["KULTURL"]
         response = requests.get(KULTURL)
         response.raise_for_status()  # Raise an exception for error HTTP statuses
-
+        dontdump=True
         new_data = response.json()
-        filePath = os.path.join(pathToCache, filename)
+        newfilePath = os.path.join(pathToCache, filename)
         # Check if file exists and if the content has changed
-        if not os.path.exists(filePath):
-            if not os.path.exists(pathToCache):
-              os.makedirs(pathToCache) 
-            with open(filePath, 'w') as f:
-                json.dump(new_data, f, indent=2, ensure_ascii=False)
-            print(f"Initial data fetched and stored in {filePath}")
-        else:
-            with open(filePath, 'r') as f:
-                old_data = json.load(f)
-            if new_data != old_data:
-              #move filePath to  oldfilePath 
-              yearPath = os.path.join(pathToCache, datetime.date.today().strftime("%Y"))
-              if not os.path.exists(yearPath):
-                  os.makedirs(yearPath)
-              
-              old_filename = f'{yearPath}/{datetime.date.today().strftime("%V")}.json'
-              dontdump=False
-              if os.path.exists(old_filename):
-                with open(filePath, 'r') as f:
-                  very_old_data = json.load(f)
-                if very_old_data == old_data:
-                  dontdump=True
-              else:
-                  os.rename(filePath, old_filename)
-              
-              if not dontdump:
-                with open(filePath, 'w') as f:
-                  json.dump(new_data, f, indent=2,ensure_ascii=False)
-                print(f"New data fetched and stored in {filePath}")
         
+        if not os.path.exists(newfilePath):
+            dontdump=False
+            old_data=""
+            if not os.path.exists(pathToCache): os.makedirs(pathToCache) 
+        else:
+            with open(newfilePath, 'r') as f:
+                old_data = json.load(f)
+            dontdump = (new_data == old_data)
+                        
+        if not dontdump:
+            #BACKUP:move newfilePath to  oldfilePath 
+            yearPath = os.path.join(pathToCache, datetime.date.today().strftime("%Y"))
+            if not os.path.exists(yearPath): os.makedirs(yearPath)
+            old_filename = f'{yearPath}/{datetime.date.today().strftime("%V")}.json'
+            if not os.path.exists(old_filename):
+                os.rename(newfilePath, old_filename)
+            else: #OVERWRITE?
+                with open(old_filename, 'r') as f: very_old_data = json.load(f)
+                if (very_old_data != old_data):
+                    with open(old_filename, 'w') as f: json.dump(old_data, f, indent=2, ensure_ascii=False)
+
+            with open(newfilePath, 'w') as f:
+                json.dump(new_data, f, indent=2, ensure_ascii=False)
+            print(f"Kultunaut data fetched and stored in {newfilePath}")
+            return new_data
 
         # Manage old files
         #today = datetime.date.today()
@@ -91,6 +87,5 @@ def fetch_from_kult():
 
 if __name__ == "__main__":
   print(lib.conf["KULTURL"])
-  
   print(f"ArrNr: {fetch_jsoncache()[0]['ArrNr']}")    
   #fetch_from_kult()

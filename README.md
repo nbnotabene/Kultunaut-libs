@@ -11,6 +11,6 @@ https://packaging.python.org/en/latest/tutorials/packaging-projects/
 Use fastAPI? ../bak/kultunaut
 
 poetry shell => activate venv
-
+poetry run pytest
 poetry add request
 poetry new --name kultunaut.bio kultunaut-bio
