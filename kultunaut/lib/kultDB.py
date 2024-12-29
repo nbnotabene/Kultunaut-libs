@@ -55,7 +55,7 @@ def jsonToDB(data):
             #UPDATE
             print(f"UPDATE: {str(ev)}")
             myStatement = ev.updateStatement(rec)
-            #print(f"{myStatement}")
+            print(f"{myStatement}")
             asyncio.run(db.execute(myStatement))
         else:
             print(f"NO-ACTION: {str(ev)}")
