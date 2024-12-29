@@ -6,8 +6,7 @@ def test_answer():
 def test_env():
     assert lib.conf['KULTURL'] == "http://www.kultunaut.dk/perl/export/cassiopeia.json"
     assert lib.conf['SECRET_KEY'] == "gsabijwjnciiwbjksa"
-    assert lib.conf['BRANCH'] == "develop"
-    branch = lib.conf['BRANCH']
+    #assert lib.conf['WS'] == "dellxps"
     con = lib.sqlconn()
-    assert con[branch]['mysqlcon']['database']=='bio'
+    assert con['database']=='bio'
     

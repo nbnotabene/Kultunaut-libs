@@ -10,13 +10,14 @@ class Event:
         Events are Time & place of Arrangements
         ArrNr is the Unique ID of events
         """
-    #def __init__(self, ArrNr: int, **kwargs):
+    
     def __init__(self, **kwargs):
         self.properties = kwargs
         self.properties['kulthash'] = self.hashValue()
         self.properties['starter'] = self.properties['Startdato'] + ' ' + self.getTime()
-        self.properties['startformat'] = datetime.strptime(self.properties['starter'], '%Y-%m-%d %H:%M').strftime("%a. d. %-d/%-m") + " " + self.properties['ArrTidspunkt']
-
+        self.properties['Startformat'] = datetime.strptime(self.properties['starter'], '%Y-%m-%d %H:%M').strftime("%a. d. %-d/%-m") + " " + self.properties['ArrTidspunkt']
+        if self.properties['AinfoNr'] is None: self.properties['AinfoNr']=self.properties['ArrNr']
+    
     def getTime(self):
         # clean out "Kl. "
         ArrTidspunkt=self.properties['ArrTidspunkt']
@@ -42,9 +43,33 @@ class Event:
         return r.format(tparts[0], tparts[1])
         
     def hashValue(self):
-        str2hash=''.join(str(self.properties[k]) for k in sorted(self.properties.keys()) if k != 'kulthash')        
+        str2hash=''.join(str(self.properties[k]) for k in sorted(self.properties.keys()) if k != 'kulthash')
         # encode to bytes and format to hexadecimal
         return hashlib.md5(str2hash.encode()).hexdigest()
+    
+    def insertStatement(self):
+        myvals = '", "'.join(str(self.properties[k]).replace('"', '\\"') for k in list(self.properties.keys()))
+        myvals= f'"{myvals}"'
+        mykeys = ', '.join(str(k) for k in list(self.properties.keys()))
+        #print(mykeys)
+        #print(f"insert into kult ({mykeys}) values ({myvals})")
+        return f"insert into kult ({mykeys}) values ({myvals})"
+    
+    def updateStatement(self, dbrec):
+        count=0
+        STM = "update kult set "
+        for k in list(self.properties.keys()):
+            if k in dbrec: 
+                dbFname=k
+            else:
+                dbFname=k.casefold() 
+            if str(self.properties[k]) != dbrec[dbFname]:
+                count+=1
+                if count>1: STM += ', '
+                fval = str(dbrec[dbFname]).replace('"', '\\"')
+                STM += f'{k}="{fval}"'
+        if count>0:
+            return f'{STM} where ArrNr={dbrec["ArrNr"]}'
 
     def __str__(self):
         #return f"Event: {self.properties['ArrNr']} / {self.properties['AinfoNr']} / {self.properties['tmdbId']}: {self.properties['starter']} {self.properties['ArrKunstner']}"

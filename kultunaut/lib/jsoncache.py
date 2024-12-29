@@ -52,16 +52,18 @@ def fetch_from_kult():
             dontdump = (new_data == old_data)
                         
         if not dontdump:
-            #BACKUP:move newfilePath to  oldfilePath 
-            yearPath = os.path.join(pathToCache, datetime.date.today().strftime("%Y"))
-            if not os.path.exists(yearPath): os.makedirs(yearPath)
-            old_filename = f'{yearPath}/{datetime.date.today().strftime("%V")}.json'
-            if not os.path.exists(old_filename):
-                os.rename(newfilePath, old_filename)
-            else: #OVERWRITE?
-                with open(old_filename, 'r') as f: very_old_data = json.load(f)
-                if (very_old_data != old_data):
-                    with open(old_filename, 'w') as f: json.dump(old_data, f, indent=2, ensure_ascii=False)
+            if os.path.exists(newfilePath):
+                #BACKUP:move newfilePath to  oldfilePath 
+                yearPath = os.path.join(pathToCache, datetime.date.today().strftime("%Y"))
+                if not os.path.exists(yearPath): os.makedirs(yearPath)
+                old_filename = f'{yearPath}/{datetime.date.today().strftime("%V")}.json'
+                
+                if not os.path.exists(old_filename):
+                    os.rename(newfilePath, old_filename)
+                else: #OVERWRITE?
+                    with open(old_filename, 'r') as f: very_old_data = json.load(f)
+                    if (very_old_data != old_data):
+                        with open(old_filename, 'w') as f: json.dump(old_data, f, indent=2, ensure_ascii=False)
 
             with open(newfilePath, 'w') as f:
                 json.dump(new_data, f, indent=2, ensure_ascii=False)
@@ -86,6 +88,6 @@ def fetch_from_kult():
 # 0 0,12 * * * python /path/to/your/script.py
 
 if __name__ == "__main__":
+  #fetch_from_kult()
   print(lib.conf["KULTURL"])
   print(f"ArrNr: {fetch_jsoncache()[0]['ArrNr']}")    
-  #fetch_from_kult()

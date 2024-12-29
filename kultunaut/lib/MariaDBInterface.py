@@ -17,12 +17,11 @@ class MariaDBInterface(metaclass=lib.Singleton):
         SINGLETON DB Client
         """
     connVars = lib.sqlconn()
-    branch = lib.conf['BRANCH']
-    
-    db_config = connVars[branch]['mysqlcon']
+    #branch = lib.conf['BRANCH']    
+    #db_config = connVars[branch]['mysqlcon']
     
     def __init__(self):  #self, host, user, password, database
-        self.conn = mariadb.connect(**self.db_config)
+        self.conn = mariadb.connect(**self.connVars)
         self.cursor = self.conn.cursor()
 
     def __del__(self):
@@ -51,7 +50,20 @@ class MariaDBInterface(metaclass=lib.Singleton):
         except mariadb.Error as e:
             print(f"Error fetching data: {e}")
             return []
-          
+        
+    async def fetchOneDict(self, query, args=None):
+        try:
+            mycur = self.conn.cursor(dictionary=True)  # Enable dictionary cursor            
+            if args:
+                mycur.execute(query, args)
+            else:
+                mycur.execute(query)
+            return mycur.fetchone()
+        except mariadb.Error as e:
+            print(f"Error fetching data: {e}")
+            return []        
+
+
     async def get_field_names(self, table_name):
         try:
             self.cursor.execute(f"DESCRIBE {table_name}") 
