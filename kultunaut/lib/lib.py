@@ -1,7 +1,7 @@
 import json
 #https://pypi.org/project/python-dotenv/
 from dotenv import dotenv_values
-conf = {**dotenv_values(".env"),}
+conf = {**dotenv_values(".env"),**dotenv_values(".env.secret")}
  #  **dotenv_values(".env.secret"),  # load sensitive variables
 
 class Singleton(type):
@@ -15,10 +15,12 @@ def add_one(number):
   return number + 1
 
 def sqlconn():
-  data = json.loads(conf['SQLCONN'])
-  return data
+  conn1 = json.loads(conf['SQLCONN'])  
+  conn2 = conn1[conf['WS']]
+  conn2['mysqlcon']["password"]=conf['PW']
+  return conn2['mysqlcon']
 
 if __name__ == '__main__':
   #conf = dotenv_values(".env")
   #XX = AppSetup()
-  print(' ')
+  print(sqlconn())

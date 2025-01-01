@@ -18,3 +18,4 @@ build/
 *.dump
 main-private.py
 filecache/
+.env.secret
