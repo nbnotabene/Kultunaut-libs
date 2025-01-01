@@ -14,7 +14,7 @@ class Singleton(type):
 def add_one(number):
   return number + 1
 
-def sqlconn():  
+def sqlconn():
   conn1 = json.loads(conf['SQLCONN'])  
   conn2 = conn1[conf['WS']]
   conn2['mysqlcon']["password"]=conf['PW']

@@ -15,7 +15,6 @@ source .venv/bin/activate
 pip install -U pip setuptools
 pip install poetry
 
-
 (poetry shell => activate venv)
 poetry run pytest
 poetry add request
