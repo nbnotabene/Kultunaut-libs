@@ -1,11 +1,11 @@
-from kultunaut.lib import jsoncache
-from kultunaut.lib import kultDB
+#from kultunaut.lib import jsoncache
+from kultunaut.lib import kultDBInput
 
-def fetchAndSaveNewData():
+def kultToDB():
+  # insert kultInput
   # From Kultunaut - called from cronjob?
-  jsondata = jsoncache.fetch_jsoncache()
-  #print(jsondata[0])
-  kultDB.jsonToDB(jsondata)  
+  kultDBInput.kultToDB()  
   
 if __name__ == "__main__":
-  fetchAndSaveNewData()
+  #kultDBInput.cacheToDB()
+  kultDBInput.kultToDB()

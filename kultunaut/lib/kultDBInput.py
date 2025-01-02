@@ -1,7 +1,9 @@
 import asyncio  #mariadb
 from kultunaut.lib.MariaDBInterface import MariaDBInterface
-from kultunaut.lib.event import Event
-from kultunaut.lib import lib
+#from kultunaut.lib.event import Event
+from kultunaut.lib import jsoncache
+#from kultunaut.lib import lib
+
 import hashlib
 import json
 
@@ -42,24 +44,31 @@ def jsonToDB(data):
           if rec==None:
             # INSERT
             print(f"INSERT: {str(ev)}")
-            myStatement =f"insert into kultInput (ArrNr, kulthash, kjson) values ({jevent['ArrNr']}, '{kulthash}', '{cjevent}')"
+            myStatement =f"insert into kultInput (ArrNr, Starter, kulthash, kjson) values ({jevent['ArrNr']}, '{jevent['Startdato']}', '{kulthash}', '{cjevent}')"
             asyncio.run(db.execute(myStatement))
             #print(myStatement)
             print("")
           else:   #rec['kulthash']!=kulthash:
             #UPDATE
             print(f"UPDATE: {str(ev)}")
-            myStatement =f"update kultInput set kulthash = '{kulthash}', kjson= '{cjevent}' where ArrNr = {jevent['ArrNr']}"
+            myStatement =f"update kultInput set kulthash = '{kulthash}', Starter = '{jevent['Startdato']}', kjson= '{cjevent}' where ArrNr = {jevent['ArrNr']}"
             asyncio.run(db.execute(myStatement))
 
-def fetchAndSaveNewData():
+def kultToDB():
   # From Kultunaut - called from cronjob?
-  from kultunaut.lib import jsoncache
+  #from kultunaut.lib import jsoncache
+  #jsondata = jsoncache.fetch_jsoncache()
+  
+  jsondata = jsoncache.fetch_from_kult()
+  if jsondata is not None:
+    #print(jsondata[0])
+    jsonToDB(jsondata)
+  
+def cacheToDB():
   jsondata = jsoncache.fetch_jsoncache()
-  print(jsondata[0])
-  jsonToDB(jsondata)
-  
-  
-  
+  if jsondata is not None:
+    #print(jsondata[0])
+    jsonToDB(jsondata)
+
 if __name__ == "__main__":
-  fetchAndSaveNewData()
+  cacheToDB()
