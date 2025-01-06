@@ -42,7 +42,7 @@ def cacheToDB():
     #print(jsondata[0])
     jsonToDB(jsondata)
 
-def cacheToEventsColl():
+async def cacheToEventsColl():
   jsondata = jsoncache.fetch_jsoncache()
   if jsondata is not None:
     evs=Events()
@@ -51,12 +51,13 @@ def cacheToEventsColl():
       #ArrNr=18208349
       #aObj = {'ArrNr': 18208349, 'AinfoNr': 7104969, 'tmdbid': '', 'start': '2024-12-27'}
       #arrs.__setitem__(ArrNr, aObj)
-      evs.__setitem__(jevent['ArrNr'],jevent)
+      #evs.__setitem__(jevent['ArrNr'],jevent)
+      evs[jevent['ArrNr']]=jevent
       
-    evs.print()
-    evs.dbUpsert()
+    #evs.print()
+    await evs.dbUpsert()
     
 
 if __name__ == "__main__":
   #cacheToDB()
-  cacheToEventsColl()
+  asyncio.run(cacheToEventsColl())

@@ -2,6 +2,7 @@ from kultunaut.lib import lib
 from kultunaut.lib.MariaDBInterface import MariaDBInterface
 from kultunaut.lib.arrangments import Arrangements
 from collections.abc import MutableMapping #Interface
+import re, hashlib, json
 
 #from dataclasses import dataclass, field
 import asyncio
@@ -35,7 +36,7 @@ class Events(MutableMapping):
 
     def __setitem__(self, key, value:dict):
         if key ==  value['ArrNr'] and key not in self._events.keys():
-            E = Event(value)
+            E = Event(value, parent=self)
             #self._events.__setitem__(key, E)
             self._events[key]=E
 
@@ -43,22 +44,83 @@ class Events(MutableMapping):
         for value in self._events.values():
           print(value)
 
-    def dbUpsert(self):
+    async def dbUpsert(self):
         for arrnr in self._events:
-            dbrec= asyncio.run(self._db.fetchOneDict(f"select * from kultInput where ArrNr={arrnr}"))
-            self._events[arrnr].dbUpsert(dbrec)
+            kultInput= await self._db.fetchOneDict(f"select * from kultInput where ArrNr={arrnr}")
+            await self._events[arrnr].dbUpsert(kultInput)
             #print(dbrec)
             
 class Event():
     """Class for keeping track of one event."""
-    def __init__(self, jevent:dict):
+    def __init__(self, jevent:dict, parent):
         self._event=jevent
-        
+        self.parent=parent
+        eventStr = ''.join(str(v) for v in jevent.values())
+        self._event['kulthash'] = hashlib.md5(eventStr.encode()).hexdigest()        
+        #if 'starter' not in self._event.keys():
+        self._event['Starter'] = self._event['Startdato'] + ' ' + self.getTime()
+        if self._event['AinfoNr'] is None:
+            self._event['AinfoNr'] = self._event['ArrNr']
+                
     def __str__(self):
-        return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}"    # {self._event['Startdato']}"  {self._event['ArrKunstner']}"
+        return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
 
-    def dbUpsert(self,dbrec):
-        print(f"dbrec: {dbrec['ArrNr']}, {dbrec['AinfoNr']}")
+    async def dbUpsert(self,kultInput):
+        #self._kultInput = kultInput
+        if kultInput is None:
+            # INSERT
+            print(f"INSERT: {str(self)}")
+            _eventStr = json.dumps(self._event,ensure_ascii=False)
+            myStatement =f"insert into kultInput (ArrNr, Starter, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+            await self.parent._db.execute(myStatement)
+        elif self._event['kulthash'] != kultInput['kulthash']:
+            #UPDATE
+            print(f"UPDATE: {str(self)}")
+            _eventStr = json.dumps(self._event,ensure_ascii=False)
+            myStatement =f"update kultInput set kulthash = '{self._event['kulthash']}', Starter = '{self._event['Starter']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
+            #({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+            await self.parent._db.execute(myStatement)
+        else:
+            print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
+
+
+            
+
+        #print(f"dbrec: {dbrec['ArrNr']}, {dbrec['AinfoNr']}")
+
+    #@property
+    #def starter(self):
+    #    if 'starter' in self._event.keys():
+    #        return self._event['starter']
+
+    #@starter.setter
+    #def starter(self, value):
+    #    pass
+        
+
+    def getTime(self):
+        # clean out "Kl. "
+        ArrTidspunkt=self._event['ArrTidspunkt']
+        tparts = ArrTidspunkt.split(' ')
+        if (len(tparts) > 1):
+            t = tparts[1] 
+        elif (len(tparts) > 0):
+            t = tparts[0] 
+        else:
+            t = "19.45" #KULTDEFTIME
+
+        # split  "19-21"
+        if (len(t.split('-')) > 1):
+            t = t.split('-')[0]
+
+        # split  "19.45 or 19:45"
+        tparts = re.split("[.:]", t)
+
+        if (len(tparts) < 2):
+            tparts.append(0)
+            tparts[1] = '00'
+        r = "{}:{}"
+        return r.format(tparts[0], tparts[1])
 
 async def main():
     #my_dict = EventsDict()
