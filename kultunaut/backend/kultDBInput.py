@@ -1,7 +1,9 @@
 import asyncio  #mariadb
 #from kultunaut.lib.MariaDBInterface import MariaDBInterface
 from kultunaut.lib import jsoncache
-from kultunaut.lib.jsoncache import jsonToDB
+from kultunaut.lib import jsonToDB
+from kultunaut.lib.events import Events
+
 
 #import hashlib
 #import json
@@ -40,5 +42,21 @@ def cacheToDB():
     #print(jsondata[0])
     jsonToDB(jsondata)
 
+def cacheToEventsColl():
+  jsondata = jsoncache.fetch_jsoncache()
+  if jsondata is not None:
+    evs=Events()
+    #print(jsondata[0])
+    for jevent in jsondata:
+      #ArrNr=18208349
+      #aObj = {'ArrNr': 18208349, 'AinfoNr': 7104969, 'tmdbid': '', 'start': '2024-12-27'}
+      #arrs.__setitem__(ArrNr, aObj)
+      evs.__setitem__(jevent['ArrNr'],jevent)
+      
+    evs.print()
+    evs.dbUpsert()
+    
+
 if __name__ == "__main__":
-  cacheToDB()
+  #cacheToDB()
+  cacheToEventsColl()
