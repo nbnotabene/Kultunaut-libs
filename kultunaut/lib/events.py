@@ -81,7 +81,8 @@ class Event():
             #({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
             await self.parent._db.execute(myStatement)
         else:
-            print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
+            print(f"PASS: {str(self)}")
+            #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
 
 
             
