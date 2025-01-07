@@ -1,6 +1,6 @@
 from kultunaut.lib import lib
 from kultunaut.lib.MariaDBInterface import MariaDBInterface
-from kultunaut.lib.arrangments import Arrangements
+#from kultunaut.lib.arrangments import Arrangements
 from collections.abc import MutableMapping #Interface
 import re, hashlib, json
 
@@ -13,12 +13,14 @@ class Events(MutableMapping):
         return """
         Implement: __len__, __iter__, __getitem__, __setitem__, and __delitem__
         MutableMapping: https://realpython.com/python-mappings/
+        events => dbUpsert (for each event)
+          upsert arrang
         """
     def __init__(self, type='upsert'):
         self._db=MariaDBInterface()
         self._type=type
         self._events = {}
-        self.ArrangDict=Arrangements()        
+        self.ArrangDict=Arrangements()
     
     def __len__(self):
         len(self._events)
@@ -66,7 +68,7 @@ class Event():
         return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
 
     async def dbUpsert(self,kultInput):
-        #self._kultInput = kultInput
+        #kultInput = Dictionary: table-record from kultInput
         if kultInput is None:
             # INSERT
             print(f"INSERT: {str(self)}")

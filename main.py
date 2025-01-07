@@ -1,6 +1,5 @@
-from kultunaut.backend import kultDBInput
-  
+from kultunaut.backend.kultToCache import kultToCache  
+
 if __name__ == "__main__":
-  #kultDBInput.cacheToDB()
-  kultDBInput.kultToDB()
+  kultToCache()
 

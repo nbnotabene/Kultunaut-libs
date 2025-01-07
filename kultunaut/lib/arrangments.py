@@ -1,7 +1,6 @@
 from kultunaut.lib import lib
 from collections.abc import MutableMapping #Interface
-
-from dataclasses import dataclass, field
+#from dataclasses import dataclass, field
 import asyncio
 
 # metaclass=lib.Singleton
@@ -12,27 +11,27 @@ class Arrangements(MutableMapping):
         MutableMapping: https://realpython.com/python-mappings/
         """
     def __init__(self):
-        self._data = {}        
+        self._arrangs = {}        
     
     def __len__(self):
-        len(self._data)
+        len(self._arrangs)
 
     def __iter__(self):
-        return iter(self._data)
+        return iter(self._arrangs)
 
     def __delitem__(self, key: int ):
-        if key not in self._data and key < 1:
+        if key not in self._arrangs and key < 1:
             raise KeyError(key)
-        del self._data[key]
+        del self._arrangs[key]
 
     def __getitem__(self, key:int):
-        return self._data[key]
+        return self._arrangs[key]
 
     def __setitem__(self, key:int , value:dict):
-        if len(self._data)==0 or key not in self._data.keys:
+        if len(self._arrangs)==0 or key not in self._arrangs.keys:
 
             A = Arrangement(value['ArrNr'], value['AinfoNr'], value['tmdbid'], value['start'])
-            self._data.__setitem__(key, A)
+            self._arrangs.__setitem__(key, A)
             #super().__setitem__(key, A)
 
     
@@ -42,7 +41,7 @@ class Arrangements(MutableMapping):
         #def __setitem__(self, key, value):
         #    super().__setitem__(key, value * 10)
 
-@dataclass
+#@dataclass
 class Arrangement:
     """Class for keeping track of one arrangement."""    
     ArrNr: int = 0

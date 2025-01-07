@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import datetime
+import asyncio
 from kultunaut.lib import lib
 
 #from dotenv import load_dotenv
@@ -18,7 +19,7 @@ def doc():
 filename = "sb.json"
 pathToCache='filecache/'
 
-def fetch_jsoncache():
+async def fetch_jsoncache():
     try:
         filePath = os.path.join(pathToCache, filename)
         if os.path.exists(filePath):
@@ -30,12 +31,12 @@ def fetch_jsoncache():
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data from json-file: {e}")
 
-def fetch_from_kult():
+async def fetch_from_kult():
     """Fetch and save a JSON file from Kultunaut.
     """
     try:
         KULTURL = lib.conf["KULTURL"]
-        response = requests.get(KULTURL)
+        response =  requests.get(KULTURL)
         response.raise_for_status()  # Raise an exception for error HTTP statuses
         dontdump=True
         new_data = response.json()

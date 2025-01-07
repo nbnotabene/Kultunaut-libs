@@ -1,12 +1,19 @@
 import asyncio  #mariadb
 #from kultunaut.lib.MariaDBInterface import MariaDBInterface
 from kultunaut.lib import jsoncache
-from kultunaut.lib import jsonToDB
+from kultunaut.lib.jsonToDB import jsonToDB
 from kultunaut.lib.events import Events
 
 
 #import hashlib
 #import json
+
+def kultToCache():
+  # From Kultunaut - called from cronjob?
+  #from kultunaut.lib import jsoncache
+  #jsondata = jsoncache.fetch_jsoncache()
+  
+  jsondata = jsoncache.fetch_from_kult()
 
 """
 kultToDB  => __jsonToDB()
