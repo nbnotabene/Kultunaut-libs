@@ -16,11 +16,10 @@ class Events(MutableMapping):
         events => dbUpsert (for each event)
           upsert arrang
         """
-    def __init__(self, type='upsert'):
+    def __init__(self):
         self._db=MariaDBInterface()
         self._type=type
         self._events = {}
-        self.ArrangDict=Arrangements()
     
     def __len__(self):
         len(self._events)
@@ -48,8 +47,8 @@ class Events(MutableMapping):
 
     async def dbUpsert(self):
         for arrnr in self._events:
-            kultInput= await self._db.fetchOneDict(f"select * from kultInput where ArrNr={arrnr}")
-            await self._events[arrnr].dbUpsert(kultInput)
+            eventDbDict= await self._db.fetchOneDict(f"select * from kultevents where ArrNr={arrnr}")
+            await self._events[arrnr].dbUpsert(eventDbDict)
             #print(dbrec)
             
 class Event():
@@ -67,19 +66,20 @@ class Event():
     def __str__(self):
         return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
 
-    async def dbUpsert(self,kultInput):
-        #kultInput = Dictionary: table-record from kultInput
-        if kultInput is None:
+
+    async def dbUpsert(self,eventDbDict):
+        #self._eventDbDict = eventDbDict
+        if eventDbDict is None or len(eventDbDict)==0:
             # INSERT
             print(f"INSERT: {str(self)}")
             _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"insert into kultInput (ArrNr, Starter, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+            myStatement =f"insert into kultevents (ArrNr, Starter, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
             await self.parent._db.execute(myStatement)
-        elif self._event['kulthash'] != kultInput['kulthash']:
+        elif self._event['kulthash'] != eventDbDict['kulthash']:
             #UPDATE
             print(f"UPDATE: {str(self)}")
             _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"update kultInput set kulthash = '{self._event['kulthash']}', Starter = '{self._event['Starter']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
+            myStatement =f"update kultevents set kulthash = '{self._event['kulthash']}', Starter = '{self._event['Starter']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
             #({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
             await self.parent._db.execute(myStatement)
         else:

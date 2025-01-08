@@ -70,6 +70,8 @@ async def fetch_from_kult():
                 json.dump(new_data, f, indent=2, ensure_ascii=False)
             print(f"Kultunaut data fetched and stored in {newfilePath}")
             return new_data
+        else:
+            print(f"Kultunaut data: No changes in fileCache")
 
         # Manage old files
         #today = datetime.date.today()
