@@ -6,6 +6,7 @@ import re, hashlib, json
 
 #from dataclasses import dataclass, field
 import asyncio
+from kultunaut.lib import jsoncache
 
 # metaclass=lib.Singleton
 class Events(MutableMapping):
@@ -20,6 +21,19 @@ class Events(MutableMapping):
         self._db=MariaDBInterface()
         self._type=type
         self._events = {}
+    
+    async def cacheToDBevents(self):
+        jsondata = await jsoncache.fetch_jsoncache()
+        if jsondata is not None:
+          #evs=Events()
+          #print(jsondata[0])
+          for jevent in jsondata:
+            arrnr = jevent['ArrNr']
+            self.__setitem__(arrnr,jevent)
+            #self._events[jevent['ArrNr']]=jevent
+            eventDbDict= await self._db.fetchOneDict(f"select * from kultevents where ArrNr={arrnr}")
+            await self._events[arrnr].dbUpsert(eventDbDict)
+          #await self.dbUpsert()
     
     def __len__(self):
         len(self._events)
@@ -68,7 +82,7 @@ class Event():
 
 
     async def dbUpsert(self,eventDbDict):
-        #self._eventDbDict = eventDbDict
+        #eventDbDict from DB - eventually None
         if eventDbDict is None or len(eventDbDict)==0:
             # INSERT
             print(f"INSERT: {str(self)}")
