@@ -59,11 +59,11 @@ class Events(MutableMapping):
         for value in self._events.values():
           print(value)
 
-    async def dbUpsert(self):
-        for arrnr in self._events:
-            eventDbDict= await self._db.fetchOneDict(f"select * from kultevents where ArrNr={arrnr}")
-            await self._events[arrnr].dbUpsert(eventDbDict)
-            #print(dbrec)
+    #async def dbUpsert(self):
+    #    for arrnr in self._events:
+    #        eventDbDict= await self._db.fetchOneDict(f"select * from kultevents where ArrNr={arrnr}")
+    #        await self._events[arrnr].dbUpsert(eventDbDict)
+    #        #print(dbrec)
             
 class Event():
     """Class for keeping track of one event."""
