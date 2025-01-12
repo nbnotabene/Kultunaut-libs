@@ -67,7 +67,7 @@ class Arrangement():
                     data2 = json.loads(response2.text)
                     retval = data2['movie_results'][0]['id']
                     #print(data2)
-                print(retval)
+                print(f"TmdbId: {retval} - {str(self)}")
                 return retval
             else:
                 return response
