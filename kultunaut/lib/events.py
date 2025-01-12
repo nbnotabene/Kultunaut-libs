@@ -1,8 +1,9 @@
 from kultunaut.lib import lib
 from kultunaut.lib.MariaDBInterface import MariaDBInterface
 #from kultunaut.lib.arrangments import Arrangements
+from kultunaut.lib.event import Event
 from collections.abc import MutableMapping #Interface
-import re, hashlib, json
+import re, json, datetime
 
 #from dataclasses import dataclass, field
 import asyncio
@@ -19,7 +20,7 @@ class Events(MutableMapping):
         """
     def __init__(self):
         self._db=MariaDBInterface()
-        self._type=type
+        #self._type=type
         self._events = {}
     
     async def cacheToDBevents(self):
@@ -32,8 +33,8 @@ class Events(MutableMapping):
             self.__setitem__(arrnr,jevent)
             #self._events[jevent['ArrNr']]=jevent
             eventDbDict= await self._db.fetchOneDict(f"select * from kultevents where ArrNr={arrnr}")
-            await self._events[arrnr].dbUpsert(eventDbDict)
-          #await self.dbUpsert()
+            forceUpdate = False
+            await self._events[arrnr].dbUpsert(eventDbDict,forceUpdate = False)
     
     def __len__(self):
         len(self._events)
@@ -65,40 +66,40 @@ class Events(MutableMapping):
     #        await self._events[arrnr].dbUpsert(eventDbDict)
     #        #print(dbrec)
             
-class Event():
-    """Class for keeping track of one event."""
-    def __init__(self, jevent:dict, parent):
-        self._event=jevent
-        self.parent=parent
-        eventStr = ''.join(str(v) for v in jevent.values())
-        self._event['kulthash'] = hashlib.md5(eventStr.encode()).hexdigest()        
-        #if 'starter' not in self._event.keys():
-        self._event['Starter'] = self._event['Startdato'] + ' ' + self.getTime()
-        if self._event['AinfoNr'] is None:
-            self._event['AinfoNr'] = self._event['ArrNr']
-                
-    def __str__(self):
-        return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
-
-
-    async def dbUpsert(self,eventDbDict):
-        #eventDbDict from DB - eventually None
-        if eventDbDict is None or len(eventDbDict)==0:
-            # INSERT
-            print(f"INSERT: {str(self)}")
-            _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"insert into kultevents (ArrNr, Starter, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
-            await self.parent._db.execute(myStatement)
-        elif self._event['kulthash'] != eventDbDict['kulthash']:
-            #UPDATE
-            print(f"UPDATE: {str(self)}")
-            _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"update kultevents set kulthash = '{self._event['kulthash']}', Starter = '{self._event['Starter']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
-            #({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
-            await self.parent._db.execute(myStatement)
-        else:
-            print(f"PASS: {str(self)}")
-            #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
+#class Event():
+#    """Class for keeping track of one event."""
+#    def __init__(self, jevent:dict, parent):
+#        self._event=jevent
+#        self.parent=parent
+#        eventStr = ''.join(str(v) for v in jevent.values())
+#        self._event['kulthash'] = hashlib.md5(eventStr.encode()).hexdigest()        
+#        #if 'starter' not in self._event.keys():
+#        self._event['Starter'] = self._event['Startdato'] + ' ' + self.getTime()
+#        if self._event['AinfoNr'] is None:
+#            self._event['AinfoNr'] = self._event['ArrNr']
+#        
+#                
+#    def __str__(self):
+#        return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
+#
+#    async def dbUpsert(self,eventDbDict,forceUpdate=False):
+#        #eventDbDict from DB - eventually None
+#        if eventDbDict is None or len(eventDbDict)==0:
+#            # INSERT
+#            print(f"INSERT: {str(self)}")
+#            _eventStr = json.dumps(self._event,ensure_ascii=False)
+#            myStatement =f"insert into kultevents (ArrNr, Starter, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+#            await self.parent._db.execute(myStatement)
+#        elif forceUpdate or (self._event['kulthash'] != eventDbDict['kulthash']):
+#            #UPDATE
+#            print(f"UPDATE: {str(self)}")
+#            _eventStr = json.dumps(self._event,ensure_ascii=False)
+#            myStatement =f"update kultevents set kulthash = '{self._event['kulthash']}', Starter = '{self._event['Starter']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
+#            #({self._event['ArrNr']}, '{self._event['Starter']}', '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+#            await self.parent._db.execute(myStatement)
+#        else:
+#            print(f"PASS: {str(self)}")
+#            #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
 
 
             
@@ -139,18 +140,18 @@ class Event():
         r = "{}:{}"
         return r.format(tparts[0], tparts[1])
 
-async def main():
+#async def main():
     #my_dict = EventsDict()
     #{"AinfoNr": "7104969", "ArrBeskrivelse": "Ridley Scott er nu klar med fortsættelsen til Gladiator om den tidligere kejser Marcus Aurelius barnebarn Lucius som tvinges til at kæmpe i Colosseum", "ArrGenre": "Film", "ArrKunstner": "Gladiator II", "ArrLangBeskriv": "", "ArrNr": 18208349, "ArrTidspunkt": "kl. 19:45", "ArrUGenre": "Action/Drama", "BilledeUrl": "http://www.kultunaut.dk/images/film/7104969/plakat.jpg", "Filmvurdering": "t.o.15", "Nautanb": null, "Nautanmeld": null, "Playdk": null, "Slutdato": "2024-12-27", "Startdato": "2024-12-27", "StedNavn": "Svaneke Bio"}
-    evs=Events()
-    ArrNr=18208349
-    aObj = {'ArrNr': 18208349, 'AinfoNr': 7104969, 'tmdbid': '', 'start': '2024-12-27'}
+    #evs=Events()
+    #ArrNr=18208349
+    #aObj = {'ArrNr': 18208349, 'AinfoNr': 7104969, 'tmdbid': '', 'start': '2024-12-27'}
     #arrs.__setitem__(ArrNr, aObj)
-    evs.__setitem__(18208349,aObj)
+    #evs.__setitem__(18208349,aObj)
     #print(arrs.__getitem__(ArrNr))
-    print(evs[ArrNr])
+    #print(evs[ArrNr])
     #Arrangements.__setitem__(18208349, 7104969, "", "2024-12-27")
     
-if __name__ == "__main__":
-    asyncio.run(main())
+#if __name__ == "__main__":
+#    asyncio.run(main())
 
