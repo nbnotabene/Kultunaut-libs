@@ -5,7 +5,15 @@ from collections.abc import MutableMapping #Interface
 import requests
 import re, hashlib, json
 from datetime import datetime
-            
+
+TMDBKEY = lib.conf['TMDBKEY']
+#TMDBKEY = "dc2ad647c9f680ddb69ef6f15bd3e859"
+TMDBBASE = lib.conf['TMDBBASE']
+TMDBBASE = "https://api.themoviedb.org/3"
+#TMDBPATH = "tmdb"
+AINFOURL = lib.conf['AINFOURL']
+#AINFOURL = "http://kultunaut.dk/perl/service/film.json"
+
 class Arrangement():
     """Class for keeping track of one event."""
     def __init__(self, jevent:dict, parent):
@@ -36,13 +44,13 @@ class Arrangement():
         elif AinfoNr is None or AinfoNr=='' or self._arr['ArrNr'] == AinfoNr:
             print(f"Arr is singleton: {str(self)}")
         else:
-            TMDBKEY = lib.conf['TMDBKEY']
-            #TMDBKEY = "dc2ad647c9f680ddb69ef6f15bd3e859"
-            TMDBBASE = lib.conf['TMDBBASE']
-            TMDBBASE = "https://api.themoviedb.org/3"
-            #TMDBPATH = "tmdb"
-            AINFOURL = lib.conf['AINFOURL']
-            #AINFOURL = "http://kultunaut.dk/perl/service/film.json"
+            #TMDBKEY = lib.conf['TMDBKEY']
+            ##TMDBKEY = "dc2ad647c9f680ddb69ef6f15bd3e859"
+            #TMDBBASE = lib.conf['TMDBBASE']
+            #TMDBBASE = "https://api.themoviedb.org/3"
+            ##TMDBPATH = "tmdb"
+            #AINFOURL = lib.conf['AINFOURL']
+            ##AINFOURL = "http://kultunaut.dk/perl/service/film.json"
             
 
             # Kult AinfoNr => imdb_id => TmdbId
@@ -71,6 +79,33 @@ class Arrangement():
                 return retval
             else:
                 return response
+              
+    def _tmdbURL(self, extraURL="", language="da"):
+        tmdbId=self.__dict__['tmdbId']
+        return  f"{TMDBBASE}/movie/{tmdbId}{extraURL}?api_key={TMDBKEY}&language={language}"
+    
+    def tmdbInfo(self):
+        language="da"
+        extraURL = "/videos"
+        videodata = requests.get(self._tmdbURL(extraURL)).json()
+        if len(videodata['results'])==0:
+            videodata = requests.get(self._tmdbURL(extraURL,language="en")).json()
+        videoid = None
+        if len(videodata['results'])>0:
+            videoid = videodata['results'][0]['key']
+        
+        tmdb = requests.get(self._tmdbURL("",language)).json()
+        #if videoid:
+        tmdb['videoid']=videoid
+        
+        credits = requests.get(self._tmdbURL("/credits",language)).json()
+        tmdb['casted'] = [cast for cast in credits['cast'] if cast['order'] < 10]
+        #tmdb['crew'] = [credit for credit in credits['crew'] if credit['order']<10 ]
+        tmdb['crew'] = [credits['crew'][i] for i in range(min(10,len(credits['crew'])))]
+        #tmdb['crew'] = [credits['crew'][i] for i in [0,1,2,3,4,5,6,7,8,9]]
+
+        return tmdb
+        #return json.dumps(tmdb, ensure_ascii=False)
 
 
 #async def main():
