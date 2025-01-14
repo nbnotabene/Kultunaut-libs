@@ -1,9 +1,9 @@
 from kultunaut.lib import lib
-from kultunaut.lib.MariaDBInterface import MariaDBInterface
+#from kultunaut.lib.MariaDBInterface import MariaDBInterface
 #from kultunaut.lib.arrangments import Arrangements
-from collections.abc import MutableMapping #Interface
+#from collections.abc import MutableMapping #Interface
 import requests
-import re, hashlib, json
+import json # re, hashlib
 from datetime import datetime
 
 TMDBKEY = lib.conf['TMDBKEY']
@@ -58,33 +58,32 @@ class Arrangement():
         
             url1 = f"{AINFOURL}?AinfoNr={AinfoNr}"
             response = requests.get(url1)
-            retval=''
+            tmdbId=0
             if response.status_code == 200:
                 # Parse JSON data
                 data = json.loads(response.text)
                 film = data['film'][str(AinfoNr)] 
                 #print(film)
                 if 'TmdbId' in film:
-                    retval = film['TmdbId']
+                    tmdbId = int(film['TmdbId'])
                 elif 'Imdb' in film:
                     url2 = f"{TMDBBASE}/find/tt{film['Imdb']}?api_key={TMDBKEY}&language=da_DK&external_source=imdb_id"
                     #print(url2)
                     response2 = requests.get(url2)
-                if response2.status_code == 200:
-                    # Parse JSON data
-                    data2 = json.loads(response2.text)
-                    retval = data2['movie_results'][0]['id']
-                    #print(data2)
-                print(f"TmdbId: {retval} - {str(self)}")
-                return retval
-            else:
-                return response
+                    if response2.status_code == 200:
+                        # Parse JSON data
+                        data2 = json.loads(response2.text)
+                        tmdbId = data2['movie_results'][0]['id']
+                        #print(data2)
+                if tmdbId>0:
+                    self['tmdbId'] = tmdbId
+                    print(f"TmdbId: {retval} - {str(self)}")
               
     def _tmdbURL(self, extraURL="", language="da"):
         tmdbId=self.__dict__['tmdbId']
         return  f"{TMDBBASE}/movie/{tmdbId}{extraURL}?api_key={TMDBKEY}&language={language}"
     
-    def tmdbInfo(self):
+    def tmdbInfo(self, tmdbId):
         language="da"
         extraURL = "/videos"
         videodata = requests.get(self._tmdbURL(extraURL)).json()

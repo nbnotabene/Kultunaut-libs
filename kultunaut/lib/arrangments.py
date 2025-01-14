@@ -27,6 +27,8 @@ class Arrangements(MutableMapping):
             if ainfonr not in self._arrangs.keys():
                 self.__setitem__(ainfonr,jevent)
                 self._arrangs[ainfonr].AinfoNrToTmdbId()
+                tmdbInfo = self._arrangs[ainfonr].tmdbInfo()
+                print(tmdbInfo)
         
         #print(f"self._arrangs: ")
         #for arr in self._arrangs:  print(arr)
