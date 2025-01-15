@@ -3,7 +3,7 @@ from kultunaut.lib import lib
 #from kultunaut.lib.arrangments import Arrangements
 #from collections.abc import MutableMapping #Interface
 import requests
-import json # re, hashlib
+import json, hashlib
 from datetime import datetime
 
 TMDBKEY = lib.conf['TMDBKEY']
@@ -17,17 +17,36 @@ AINFOURL = lib.conf['AINFOURL']
 class Arrangement():
     """Class for keeping track of one event."""
     def __init__(self, jevent:dict, parent):
-        self._arr=jevent
+        self._arr=jevent  # Hentet fra DB kultevents
         self.parent=parent
         self._kultfilm = None
+        self._arr['tmdbId']=None
         ## {'Category': 'Komedie/Romantik', 'Censur': 't.f.a', 'Imdb': '15560314', 'OrgTitle': 'The Monk and the Gun', 'Poster': 'https://www.kultunaut.dk/images/film/7105122/plakat.jpg', 'Runtime': '107', 'Title': 'Munken og geværet', 'Year': '2023'}
                 
     def __str__(self):
         return f"Arrang: {self._arr['AinfoNr']} (ev: {self._arr['ArrNr']}), {self._arr['ArrKunstner']}"
     
     async def dbUpsert(self, ArrDbDict, forceUpdate=False):
-        print(f"TEST: {str(self)}")
+        # ArrDbDict: Hentet fra DB kultarrs        
         self._kultfilm = await self.kultfilm()
+        kultfilmdump = json.dumps(self._kultfilm)
+        filmStr = ''.join(str(v) for v in self._kultfilm.values())
+        self._arr['kulthash'] = hashlib.md5(filmStr.encode()).hexdigest()
+        
+        tmdbInfodump=None
+        if self.tmdbId is not None:
+            print(f"tmdbId: {self.tmdbId}: {str(self)}")
+            tmdbInfo= self.tmdbInfo()
+            tmdbInfodump= json.dumps(tmdbInfo)
+            #print(json.dumps(tmdbInfo))
+        
+        if ArrDbDict is None:
+            print(f"INSERT: {str(self)}")
+            kultfilmjson = json.dumps(self._kultfilm, ensure_ascii=False)
+            
+            myStatement =f"insert into kultarrs (AinfoNr, kulthash, kultfilm, tmdb) values ({self._arr['AinfoNr']}, '{self._arr['kulthash']}', '{kultfilmdump}', '{tmdbInfodump}')"
+            await self.parent._db.execute(myStatement)
+
         #print(f"Film: {self._kultfilm}")
         
         return
@@ -49,7 +68,8 @@ class Arrangement():
             print(f"PASS: {str(self)}")
             #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
 
-    async def kultfilm(self): 
+    async def kultfilm(self):
+        # json data from kultunaut about film
         AinfoNr = self._arr['AinfoNr']
         film = None
         if AinfoNr != self._arr['ArrNr']:
@@ -62,54 +82,30 @@ class Arrangement():
                     film = data['film'][str(AinfoNr)] 
         return film    
 
-    def AinfoNrToTmdbId(self): 
+    @property
+    def tmdbId(self): 
         AinfoNr = self._arr['AinfoNr']
-        #if self._arr['tmdbId'] is not None:
-        if 'tmdbId' in self._arr.keys():
-            print(f"tmdbId OK: {str(self)}")
-        elif AinfoNr is None or AinfoNr=='' or self._arr['ArrNr'] == AinfoNr:
-            print(f"Arr is singleton: {str(self)}")
+        if 'tmdbId' in self._arr.keys() and self._arr['tmdbId'] is not None:
+            return self._arr['tmdbId']
+            #elif AinfoNr is None or AinfoNr=='' or self._arr['ArrNr'] == AinfoNr:
+            #    print(f"Arr is singleton: {str(self)}")
         else:
-            #TMDBKEY = lib.conf['TMDBKEY']
-            ##TMDBKEY = "dc2ad647c9f680ddb69ef6f15bd3e859"
-            #TMDBBASE = lib.conf['TMDBBASE']
-            #TMDBBASE = "https://api.themoviedb.org/3"
-            ##TMDBPATH = "tmdb"
-            #AINFOURL = lib.conf['AINFOURL']
-            ##AINFOURL = "http://kultunaut.dk/perl/service/film.json"
-            
-
-            # Kult AinfoNr => imdb_id => TmdbId
-            # http://kultunaut.dk/perl/service/film.json?AinfoNr=7098903
-        
-            url1 = f"{AINFOURL}?AinfoNr={AinfoNr}"
-            response = requests.get(url1)
-            tmdbId=0
-            if response.status_code == 200:
-                # Parse JSON data
-                data = json.loads(response.text)
-                film = data['film'][str(AinfoNr)] 
-                #print(film)
-                if 'TmdbId' in film:
-                    tmdbId = int(film['TmdbId'])
-                elif 'Imdb' in film:
-                    url2 = f"{TMDBBASE}/find/tt{film['Imdb']}?api_key={TMDBKEY}&language=da_DK&external_source=imdb_id"
-                    #print(url2)
-                    response2 = requests.get(url2)
-                    if response2.status_code == 200:
-                        # Parse JSON data
-                        data2 = json.loads(response2.text)
-                        tmdbId = data2['movie_results'][0]['id']
-                        #print(data2)
-                if tmdbId>0:
-                    self['tmdbId'] = tmdbId
-                    print(f"TmdbId: {tmdbId} - {str(self)}")
+            if self._kultfilm and 'Imdb' in self._kultfilm:
+                imdbId =  self._kultfilm['Imdb']
+                url2 = f"{TMDBBASE}/find/tt{imdbId}?api_key={TMDBKEY}&language=da_DK&external_source=imdb_id"
+                #print(url2)
+                response2 = requests.get(url2)
+                if response2.status_code == 200:
+                    # Parse JSON data
+                    data2 = json.loads(response2.text)
+                    self._arr['tmdbId'] = data2['movie_results'][0]['id']
+        return self._arr['tmdbId']
               
     def _tmdbURL(self, extraURL="", language="da"):
-        tmdbId=self.__dict__['tmdbId']
-        return  f"{TMDBBASE}/movie/{tmdbId}{extraURL}?api_key={TMDBKEY}&language={language}"
+        #tmdbId=self.__dict__['tmdbId']
+        return  f"{TMDBBASE}/movie/{self.tmdbId}{extraURL}?api_key={TMDBKEY}&language={language}"
     
-    def tmdbInfo(self, tmdbId):
+    def tmdbInfo(self):
         language="da"
         extraURL = "/videos"
         videodata = requests.get(self._tmdbURL(extraURL)).json()
