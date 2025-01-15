@@ -33,7 +33,7 @@ class Events(MutableMapping):
             self.__setitem__(arrnr,jevent)
             #self._events[jevent['ArrNr']]=jevent
             eventDbDict= await self._db.fetchOneDict(f"select * from kultevents where ArrNr={arrnr}")
-            forceUpdate = False
+            #forceUpdate = False
             await self._events[arrnr].dbUpsert(eventDbDict,forceUpdate = False)
     
     def __len__(self):

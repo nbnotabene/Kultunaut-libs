@@ -4,7 +4,7 @@ from collections.abc import MutableMapping #Interface
 #from dataclasses import dataclass, field
 from kultunaut.lib.arrangment import Arrangement
 import asyncio
-import json
+import json, datetime
 
 # metaclass=lib.Singleton
 class Arrangements(MutableMapping):
@@ -18,17 +18,26 @@ class Arrangements(MutableMapping):
         self._arrangs = {}   
         
     async def DBEventsToArrangs(self):
-        Dbevents= await self._db.fetchall(f"select ArrNr, AinfoNr, kjson from kultevents") #  where starter > '{datetime.datetime.now()}'")
-        for dbev in Dbevents:
-            arrnr = dbev[0]
-            ainfonr = dbev[1]
-            jevent = json.loads(dbev[2])
+        start = datetime.datetime.now()
+        start = '2024-12-12'
+        sql = f"select ArrNr, AinfoNr, kjson from kultevents where vStarter > '{start}' order by vStarter" #  where starter > '{datetime.datetime.now()}'")
+        Dbevents= await self._db.fetchall(sql)
+        #for dbev in Dbevents:
+        for (arrnr, ainfonr, jev) in Dbevents:  
+            #arrnr = dbev[0]
+            #ainfonr = dbev[1]
+            jevent = json.loads(jev)
             #print(f"{arrnr} - {jevent['ArrKunstner']} {ainfonr}")
             if ainfonr not in self._arrangs.keys():
                 self.__setitem__(ainfonr,jevent)
-                self._arrangs[ainfonr].AinfoNrToTmdbId()
-                tmdbInfo = self._arrangs[ainfonr].tmdbInfo()
-                print(tmdbInfo)
+                
+                ArrDbDict= await self._db.fetchOneDict(f"select * from kultarrs where AinfoNr={ainfonr}")
+                #forceUpdate = False
+                #await self._events[arrnr].dbUpsert(eventDbDict,forceUpdate = False)
+                #self._arrangs[ainfonr].AinfoNrToTmdbId()
+                await self._arrangs[ainfonr].dbUpsert(ArrDbDict, forceUpdate = False)
+                #tmdbInfo = self._arrangs[ainfonr].tmdbInfo()
+                #print(tmdbInfo)
         
         #print(f"self._arrangs: ")
         #for arr in self._arrangs:  print(arr)

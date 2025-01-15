@@ -37,7 +37,7 @@ class Event():
             self._event[largeVal] = self._event[largeVal].replace("'", "´")
             self._event[largeVal] = self._event[largeVal].replace('"', '\\"')
 
-    async def dbUpsert(self,eventDbDict,forceUpdate=False):
+    async def dbUpsert(self, eventDbDict, forceUpdate=False):
         self.updateJSONvalues()
         #eventDbDict from DB - eventually None
         if eventDbDict is None or len(eventDbDict)==0:

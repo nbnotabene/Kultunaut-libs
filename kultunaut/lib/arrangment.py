@@ -18,23 +18,49 @@ class Arrangement():
     """Class for keeping track of one event."""
     def __init__(self, jevent:dict, parent):
         self._arr=jevent
-        self.parent=parent         
+        self.parent=parent
+        self._kultfilm = None
+        ## {'Category': 'Komedie/Romantik', 'Censur': 't.f.a', 'Imdb': '15560314', 'OrgTitle': 'The Monk and the Gun', 'Poster': 'https://www.kultunaut.dk/images/film/7105122/plakat.jpg', 'Runtime': '107', 'Title': 'Munken og geværet', 'Year': '2023'}
                 
     def __str__(self):
-        return f"Arrang: {self._arr['AinfoNr']}, {self._arr['ArrKunstner']}"
+        return f"Arrang: {self._arr['AinfoNr']} (ev: {self._arr['ArrNr']}), {self._arr['ArrKunstner']}"
+    
+    async def dbUpsert(self, ArrDbDict, forceUpdate=False):
+        print(f"TEST: {str(self)}")
+        self._kultfilm = await self.kultfilm()
+        #print(f"Film: {self._kultfilm}")
+        
+        return
+        #self.updateJSONvalues()
+        #ArrDbDict from DB - eventually None
+        if ArrDbDict is None or len(ArrDbDict)==0:
+            # INSERT
+            print(f"INSERT: {str(self)}")
+            _eventStr = json.dumps(self._event,ensure_ascii=False)
+            myStatement =f"insert into kultevents (ArrNr, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+            await self.parent._db.execute(myStatement)
+        elif forceUpdate or (self._event['kulthash'] != ArrDbDict['kulthash']):
+            #UPDATE
+            print(f"UPDATE: {str(self)}")
+            _eventStr = json.dumps(self._event,ensure_ascii=False)
+            myStatement =f"update kultevents set kulthash = '{self._event['kulthash']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
+            await self.parent._db.execute(myStatement)
+        else:
+            print(f"PASS: {str(self)}")
+            #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
 
-    #def filmInfo(self):
-    #    
-    #    print(f"PASS: {str(self)}")
-    #    #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
-#
-    #def tmdb(self):
-    #    if self._arr['ArrNr'] != self._arr['AinfoNr'] and self._arr['tmdbId'] is None:
-    #        tmp = self._AinfoNrToTmdbId()
-    #        self._arr['tmdbId']=''
-    #        if tmp != '':
-    #            self._arr['tmdbId']
-    #        return self._arr['tmdbId']
+    async def kultfilm(self): 
+        AinfoNr = self._arr['AinfoNr']
+        film = None
+        if AinfoNr != self._arr['ArrNr']:
+            url1 = f"{AINFOURL}?AinfoNr={AinfoNr}"
+            response = requests.get(url1)
+            if response.status_code == 200:
+                # Parse JSON data
+                data = json.loads(response.text)
+                if data['film']!={}:
+                    film = data['film'][str(AinfoNr)] 
+        return film    
 
     def AinfoNrToTmdbId(self): 
         AinfoNr = self._arr['AinfoNr']
@@ -77,7 +103,7 @@ class Arrangement():
                         #print(data2)
                 if tmdbId>0:
                     self['tmdbId'] = tmdbId
-                    print(f"TmdbId: {retval} - {str(self)}")
+                    print(f"TmdbId: {tmdbId} - {str(self)}")
               
     def _tmdbURL(self, extraURL="", language="da"):
         tmdbId=self.__dict__['tmdbId']
