@@ -1,0 +1,353 @@
+{
+	"adult": false,
+	"backdrop_path": "/euYIwmwkmz95mnXvufEmbL6ovhZ.jpg",
+	"belongs_to_collection": {
+		"id": 1069584,
+		"name": "Gladiator Collection",
+		"poster_path": "/r7uyUOB6fmmPumWwHiV7Hn2kUbL.jpg",
+		"backdrop_path": "/1VdLvSIeHuwqCT13H9EafxCacGB.jpg"
+	},
+	"budget": 310000000,
+	"genres": [
+		{
+			"id": 28,
+			"name": "Action"
+		},
+		{
+			"id": 12,
+			"name": "Eventyr"
+		},
+		{
+			"id": 18,
+			"name": "Drama"
+		}
+	],
+	"homepage": "",
+	"id": 558449,
+	"imdb_id": "tt9218128",
+	"origin_country": [
+		"US"
+	],
+	"original_language": "en",
+	"original_title": "Gladiator II",
+	"overview": "\u00c5r efter at have v\u00e6ret vidne til den \u00e6rede helt Maximus' d\u00f8d i h\u00e6nderne p\u00e5 sin onkel, er Lucius tvunget til at g\u00e5 ind i Colosseum, efter at hans hjem er erobret af de tyranniske kejsere, der nu leder Rom med en jernn\u00e6ve. Med vrede i hjertet og imperiets fremtid p\u00e5 spil, m\u00e5 Lucius se p\u00e5 sin fortid for at finde styrke og \u00e6re til at returnere Roms herlighed til dets folk.",
+	"popularity": 2451.335,
+	"poster_path": "/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
+	"production_companies": [
+		{
+			"id": 4,
+			"logo_path": "/gz66EfNoYPqHTYI4q9UEN4CbHRc.png",
+			"name": "Paramount Pictures",
+			"origin_country": "US"
+		},
+		{
+			"id": 221347,
+			"logo_path": "/6Ry6uNBaa0IbbSs1XYIgX5DkA9r.png",
+			"name": "Scott Free Productions",
+			"origin_country": "US"
+		},
+		{
+			"id": 246486,
+			"logo_path": null,
+			"name": "Lucy Fisher/Douglas Wick Productions",
+			"origin_country": "US"
+		}
+	],
+	"production_countries": [
+		{
+			"iso_3166_1": "US",
+			"name": "United States of America"
+		}
+	],
+	"release_date": "2024-11-05",
+	"revenue": 455388841,
+	"runtime": 148,
+	"spoken_languages": [
+		{
+			"english_name": "English",
+			"iso_639_1": "en",
+			"name": "English"
+		}
+	],
+	"status": "Released",
+	"tagline": "",
+	"title": "Gladiator II",
+	"video": false,
+	"vote_average": 6.763,
+	"vote_count": 2315,
+	"videoid": "_ZBYN01c7OM",
+	"casted": [
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 2326151,
+			"known_for_department": "Acting",
+			"name": "Paul Mescal",
+			"original_name": "Paul Mescal",
+			"popularity": 48.408,
+			"profile_path": "/vrzZ41TGNAFgfmZjC2sOJySzBLd.jpg",
+			"cast_id": 10,
+			"character": "Lucius",
+			"credit_id": "63b8777a1cfe3a00894541ec",
+			"order": 0
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 5292,
+			"known_for_department": "Acting",
+			"name": "Denzel Washington",
+			"original_name": "Denzel Washington",
+			"popularity": 64.571,
+			"profile_path": "/9Iyt3wbsla5bM6IzbICDVnBhkER.jpg",
+			"cast_id": 25,
+			"character": "Macrinus",
+			"credit_id": "641493c3ede1b028c599148f",
+			"order": 1
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 1253360,
+			"known_for_department": "Acting",
+			"name": "Pedro Pascal",
+			"original_name": "Pedro Pascal",
+			"popularity": 119.721,
+			"profile_path": "/9VYK7oxcqhjd5LAH6ZFJ3XzOlID.jpg",
+			"cast_id": 29,
+			"character": "General Acacius",
+			"credit_id": "64501ad035039802e7d5a111",
+			"order": 2
+		},
+		{
+			"adult": false,
+			"gender": 1,
+			"id": 935,
+			"known_for_department": "Acting",
+			"name": "Connie Nielsen",
+			"original_name": "Connie Nielsen",
+			"popularity": 58.347,
+			"profile_path": "/lvQypTfeH2Gn2PTbzq6XkT2PLmn.jpg",
+			"cast_id": 26,
+			"character": "Lucilla",
+			"credit_id": "644bfc03336e0105177379a2",
+			"order": 3
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 1597365,
+			"known_for_department": "Acting",
+			"name": "Joseph Quinn",
+			"original_name": "Joseph Quinn",
+			"popularity": 36.136,
+			"profile_path": "/zshhuioZaH8S5ZKdMcojzWi1ntl.jpg",
+			"cast_id": 27,
+			"character": "Emperor Geta",
+			"credit_id": "644bfc0e596a91054d57f2f8",
+			"order": 4
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 2099497,
+			"known_for_department": "Acting",
+			"name": "Fred Hechinger",
+			"original_name": "Fred Hechinger",
+			"popularity": 34.652,
+			"profile_path": "/99ctABEIEwNl4qjIZcLODgwnx0M.jpg",
+			"cast_id": 64,
+			"character": "Emperor Caracalla",
+			"credit_id": "6466aa282bcf67015581afa6",
+			"order": 5
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 1259880,
+			"known_for_department": "Acting",
+			"name": "Lior Raz",
+			"original_name": "Lior Raz",
+			"popularity": 29.282,
+			"profile_path": "/bl3KLFUQ4Q0zC9lCU4qP1Jf4qHS.jpg",
+			"cast_id": 60,
+			"character": "Viggo",
+			"credit_id": "6466952033a37600e6796f6d",
+			"order": 6
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 937,
+			"known_for_department": "Acting",
+			"name": "Derek Jacobi",
+			"original_name": "Derek Jacobi",
+			"popularity": 45.123,
+			"profile_path": "/htc4eCYmNlVotcu8AFTbDiLBzsJ.jpg",
+			"cast_id": 61,
+			"character": "Gracchus",
+			"credit_id": "6466952ba5046e012466c6a7",
+			"order": 7
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 68278,
+			"known_for_department": "Acting",
+			"name": "Peter Mensah",
+			"original_name": "Peter Mensah",
+			"popularity": 39.598,
+			"profile_path": "/t94TFc6f71AUmZFqdaQfjr7LTRp.jpg",
+			"cast_id": 62,
+			"character": "Jugurtha",
+			"credit_id": "64669537a5046e01474be4cb",
+			"order": 8
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 26209,
+			"known_for_department": "Acting",
+			"name": "Matt Lucas",
+			"original_name": "Matt Lucas",
+			"popularity": 40.497,
+			"profile_path": "/2OhGLJqiknaWlbTkG2KDwT935km.jpg",
+			"cast_id": 63,
+			"character": "Master of Ceremonies",
+			"credit_id": "64669541c3514c00e5dc2eb4",
+			"order": 9
+		}
+	],
+	"crew": [
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 943,
+			"known_for_department": "Camera",
+			"name": "John Mathieson",
+			"original_name": "John Mathieson",
+			"popularity": 16.109,
+			"profile_path": "/AkWm67UMEWHhF3BDfH32HkRl5oM.jpg",
+			"credit_id": "6500c6561bf26600ac74e78e",
+			"department": "Camera",
+			"job": "Director of Photography"
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 5553,
+			"known_for_department": "Sound",
+			"name": "Harry Gregson-Williams",
+			"original_name": "Harry Gregson-Williams",
+			"popularity": 5.309,
+			"profile_path": "/xLuIAM22zCffnzPyKOSRQQYh03C.jpg",
+			"credit_id": "659831c1d7a70a128f6a5d40",
+			"department": "Sound",
+			"job": "Original Music Composer"
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 944,
+			"known_for_department": "Art",
+			"name": "Arthur Max",
+			"original_name": "Arthur Max",
+			"popularity": 8.495,
+			"profile_path": "/kIh83DFSNqWQuHsR0CiKw3Qjf2n.jpg",
+			"credit_id": "63b877b9f04d0100ae57f7d0",
+			"department": "Art",
+			"job": "Production Design"
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 929,
+			"known_for_department": "Writing",
+			"name": "David Franzoni",
+			"original_name": "David Franzoni",
+			"popularity": 4.518,
+			"profile_path": "/uNDu3nnt5HCxuSxWAlDWrzQfWSz.jpg",
+			"credit_id": "63b8e36650733c00ac63b37b",
+			"department": "Writing",
+			"job": "Characters"
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 1914415,
+			"known_for_department": "Crew",
+			"name": "Paul Biddiss",
+			"original_name": "Paul Biddiss",
+			"popularity": 6.51,
+			"profile_path": null,
+			"credit_id": "65d5e91bed2ac2017c34e75b",
+			"department": "Crew",
+			"job": "Military Consultant"
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 1527474,
+			"known_for_department": "Production",
+			"name": "Michael A. Pruss",
+			"original_name": "Michael A. Pruss",
+			"popularity": 1.137,
+			"profile_path": null,
+			"credit_id": "63dd4b3ece5d82008e0829b1",
+			"department": "Production",
+			"job": "Producer"
+		},
+		{
+			"adult": false,
+			"gender": 1,
+			"id": 946,
+			"known_for_department": "Costume & Make-Up",
+			"name": "Janty Yates",
+			"original_name": "Janty Yates",
+			"popularity": 11.343,
+			"profile_path": null,
+			"credit_id": "63dd4b87cd20460081e150e8",
+			"department": "Costume & Make-Up",
+			"job": "Costume Design"
+		},
+		{
+			"adult": false,
+			"gender": 2,
+			"id": 6060,
+			"known_for_department": "Visual Effects",
+			"name": "Neil Corbould",
+			"original_name": "Neil Corbould",
+			"popularity": 8.751,
+			"profile_path": "/tyrIWpWILlaDroOuzRNI18G9PXn.jpg",
+			"credit_id": "63e27d3fac8e6b00a0ba6f64",
+			"department": "Visual Effects",
+			"job": "Special Effects Supervisor"
+		},
+		{
+			"adult": false,
+			"gender": 1,
+			"id": 12787,
+			"known_for_department": "Art",
+			"name": "Elli Griff",
+			"original_name": "Elli Griff",
+			"popularity": 10.809,
+			"profile_path": "/xH1jrTP58CVnGWPBICtpECd13g1.jpg",
+			"credit_id": "63ffa9109653f600894eafee",
+			"department": "Art",
+			"job": "Set Decoration"
+		},
+		{
+			"adult": false,
+			"gender": 0,
+			"id": 3944590,
+			"known_for_department": "Art",
+			"name": "Roberto Bolea",
+			"original_name": "Roberto Bolea",
+			"popularity": 0.001,
+			"profile_path": null,
+			"credit_id": "63ffa950c7176d009d6e735b",
+			"department": "Art",
+			"job": "Sculptor"
+		}
+	]
+}

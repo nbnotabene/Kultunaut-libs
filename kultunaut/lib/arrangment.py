@@ -11,8 +11,6 @@ TMDBKEY = lib.conf['TMDBKEY']
 TMDBBASE = lib.conf['TMDBBASE']
 TMDBBASE = "https://api.themoviedb.org/3"
 #TMDBPATH = "tmdb"
-AINFOURL = lib.conf['AINFOURL']
-#AINFOURL = "http://kultunaut.dk/perl/service/film.json"
 
 class Arrangement():
     """Class for keeping track of one event."""
@@ -26,54 +24,44 @@ class Arrangement():
     def __str__(self):
         return f"Arrang: {self._arr['AinfoNr']} (ev: {self._arr['ArrNr']}), {self._arr['ArrKunstner']}"
     
+    # Input ArrDbDict: Hentet fra DB kultarrs
     async def dbUpsert(self, ArrDbDict, forceUpdate=False):
-        # ArrDbDict: Hentet fra DB kultarrs        
-        self._kultfilm = await self.kultfilm()
-        kultfilmdump = json.dumps(self._kultfilm)
-        filmStr = ''.join(str(v) for v in self._kultfilm.values())
-        self._arr['kulthash'] = hashlib.md5(filmStr.encode()).hexdigest()
         
+        self._kultfilm = await self.kultfilm()
+        if self._kultfilm is not None:
+              filmStr = ''.join(str(v) for v in self._kultfilm.values())
+              self._arr['kulthash'] = hashlib.md5(filmStr.encode()).hexdigest()
+              kultfilmdump = json.dumps(self._kultfilm, ensure_ascii=False)
+              if ArrDbDict is None:
+                  print(f"INSERT: {str(self)}")
+                  kultfilmjson = json.dumps(self._kultfilm, ensure_ascii=False)
+                  tmdbInfodump = await self.getTmdbInfodump()
+                  myStatement =f"insert into kultarrs (AinfoNr, kulthash, kultfilm, tmdb) values ({self._arr['AinfoNr']}, '{self._arr['kulthash']}', '{kultfilmdump}', '{tmdbInfodump}')"
+                  await self.parent._db.execute(myStatement)      
+              elif forceUpdate or (self._arr['kulthash'] != ArrDbDict['kulthash']):
+                  print(f"UPDATE: {str(self)}")
+                  tmdbInfodump = await self.getTmdbInfodump()
+                  myStatement =f"update kultarrs set  kulthash = '{self._arr['kulthash']}', kultfilm='{kultfilmdump.replace("\'", "\\'")}', tmdb='{tmdbInfodump.replace("\'", "\\'")}' where AinfoNr={self._arr['AinfoNr']}"
+                  await self.parent._db.execute(myStatement)
+              else:
+                  print(f"PASS: {str(self)}")
+
+    async def getTmdbInfodump(self):
         tmdbInfodump=None
+        # property tmdbId 
         if self.tmdbId is not None:
             print(f"tmdbId: {self.tmdbId}: {str(self)}")
             tmdbInfo= self.tmdbInfo()
-            tmdbInfodump= json.dumps(tmdbInfo)
-            #print(json.dumps(tmdbInfo))
-        
-        if ArrDbDict is None:
-            print(f"INSERT: {str(self)}")
-            kultfilmjson = json.dumps(self._kultfilm, ensure_ascii=False)
-            
-            myStatement =f"insert into kultarrs (AinfoNr, kulthash, kultfilm, tmdb) values ({self._arr['AinfoNr']}, '{self._arr['kulthash']}', '{kultfilmdump}', '{tmdbInfodump}')"
-            await self.parent._db.execute(myStatement)
-
-        #print(f"Film: {self._kultfilm}")
-        
-        return
-        #self.updateJSONvalues()
-        #ArrDbDict from DB - eventually None
-        if ArrDbDict is None or len(ArrDbDict)==0:
-            # INSERT
-            print(f"INSERT: {str(self)}")
-            _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"insert into kultevents (ArrNr, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
-            await self.parent._db.execute(myStatement)
-        elif forceUpdate or (self._event['kulthash'] != ArrDbDict['kulthash']):
-            #UPDATE
-            print(f"UPDATE: {str(self)}")
-            _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"update kultevents set kulthash = '{self._event['kulthash']}', kjson= '{_eventStr}', AinfoNr={self._event['AinfoNr']} where ArrNr = {self._event['ArrNr']}"
-            await self.parent._db.execute(myStatement)
-        else:
-            print(f"PASS: {str(self)}")
-            #print(f"self._event['kulthash'] == kultInput['kulthash'], {self._event['kulthash']} {kultInput['kulthash']} ")
+            Infodump = json.dumps(tmdbInfo, ensure_ascii=False)
+            if tmdbInfo:
+                return str(tmdbInfo)
 
     async def kultfilm(self):
         # json data from kultunaut about film
         AinfoNr = self._arr['AinfoNr']
         film = None
         if AinfoNr != self._arr['ArrNr']:
-            url1 = f"{AINFOURL}?AinfoNr={AinfoNr}"
+            url1 = f"{lib.conf['AINFOURL']}?AinfoNr={AinfoNr}"
             response = requests.get(url1)
             if response.status_code == 200:
                 # Parse JSON data
