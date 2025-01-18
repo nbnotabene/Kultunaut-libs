@@ -9,6 +9,6 @@ if __name__ == "__main__":
   #kultToCache()
   #ev = Events()
   #asyncio.run(ev.cacheToDBevents())
-  ar = Arrangements()
-  asyncio.run(ar.DBEventsToArrangs())
+  ars = Arrangements()
+  asyncio.run(ars.DBEventsToArrangs(forceUpdate=True))
 

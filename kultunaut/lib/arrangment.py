@@ -24,9 +24,8 @@ class Arrangement():
     def __str__(self):
         return f"Arrang: {self._arr['AinfoNr']} (ev: {self._arr['ArrNr']}), {self._arr['ArrKunstner']}"
     
-    # Input ArrDbDict: Hentet fra DB kultarrs
-    async def dbUpsert(self, ArrDbDict, forceUpdate=False):
-        
+    # Input ArrDbDict: Hentet fra DB-table: kultarrs
+    async def dbUpsert(self, ArrDbDict, forceUpdate=False):        
         self._kultfilm = await self.kultfilm()
         if self._kultfilm is not None:
               filmStr = ''.join(str(v) for v in self._kultfilm.values())
@@ -41,20 +40,21 @@ class Arrangement():
               elif forceUpdate or (self._arr['kulthash'] != ArrDbDict['kulthash']):
                   print(f"UPDATE: {str(self)}")
                   tmdbInfodump = await self.getTmdbInfodump()
-                  myStatement =f"update kultarrs set  kulthash = '{self._arr['kulthash']}', kultfilm='{kultfilmdump.replace("\'", "\\'")}', tmdb='{tmdbInfodump.replace("\'", "\\'")}' where AinfoNr={self._arr['AinfoNr']}"
+                  myStatement =f"update kultarrs set  kulthash = '{self._arr['kulthash']}', kultfilm='{kultfilmdump.replace("\'", "\\'")}', tmdb='{tmdbInfodump}' where AinfoNr={self._arr['AinfoNr']}"
+                  #myStatement =f"update kultarrs set  kulthash = '{self._arr['kulthash']}', kultfilm='{kultfilmdump.replace("\'", "\\'")}', tmdb='{tmdbInfodump.replace("\'", "\\'")}' where AinfoNr={self._arr['AinfoNr']}"
                   await self.parent._db.execute(myStatement)
               else:
                   print(f"PASS: {str(self)}")
 
     async def getTmdbInfodump(self):
-        tmdbInfodump=None
         # property tmdbId 
+        self.tmdbId = self.getTmdbId()
         if self.tmdbId is not None:
             print(f"tmdbId: {self.tmdbId}: {str(self)}")
             tmdbInfo= self.tmdbInfo()
             Infodump = json.dumps(tmdbInfo, ensure_ascii=False)
             if tmdbInfo:
-                return str(tmdbInfo)
+                return Infodump #str(tmdbInfo)
 
     async def kultfilm(self):
         # json data from kultunaut about film
@@ -70,9 +70,9 @@ class Arrangement():
                     film = data['film'][str(AinfoNr)] 
         return film    
 
-    @property
-    def tmdbId(self): 
-        AinfoNr = self._arr['AinfoNr']
+    #@property
+    def getTmdbId(self): 
+        #AinfoNr = self._arr['AinfoNr']
         if 'tmdbId' in self._arr.keys() and self._arr['tmdbId'] is not None:
             return self._arr['tmdbId']
             #elif AinfoNr is None or AinfoNr=='' or self._arr['ArrNr'] == AinfoNr:

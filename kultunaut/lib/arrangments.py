@@ -17,30 +17,22 @@ class Arrangements(MutableMapping):
         self._db=MariaDBInterface()
         self._arrangs = {}   
         
-    async def DBEventsToArrangs(self):
+    async def DBEventsToArrangs(self,forceUpdate=False):
         start = datetime.datetime.now()
         start = '2024-12-12'
-        sql = f"select ArrNr, AinfoNr, kjson from kultevents where vStarter > '{start}' order by vStarter" #  where starter > '{datetime.datetime.now()}'")
+        sql = f"select AinfoNr, kjson from kultevents where vStarter > '{start}' order by vStarter"
         Dbevents= await self._db.fetchall(sql)
         #for dbev in Dbevents:
-        for (arrnr, ainfonr, jev) in Dbevents:  
-            #arrnr = dbev[0]
-            #ainfonr = dbev[1]
+        for (ainfonr, jev) in Dbevents:  
             jevent = json.loads(jev)
-            #print(f"{arrnr} - {jevent['ArrKunstner']} {ainfonr}")
             if ainfonr not in self._arrangs.keys():
+                # jevent = DICT Hentet fra DB kultevents
                 self.__setitem__(ainfonr,jevent)
                 
                 ArrDbDict= await self._db.fetchOneDict(f"select * from kultarrs where AinfoNr={ainfonr}")
                 #forceUpdate = False
-                #await self._events[arrnr].dbUpsert(eventDbDict,forceUpdate = False)
-                #self._arrangs[ainfonr].AinfoNrToTmdbId()
-                await self._arrangs[ainfonr].dbUpsert(ArrDbDict, forceUpdate = False)
-                #tmdbInfo = self._arrangs[ainfonr].tmdbInfo()
-                #print(tmdbInfo)
+                await self._arrangs[ainfonr].dbUpsert(ArrDbDict, forceUpdate = forceUpdate)
         
-        #print(f"self._arrangs: ")
-        #for arr in self._arrangs:  print(arr)
     
     def __len__(self):
         len(self._arrangs)
@@ -57,15 +49,11 @@ class Arrangements(MutableMapping):
         return self._arrangs[key]
 
     def __setitem__(self, key:int , value:dict):
+        # value = DICT Hentet fra DB kultevents
         #if len(self._arrangs)==0 or key not in self._arrangs.keys():
         A = Arrangement(value, parent=self)
         self._arrangs.__setitem__(key, A)
 
-        #def __init__(self):  #self, host, user, password, database
-        #    self.__arrs = []
-        #
-        #def __setitem__(self, key, value):
-        #    super().__setitem__(key, value * 10)
 
 #async def main():
 #    #my_dict = EventsDict()
