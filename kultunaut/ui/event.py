@@ -1,6 +1,6 @@
 import re
 import json
-import locale
+#import locale
 from datetime import datetime
 import requests
 
@@ -53,7 +53,8 @@ class Event:
         # Kult AinfoNr => imdb_id => TmdbId
         # http://kultunaut.dk/perl/service/film.json?AinfoNr=7098903
         
-        if AinfoNr is None or AinfoNr=='': return ''
+        if AinfoNr is None or AinfoNr=='': 
+            return ''
         url1 = f"{AINFOURL}?AinfoNr={AinfoNr}"
         response = requests.get(url1)
         retval=''
