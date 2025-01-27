@@ -44,7 +44,7 @@ class Event():
             # INSERT
             print(f"INSERT: {str(self)}")
             _eventStr = json.dumps(self._event,ensure_ascii=False)
-            myStatement =f"insert into kultevents (ArrNr, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['kulthash']}', '{_eventStr}', self._event['AinfoNr'])"
+            myStatement =f"insert into kultevents (ArrNr, kulthash, kjson, AinfoNr) values ({self._event['ArrNr']}, '{self._event['kulthash']}', '{_eventStr}', {self._event['AinfoNr']})"
             await self.parent._db.execute(myStatement)
         elif forceUpdate or (self._event['kulthash'] != eventDbDict['kulthash']):
             #UPDATE
