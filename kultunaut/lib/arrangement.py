@@ -32,16 +32,17 @@ class Arrangement():
               filmStr = ''.join(str(v) for v in self._kultfilm.values())
               self._arr['kulthash'] = hashlib.md5(filmStr.encode()).hexdigest()
               kultfilmdump = json.dumps(self._kultfilm, ensure_ascii=False)
+              kultfilmdump=kultfilmdump.replace("\'", "\\'")
               if ArrDbDict is None:
                   print(f"INSERT: {str(self)}")
                   #kultfilmjson = json.dumps(self._kultfilm, ensure_ascii=False)
                   tmdbInfodump = await self.getTmdbInfodump()
+                  tmdbInfodump = tmdbInfodump.replace("\'", "\\'")
                   myStatement =f"insert into kultarrs (AinfoNr, kulthash, kultfilm, tmdb) values ({self._arr['AinfoNr']}, '{self._arr['kulthash']}', '{kultfilmdump}', '{tmdbInfodump}')"
                   await self.parent._db.execute(myStatement)      
               elif forceUpdate or (self._arr['kulthash'] != ArrDbDict['kulthash']):
                   print(f"UPDATE: {str(self)}")
-                  tmdbInfodump = await self.getTmdbInfodump()
-                  kultfilmdump=kultfilmdump.replace("\'", "\\'")
+                  tmdbInfodump = await self.getTmdbInfodump()                  
                   tmdbInfodump = tmdbInfodump.replace("\'", "\\'")
                   myStatement = f"update kultarrs set  kulthash = '{self._arr['kulthash']}', kultfilm = '{kultfilmdump}', "
                   myStatement += f"tmdb = '{tmdbInfodump}' where AinfoNr={self._arr['AinfoNr']}"
