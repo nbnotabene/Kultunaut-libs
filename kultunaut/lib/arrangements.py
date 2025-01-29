@@ -20,7 +20,7 @@ class Arrangements(MutableMapping):
         
     async def DBEventsToArrangs(self,forceUpdate=False):
         start = datetime.datetime.now()
-        start = '2024-12-12'
+        #start = '2024-12-12'
         sql = f"select AinfoNr, kjson from kultevents where vStarter > '{start}' order by vStarter"
         Dbevents= await self._db.fetchall(sql)
         #for dbev in Dbevents:

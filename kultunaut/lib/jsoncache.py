@@ -2,7 +2,6 @@ import requests
 import json
 import os
 import datetime
-import asyncio
 from kultunaut.lib import lib
 
 #from dotenv import load_dotenv
@@ -27,7 +26,7 @@ async def fetch_jsoncache():
                 data = json.load(f)
                 return data
         else:
-          print(f"Error fetching data from json-file")
+          print("Error fetching data from json-file")
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data from json-file: {e}")
 
@@ -71,7 +70,7 @@ async def fetch_from_kult():
             print(f"Kultunaut data fetched and stored in {newfilePath}")
             return new_data
         else:
-            print(f"Kultunaut data: No changes in fileCache")
+            print("Kultunaut data: No changes in fileCache")
 
         # Manage old files
         #today = datetime.date.today()

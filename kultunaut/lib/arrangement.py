@@ -76,6 +76,7 @@ class Arrangement():
         return film    
 
     #@property
+    """"""
     def getTmdbId(self): 
         #AinfoNr = self._arr['AinfoNr']
         if 'tmdbId' in self._arr.keys() and self._arr['tmdbId'] is not None:
@@ -97,6 +98,7 @@ class Arrangement():
     def _tmdbURL(self, extraURL="", language="da"):
         #tmdbId=self.__dict__['tmdbId']
         return  f"{TMDBBASE}/movie/{self.tmdbId}{extraURL}?api_key={TMDBKEY}&language={language}"
+    
     
     def tmdbInfo(self):
         language="da"
