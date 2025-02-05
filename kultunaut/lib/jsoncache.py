@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import datetime
+#import asyncio
 from kultunaut.lib import lib
 
 #from dotenv import load_dotenv
@@ -26,7 +27,7 @@ async def fetch_jsoncache():
                 data = json.load(f)
                 return data
         else:
-          print("Error fetching data from json-file")
+          print(f"{filePath} not found")
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data from json-file: {e}")
 
@@ -45,7 +46,8 @@ async def fetch_from_kult():
         if not os.path.exists(newfilePath):
             dontdump=False
             old_data=""
-            if not os.path.exists(pathToCache): os.makedirs(pathToCache) 
+            if not os.path.exists(pathToCache): 
+                os.makedirs(pathToCache) 
         else:
             with open(newfilePath, 'r') as f:
                 old_data = json.load(f)
@@ -55,22 +57,25 @@ async def fetch_from_kult():
             if os.path.exists(newfilePath):
                 #BACKUP:move newfilePath to  oldfilePath 
                 yearPath = os.path.join(pathToCache, datetime.date.today().strftime("%Y"))
-                if not os.path.exists(yearPath): os.makedirs(yearPath)
+                if not os.path.exists(yearPath): 
+                    os.makedirs(yearPath)
                 old_filename = f'{yearPath}/{datetime.date.today().strftime("%V")}.json'
                 
                 if not os.path.exists(old_filename):
                     os.rename(newfilePath, old_filename)
                 else: #OVERWRITE?
-                    with open(old_filename, 'r') as f: very_old_data = json.load(f)
+                    with open(old_filename, 'r') as f: 
+                        very_old_data = json.load(f)
                     if (very_old_data != old_data):
-                        with open(old_filename, 'w') as f: json.dump(old_data, f, indent=2, ensure_ascii=False)
+                        with open(old_filename, 'w') as f: 
+                            json.dump(old_data, f, indent=2, ensure_ascii=False)
 
             with open(newfilePath, 'w') as f:
                 json.dump(new_data, f, indent=2, ensure_ascii=False)
             print(f"Kultunaut data fetched and stored in {newfilePath}")
             return new_data
         else:
-            print("Kultunaut data: No changes in fileCache")
+            print(f"{newfilePath}: No changes in fileCache")
 
         # Manage old files
         #today = datetime.date.today()

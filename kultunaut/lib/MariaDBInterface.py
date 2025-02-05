@@ -1,4 +1,5 @@
-import mariadb, asyncio
+import mariadb
+import asyncio
 from kultunaut.lib import lib
 
 #from config import settings, Singleton

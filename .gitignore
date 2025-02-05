@@ -20,3 +20,4 @@ main-private.py
 filecache/
 .env.secret
 bak/
+*-BAK
