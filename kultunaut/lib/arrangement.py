@@ -37,9 +37,10 @@ class Arrangement():
                   print(f"INSERT: {str(self)}")
                   #kultfilmjson = json.dumps(self._kultfilm, ensure_ascii=False)
                   tmdbInfodump = await self.getTmdbInfodump()
-                  tmdbInfodump = tmdbInfodump.replace("\'", "\\'")
-                  myStatement =f"insert into kultarrs (AinfoNr, kulthash, kultfilm, tmdb) values ({self._arr['AinfoNr']}, '{self._arr['kulthash']}', '{kultfilmdump}', '{tmdbInfodump}')"
-                  await self.parent._db.execute(myStatement)      
+                  if tmdbInfodump:
+                      tmdbInfodump = tmdbInfodump.replace("\'", "\\'")
+                      myStatement =f"insert into kultarrs (AinfoNr, kulthash, kultfilm, tmdb) values ({self._arr['AinfoNr']}, '{self._arr['kulthash']}', '{kultfilmdump}', '{tmdbInfodump}')"
+                      await self.parent._db.execute(myStatement)      
               elif forceUpdate or (self._arr['kulthash'] != ArrDbDict['kulthash']):
                   print(f"UPDATE: {str(self)}")
                   tmdbInfodump = await self.getTmdbInfodump()                  
@@ -92,7 +93,8 @@ class Arrangement():
                 if response2.status_code == 200:
                     # Parse JSON data
                     data2 = json.loads(response2.text)
-                    self._arr['tmdbId'] = data2['movie_results'][0]['id']
+                    if data2['movie_results']!=[]:
+                        self._arr['tmdbId'] = data2['movie_results'][0]['id']
         return self._arr['tmdbId']
               
     def _tmdbURL(self, extraURL="", language="da"):

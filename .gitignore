@@ -21,3 +21,4 @@ filecache/
 .env.secret
 bak/
 *-BAK
+webroot/arr/

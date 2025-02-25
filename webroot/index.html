@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Svaneke Bio - Velkommen!</title>  
+  <!--<link rel="stylesheet" href="./css/normalize.css">-->
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/overlay.css">
+  <link rel="stylesheet" href="./css/basic.css">
+  
+<link rel="stylesheet" href="./css/films.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div id="myNav" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+      <a href="./">Svaneke Bio - Film oversigt</a>
+      <a href="./pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
+      <a href="./pages/omBio.html">Om Svaneke Bio</a>
+      <a target="_new" href="https://www.kultunaut.dk">
+        <span>
+          Kultunaut
+          <img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
+            src="./img/kultunaut.png" class="infologos" />
+          (Arrangements-database)
+        </span>
+      </a>
+      <a target="_new" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">
+        <span>
+          Facebook
+          <img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
+            src="./img/facebook.png" class="infologos" />
+        </span>
+      </a>
+      <!--
+      <a href="./pages/lyd.html" class="">
+        <span>
+          Om lydanlæget
+          <img width="38" height="38" style="vertical-align:bottom" id="megafon_image"
+            title="Lyt til din film - i Svaneke Bio!" src="./img/megafon.png" class="infologos" />
+        </span>
+      </a>  
+      -->
+    </div>
+  </div>
+  <nav class="top-nav">
+    <div class="sub left" id="biologo">
+      <a href="./">
+        <img src="./img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
+      </a>
+    </div>
+    <div class="sub center" id="navmiddle">
+ 
+    </div>
+    <div class="sub right" id="navright">
+      <!--<span style="font-size:30px;cursor:pointer;vertical-align:bottom;" onclick="openNav()">&#9776;</span>-->
+      <i style="font-size:30px;cursor:pointer;vertical-align:bottom;" title="Bio Menu" onclick="openNav()" class="material-icons">menu</i>
+    </div>   
+  </nav>
+  <script>
+    function closeNav() {
+      document.getElementById("myNav").style.width = "0%";
+    }
+
+    function openNav() {
+      document.getElementById("myNav").style.width = "100%";
+      window.onkeydown = function (event) {
+        if (event.keyCode == 27) {          
+          console.log('escape pressed');
+          closeNav()
+        }
+      };
+    }
+  </script>
+</header>
+    <div id="content">
+      
+  <section id="bio-list">
+    <ul id="filmcards" class="listing">
+    
+      <li>
+          <a href="arr/17793507/"><h3>Spejlbilleder og molekyler (via livestream fra Aarhus Universitet)</h3></a>
+          <div class="body">
+            <a href="arr/17793507/">
+              <img src="arr/17793507/posterMini.jpg" alt="Spejlbilleder og molekyler (via livestream fra Aarhus Universitet)"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=17793507-->
+                <a href="arr/17793507/">tir. d. 24/9 kl. 19-21</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/7104696/"><h3>Mørkeland</h3></a>
+          <div class="body">
+            <a href="arr/7104696/">
+              <img src="arr/7104696/posterMini.jpg" alt="Mørkeland"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=17964366-->
+                <a href="arr/7104696/">tor. d. 26/9 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=17964367-->
+                <a href="arr/7104696/">lør. d. 28/9 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=17964368-->
+                <a href="arr/7104696/">søn. d. 29/9 kl. 16:00</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/17793596/"><h3>Jordens forhistoriske klimakatastrofer (via livestream fra Aarhus Universitet)</h3></a>
+          <div class="body">
+            <a href="arr/17793596/">
+              <img src="arr/17793596/posterMini.jpg" alt="Jordens forhistoriske klimakatastrofer (via livestream fra Aarhus Universitet)"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=17793596-->
+                <a href="arr/17793596/">tir. d. 1/10 kl. 19-21</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/7104550/"><h3>Sex</h3></a>
+          <div class="body">
+            <a href="arr/7104550/">
+              <img src="arr/7104550/posterMini.jpg" alt="Sex"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033930-->
+                <a href="arr/7104550/">tor. d. 3/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033931-->
+                <a href="arr/7104550/">lør. d. 5/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033932-->
+                <a href="arr/7104550/">søn. d. 6/10 kl. 16:00</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/18033933/"><h3>Memory</h3></a>
+          <div class="body">
+            <a href="arr/18033933/">
+              <img src="arr/18033933/posterMini.jpg" alt="Memory"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033933-->
+                <a href="arr/18033933/">tor. d. 10/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033934-->
+                <a href="arr/18033933/">lør. d. 12/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033935-->
+                <a href="arr/18033933/">søn. d. 13/10 kl. 16:00</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/7104898/"><h3>En panda i Afrika</h3></a>
+          <div class="body">
+            <a href="arr/7104898/">
+              <img src="arr/7104898/posterMini.jpg" alt="En panda i Afrika"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033936-->
+                <a href="arr/7104898/">lør. d. 12/10 kl. 16:00</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033937-->
+                <a href="arr/7104898/">lør. d. 19/10 kl. 16:00</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/7104778/"><h3>Beetlejuice Beetlejuice</h3></a>
+          <div class="body">
+            <a href="arr/7104778/">
+              <img src="arr/7104778/posterMini.jpg" alt="Beetlejuice Beetlejuice"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033938-->
+                <a href="arr/7104778/">tor. d. 17/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033940-->
+                <a href="arr/7104778/">lør. d. 19/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033939-->
+                <a href="arr/7104778/">søn. d. 20/10 kl. 16:00</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/17793873/"><h3>Teleskopet - vores øje til universet (via livestream fra Aarhus Universitet)</h3></a>
+          <div class="body">
+            <a href="arr/17793873/">
+              <img src="arr/17793873/posterMini.jpg" alt="Teleskopet - vores øje til universet (via livestream fra Aarhus Universitet)"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=17793873-->
+                <a href="arr/17793873/">tir. d. 22/10 kl. 19-21</a>
+              </div>
+            
+          </div>
+      </li>
+    
+      <li>
+          <a href="arr/7104753/"><h3>Vogter</h3></a>
+          <div class="body">
+            <a href="arr/7104753/">
+              <img src="arr/7104753/posterMini.jpg" alt="Vogter"/>
+            </a>
+          </div>
+          <div class="cta">
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033941-->
+                <a href="arr/7104753/">tor. d. 24/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033943-->
+                <a href="arr/7104753/">lør. d. 26/10 kl. 19:45</a>
+              </div>
+            
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr=18033942-->
+                <a href="arr/7104753/">søn. d. 27/10 kl. 16:00</a>
+              </div>
+            
+          </div>
+      </li>
+    
+    </ul>
+  </section>
+
+    </div>
+    <div id="footer">
+      
+        <h3>&copy; Copyright 2024 <a href="https://svanekebio.dk/">Svaneke Bio</a>.</h3>
+      
+    </div>
+  </div>
+  <script src="./sw.js"></script>
+</body>
+
+</html>
