@@ -34,16 +34,7 @@
       <div class="ctalist2">
         {% for starter in data.startdatoer %}
         <div class="cta">
-          <!--<i class="material-icons">movie</i>-->
-					<!--
-          {% if starter[3] != None %}
-          {% from "macro_defs.html" import popup_gen -%}
-          {{ popup_gen("Baby-bio!", "Denne visning er specielt tilpasset for forældre, som medtager babyer til filmen")
-          }}
-          </a><button onclick="document.getElementById('popup').style.display = 'block'">Baby-bio</button>&nbsp;
-          {% endif %}
-					-->
-          {{ starter[2] }}
+           {{ starter[2] }}
           <!--<a href="index.html?arrnr={{ starter[0] }}">{{ starter[2] }}</a>-->
         </div>
         {% endfor %}

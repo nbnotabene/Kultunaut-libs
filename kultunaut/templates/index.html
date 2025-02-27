@@ -7,19 +7,19 @@
 {% block content %}
   <section id="bio-list">
     <ul id="filmcards" class="listing">
-    {% for myitem in data.list %}
+    {% for myitem in data.events %}
       <li>
-          <a href="arr/{{myitem}}/"><h3>{{ data[myitem].ArrKunstner }}</h3></a>
+          <a href="arr/{{ myitem.AinfoNr }}/"><h3>{{myitem.ArrKunstner}}</h3></a>
           <div class="body">
-            <a href="arr/{{myitem}}/">
-              <img src="arr/{{myitem}}/posterMini.jpg" alt="{{ data[myitem].ArrKunstner}}"/>
+            <a href="arr/{{myitem.AinfoNr}}/">
+              <img src="arr/{{myitem.AinfoNr}}/posterMini.jpg" alt="{{ myitem.ArrKunstner}}"/>
             </a>
           </div>
           <div class="cta">
-            {% for starter in data[myitem].startarr %}
+            {% for starter in myitem.startformat.split(',') %}
               <div class="ctastarter">
                 <!--<i class="material-icons">movie</i>index.html?arrnr={{ starter[0] }}-->
-                <a href="arr/{{myitem}}/">{{ starter[2] }}</a>
+                <a href="arr/{{myitem.AinfoNr}}/">{{ starter }}</a>
               </div>
             {% endfor %}
           </div>

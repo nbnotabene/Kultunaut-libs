@@ -57,9 +57,18 @@ class UI():
             startformatA=arr['startformat'].split(',')
             #arrNrA = arr['arrnums'].split(',')
             for i,eventnr in enumerate(arr['arrnums'].split(',')):
-                startArr.append([int(eventnr), starterA[i], startformatA[i],'00000000'])
+                #startArr.append([int(eventnr), starterA[i], startformatA[i],'00000000'])
+                startArr.append([int(eventnr), starterA[i], startformatA[i]])
             data['startdatoer'] = startArr
-            data['tmdb'] = arr['tmdb']
+            if arr['tmdb'] is None:
+                data['tmdb'] =''                
+            else:
+                try:
+                    jsonObj = json.loads(arr['tmdb'])
+                except(json.decoder.JSONDecodeError):
+                    jsonObj = '{error: "JSONDecodeError", errormsg: "Could not decode JSON"}'               
+                data['tmdb'] = jsonObj
+                
             
             f = open(f"{newFolder}/arrdata.json", "w", encoding="utf_8")
             f.write(json.dumps(data, ensure_ascii=False))
@@ -78,7 +87,7 @@ class UI():
             
 
 
-    def createIndex(self):
+    async def createIndex(self):
         #data = self.get_all_events()
         #data = self.dbEvents
         #self.dbEvents['relativeUrl']="./"
@@ -87,8 +96,13 @@ class UI():
         #data = jsonpickle.encode(self._events, unpicklable=False)
         #data = self._events.values()
         #[17386703: 2024-03-16 19:45 Den grænseløse, .....
+        data={ 
+            'relativeUrl': './',
+            'events': list(self.dbEvents)
+        }
+        
         output_file_path = f"{self.output_dir}/index.html"
-        self.jinja.render_templates('index.html',self.dbEvents,output_file_path)
+        self.jinja.render_templates('index.html',data,output_file_path)
 
 
 
@@ -97,8 +111,8 @@ async def main():
     myUI = UI()
     await myUI.getEvents()
     #await myUI.pagesFromDB()
-    await myUI.createArrFolders()
-    #await myUI.createIndex()
+    #await myUI.createArrFolders()
+    await myUI.createIndex()
 
 if __name__ == "__main__":
     asyncio.run(main())
