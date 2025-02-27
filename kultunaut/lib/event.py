@@ -1,4 +1,5 @@
 from datetime import datetime
+import locale
 import re
 import hashlib
 import json
@@ -13,6 +14,7 @@ class Event:
     def __init__(self, jevent: dict, parent):
         self._event = jevent
         self.parent = parent
+        locale.setlocale(locale.LC_ALL, 'da_DK')        
 
     def __str__(self):
         return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"

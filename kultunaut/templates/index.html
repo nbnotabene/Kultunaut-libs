@@ -9,7 +9,7 @@
     <ul id="filmcards" class="listing">
     {% for myitem in data.events %}
       <li>
-          <a href="arr/{{ myitem.AinfoNr }}/"><h3>{{myitem.ArrKunstner}}</h3></a>
+          <a href="arr/{{ myitem.AinfoNr }}/"><h3>{{myitem.evTitle}}</h3></a>
           <div class="body">
             <a href="arr/{{myitem.AinfoNr}}/">
               <img src="arr/{{myitem.AinfoNr}}/posterMini.jpg" alt="{{ myitem.ArrKunstner}}"/>

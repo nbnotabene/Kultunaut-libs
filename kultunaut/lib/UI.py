@@ -26,7 +26,7 @@ class UI():
         #self.getEvents()
         
     async def getEvents(self):    
-        self.dbEvents= await self._db.fetchDict("select * from curArrs")
+        self.dbEvents= await self._db.fetchDict("select * from curArrs where mstart > now()")
         
     async def pagesFromDB(self):
         # dbPages = self.__db.select("select * from pages")
@@ -38,7 +38,7 @@ class UI():
             self.jinja.render_templates('page.html', data, output_file_path)
 
     #async def eventsToHTML(self):
-    #    eventsdb = await self._db.fetchDict("select * from pages")
+    #    eventsdb = await self._db.fetchDict("select * from pages")e
 
     async def createArrFolders(self):
         for arr in self.dbEvents:
