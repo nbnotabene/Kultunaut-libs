@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block head %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel="manifest" href="{{ data['relativeUrl'] }}manifest.json">
+  <link rel="icon" href="{{ data['relativeUrl'] }}favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Svaneke Bio - {% block title %}Velkommen!{% endblock %}</title>  
+  <!--<link rel="stylesheet" href="{{ data['relativeUrl'] }}css/normalize.css">-->
+  <link rel="stylesheet" href="{{ data['relativeUrl'] }}css/header.css">
+  <link rel="stylesheet" href="{{ data['relativeUrl'] }}css/overlay.css">
+  <link rel="stylesheet" href="{{ data['relativeUrl'] }}css/basic.css">
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container">
+    {% include 'header.html' %}
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <div id="footer">
+      {% block footer %}
+        <h3>&copy; Copyright 2024 <a href="https://svanekebio.dk/">Svaneke Bio</a>.</h3>
+      {% endblock %}
+    </div>
+  </div>
+  <script src="{{ data['relativeUrl'] }}sw.js"></script>
+</body>
+
+</html>

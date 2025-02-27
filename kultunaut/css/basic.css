@@ -1,0 +1,68 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+  overflow-y: scroll; 
+
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  font:
+    1.0em Lato,    
+    arial,
+    sans-serif;
+    color:#f08c00;
+}
+body {
+    overflow-x: hidden;
+}
+
+.ctastarter i.material-icons {
+  vertical-align: middle;  /* Adjust slightly with 'baseline' or 'sub' if needed */
+}
+
+i.material-icons{  
+  min-width: 18px;
+  width: 22px;
+}
+/*
+* {
+  font-family: "Lato";
+  box-sizing: border-box;
+}
+font-family: "Raleway" Helvetica;
+body {  font-family: 'Lato', sans-serif;}
+*/
+
+
+a:link, a:visited {
+  text-decoration: none;
+  color: #f08c00;
+}
+#footer a {
+  color: #fff
+}
+h1 {
+  margin-block-start: 5px; /*  */
+  margin-block-end: 0;
+}
+
+h2 {
+  vertical-align: center;
+  text-align: center;
+}
+
+h3 {
+  background-color: #f08c00;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  padding: 20px 20px 0 20px;
+  height: 4.2em;
+}

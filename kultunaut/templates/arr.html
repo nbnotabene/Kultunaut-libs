@@ -1,0 +1,87 @@
+{% extends "baselayout.html" %}
+{# templates/arr.html #}
+{% block title %}{{ data.ArrKunstner }}{% endblock %}
+{% block head %}
+{{ super() }}
+{# arr.css #}
+<link rel="stylesheet" href="{{ data['relativeUrl'] }}css/arr.css">
+{% endblock %}
+{% block content %}
+<div id="level1" class="arrcontainer">
+  <div class="arrsplititem">
+    <picture>
+      <source media="(min-width: 600px)" srcset="poster.jpg">
+      <img src="posterMini.jpg" alt="{{ data.ArrKunstner}}" />
+    </picture>
+  </div>
+  <div class="arrsplititem">
+    <!--<ul id="arrdetail" class="listing">
+      <li> 
+            </li>
+            <li>
+            </li>
+            </ul>
+    -->
+    <div id="level2" class="arrcontainer">
+      <div class="ctalist1">
+        <h1>{{ data.ArrKunstner }}</h1>
+        <p><span>{{ "%s" % (data.ArrUGenre) }}</span>
+          {% if (((data.Filmvurdering) is none) is false) -%}
+          <span>{{ " - %s" % (data.Filmvurdering) }}</span>
+          {% endif %}
+        </p>
+      </div>
+      <div class="ctalist2">
+        {% for starter in data.startdatoer %}
+        <div class="cta">
+          <!--<i class="material-icons">movie</i>-->
+					<!--
+          {% if starter[3] != None %}
+          {% from "macro_defs.html" import popup_gen -%}
+          {{ popup_gen("Baby-bio!", "Denne visning er specielt tilpasset for forældre, som medtager babyer til filmen")
+          }}
+          </a><button onclick="document.getElementById('popup').style.display = 'block'">Baby-bio</button>&nbsp;
+          {% endif %}
+					-->
+          {{ starter[2] }}
+          <!--<a href="index.html?arrnr={{ starter[0] }}">{{ starter[2] }}</a>-->
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if (((data.ArrBeskrivelse) is none) is false) %}
+    <div>{{ data.ArrBeskrivelse }}</div>
+    {% endif %}
+    {% if (((data.ArrLangBeskriv) is none) is false) %}
+    <div>{{ data.ArrLangBeskriv|safe }}</div>
+    {% endif %}
+    {% if (((data.tmdb.overview) is none) is false) %}
+    <hr />
+    <div>{{ data.tmdb.overview }}</div>
+    {% endif %}
+
+    {% if data.tmdb and data.tmdb.videoid %}
+    {% from "macro_defs.html" import video_gen -%}
+    <p style="color: #fff;"><i>Dobbelklik for at se trailer "Fuld skærm" - Esc for at returnere!</i></p>
+    {{ video_gen(data.tmdb.videoid) }}
+    {% endif %}
+    <hr/>
+    <p>
+      Her kan du se relevante links om <a target="_blank" href="{{ 'https://www.google.com/search?q=%s+film'%data.ArrKunstner|urlencode }}">filmen</a>
+    </p>
+    <div class="share">
+      <h4>Del med andre!</h4>
+      <a onclick="window.open('https://www.kultunaut.dk/perl/share/type-nynaut/facebook?ArrNr=17715296', '_blank', 'scrollbars=yes,resizable=0,width=560,height=600,alwaysRaised=yes');return false"  target="_blank" href="https://www.kultunaut.dk/perl/share/type-nynaut/facebook?ArrNr=17715296"><span class="fab fa-facebook"></span> Facebook</a>
+  
+      <a onclick="window.open('https://www.kultunaut.dk/perl/share/type-nynaut/twitter?ArrNr=17715296', '_blank', 'scrollbars=yes,resizable=1,width=560,height=435,alwaysRaised=yes');return false" target="_blank"  href="https://www.kultunaut.dk/perl/share/type-nynaut/twitter?ArrNr=17715296"><span class="fab fa-twitter"></span> Twitter</a>
+  
+      <a  target="_blank" href="https://www.kultunaut.dk/perl/share/type-nynaut/googlecal?ArrNr=17715296"><span class="fa-stack" style="width: 1.7em;font-size: 0.5em;"><i class="far fa-calendar fa-stack-2x" style="margin-top:-0.13em;"></i><i class="fab fa-google fa-stack-1x"></i></span>
+   Google calendar</a>
+      <a title="ical"  href="https://www.kultunaut.dk/perl/share/type-nynaut/ical?ArrNr=17715296"><i class="far fa-calendar-alt"></i> ical</a>
+      <a target="_blank" href="https://www.kultunaut.dk/perl/share/type-nynaut/mail?ArrNr=17715296"><span class="far fa-envelope"></span> Email</a>
+  </div>
+
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,36 @@
+
+  * {
+    box-sizing: border-box;
+  } 
+  /**/
+  img {
+    max-width: 100%;
+  }
+
+  .listing {
+    list-style: none;
+    /*padding-top: 43px;*/
+    margin: 2em;
+    margin-left: 0em;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .listing li {
+    border: 1px solid #ffe066;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  .listing .cta {
+    margin-top: auto;
+    border-top: 1px solid #ffe066;
+    padding: 10px;
+    text-align: center;
+    height: 5em;
+  }
+  .listing .body {
+    padding: 10px;
+  }
+

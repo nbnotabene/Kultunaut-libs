@@ -1,0 +1,78 @@
+{% macro video_gen(videoID) %}
+  {% if videoID is number %}
+    {% set videourl = "https://player.vimeo.com/video/" %}
+  {% else %}
+    {% set videourl = "https://www.youtube.com/embed/" %}
+  {% endif %}
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      src="{{videourl}}{{videoID}}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+{% endmacro %}
+
+{% macro popup_gen(popuptitle, popuptext) %}
+  <style>
+    .popup {
+      display: none;
+      /* Hide the popup initially */
+      position: fixed;
+      /* Stay in place when scrolling */
+      z-index: 1;
+      /* Sit on top of other content */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if content is bigger */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Transparent background */
+      align-items: start;
+    }
+
+    .popup-content {
+      background-color: white;
+      margin: 15% auto;
+      /* 15% from top and center horizontally */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      align-items: left;
+      /* Popup content width */
+    }
+
+    .closebtn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #f1f1f1;
+      cursor: pointer;
+    }
+  </style>
+
+  <!--<button onclick="document.getElementById('popup').style.display = 'block'">Open Popup</button>-->
+  <div id="popup" class="popup">
+    <span class="closebtn" onclick="document.getElementById('popup').style.display = 'none'">&times;</span>
+    <div class="popup-content">
+      <h1>{{popuptitle}}</h1>
+      <hr>
+      <p id="popup-text">{{popuptext}}</p>
+    </div>
+  </div>
+
+  <script>
+    // Function to close the popup with Escape key
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        document.getElementById("popup").style.display = "none";
+      }
+    });
+    function changePopupContent(newContent) {
+      document.getElementById("popup-text").innerHTML = newContent;
+    }
+  </script>
+{% endmacro %}

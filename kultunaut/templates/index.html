@@ -1,0 +1,30 @@
+{% extends "baselayout.html" %}
+{# templates/index.html #}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ data['relativeUrl'] }}css/films.css">
+{% endblock %}
+{% block content %}
+  <section id="bio-list">
+    <ul id="filmcards" class="listing">
+    {% for myitem in data.list %}
+      <li>
+          <a href="arr/{{myitem}}/"><h3>{{ data[myitem].ArrKunstner }}</h3></a>
+          <div class="body">
+            <a href="arr/{{myitem}}/">
+              <img src="arr/{{myitem}}/posterMini.jpg" alt="{{ data[myitem].ArrKunstner}}"/>
+            </a>
+          </div>
+          <div class="cta">
+            {% for starter in data[myitem].startarr %}
+              <div class="ctastarter">
+                <!--<i class="material-icons">movie</i>index.html?arrnr={{ starter[0] }}-->
+                <a href="arr/{{myitem}}/">{{ starter[2] }}</a>
+              </div>
+            {% endfor %}
+          </div>
+      </li>
+    {% endfor %}
+    </ul>
+  </section>
+{% endblock content %}

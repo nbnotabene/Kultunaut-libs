@@ -51,6 +51,19 @@ class MariaDBInterface(metaclass=lib.Singleton):
         except mariadb.Error as e:
             print(f"Error fetching data: {e}")
             return []
+          
+    async def fetchDict(self, query, args=None):
+        try:
+            mycur = self.conn.cursor(dictionary=True)  # Enable dictionary cursor            
+            if args:
+                mycur.execute(query, args)
+            else:
+                mycur.execute(query)
+            return mycur.fetchall()
+        except mariadb.Error as e:
+            print(f"Error fetching data: {e}")
+            return []        
+
         
     async def fetchOneDict(self, query, args=None):
         try:

@@ -1,0 +1,69 @@
+.arrcontainer {
+  display: flex;
+  flex-direction: column;
+}
+.arrsplititem img{
+    width:100%;
+}
+
+.arrsplititem {
+  flex: 1; /* All items will share available space equally  0 50% */
+  padding: 1rem;
+  margin-bottom: 1rem; 
+  /* border: 1px solid #ddd; */
+}
+
+  #level1 .listing {
+    list-style: none;
+    /*padding-top: 43px;*/
+    margin: 0,5em;
+    margin-left: 0em;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  #level1 .listing li {
+    /*border: 1px solid #ffe066;
+    border-radius: 5px;*/
+    display: flex;
+    flex-direction: column;
+    columns: 2;
+  }
+
+  /*#level1 .listing .cta {
+    margin-top: auto;
+    border-top: 1px solid #ffe066; 
+    height: 5em;
+    padding: 10px;
+    text-align: center;    
+  }*/
+
+
+
+/* Media query for larger devices */
+@media (min-width: 768px) {  /* 768px Adjust breakpoint as needed */
+  div#level1>.arrsplititem {
+    border-right: 2px solid #ddd;
+  }
+  .arrcontainer {
+    flex-direction: row;
+  }
+  div.starterblok {
+    text-align: right;
+  }
+  div#level1>.arrsplititem:nth-child(1) {  /* Target the first item (row 1) */
+    order: 2;  /* Move it to the second position (column 2) */
+    min-height: 100%;
+  }
+  /*ul#arrdetail li:nth-child(2) {
+    text-align: right;
+  }*/
+  div.ctalist2 {
+    flex: 1 0 50%;
+    text-align: right;
+    padding-top: 1em;
+    padding-right: 0.5em;
+  }
+
+}

@@ -1,38 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title>Svaneke Bio - Velkommen!</title>  
-  <!--<link rel="stylesheet" href="css/normalize.css">-->
-  <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/overlay.css">
-  <link rel="stylesheet" href="css/basic.css">
-  
-<link rel="stylesheet" href="css/films.css">
-
-</head>
-
-<body>
-  <div class="container">
-    <header>
+<header>
   <div id="myNav" class="overlay">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="overlay-content">
-      <a href="">Svaneke Bio - Film oversigt</a>
-      <a href="pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
-      <a href="pages/omBio.html">Om Svaneke Bio</a>
+      <a href="{{ data['relativeUrl'] }}">Svaneke Bio - Film oversigt</a>
+      <a href="{{ data['relativeUrl'] }}pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
+      <a href="{{ data['relativeUrl'] }}pages/omBio.html">Om Svaneke Bio</a>
       <a target="_new" href="https://www.kultunaut.dk">
         <span>
           Kultunaut
           <img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
-            src="img/kultunaut.png" class="infologos" />
+            src="{{ data['relativeUrl'] }}img/kultunaut.png" class="infologos" />
           (Arrangements-database)
         </span>
       </a>
@@ -40,15 +17,15 @@
         <span>
           Facebook
           <img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
-            src="img/facebook.png" class="infologos" />
+            src="{{ data['relativeUrl'] }}img/facebook.png" class="infologos" />
         </span>
       </a>
       <!--
-      <a href="pages/lyd.html" class="">
+      <a href="{{ data['relativeUrl'] }}pages/lyd.html" class="">
         <span>
           Om lydanlæget
           <img width="38" height="38" style="vertical-align:bottom" id="megafon_image"
-            title="Lyt til din film - i Svaneke Bio!" src="img/megafon.png" class="infologos" />
+            title="Lyt til din film - i Svaneke Bio!" src="{{ data['relativeUrl'] }}img/megafon.png" class="infologos" />
         </span>
       </a>  
       -->
@@ -56,8 +33,8 @@
   </div>
   <nav class="top-nav">
     <div class="sub left" id="biologo">
-      <a href="">
-        <img src="img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
+      <a href="{{ data['relativeUrl'] }}">
+        <img src="{{ data['relativeUrl'] }}img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
       </a>
     </div>
     <div class="sub center" id="navmiddle">
@@ -84,22 +61,3 @@
     }
   </script>
 </header>
-    <div id="content">
-      
-  <section id="bio-list">
-    <ul id="filmcards" class="listing">
-    
-    </ul>
-  </section>
-
-    </div>
-    <div id="footer">
-      
-        <h3>&copy; Copyright 2024 <a href="https://svanekebio.dk/">Svaneke Bio</a>.</h3>
-      
-    </div>
-  </div>
-  <script src="sw.js"></script>
-</body>
-
-</html>

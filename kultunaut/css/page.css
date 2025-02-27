@@ -1,0 +1,25 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+div.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#content {
+    flex: 1; /* This makes the main content area grow to fill remaining space */
+}
+
+#footer {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+div.page {
+    margin-top: 2em;
+    margin-left: 2em;
+}
+

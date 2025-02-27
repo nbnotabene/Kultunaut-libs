@@ -1,0 +1,36 @@
+[
+	{"1":"ekjson",
+	"2": "kultfilm"},
+	{
+		"AinfoNr": "7104752",
+		"ArrBeskrivelse": "Pigen med nålen (2024) er en dansk thriller instrueret af Jeanette Nordahl. Filmen følger en ung kvinde, spillet af Sofie Gråbøl, der kæmper for at afsløre en morder i en intens, psykologisk jagt. Mørk, intens og spændingsfyldt",
+		"ArrGenre": "Film",
+		"ArrKunstner": "Pigen med nålen",
+		"ArrLangBeskriv": "",
+		"ArrNr": 18424274,
+		"ArrTidspunkt": "kl. 19:45",
+		"ArrUGenre": "Action/Drama",
+		"BilledeUrl": "http://www.kultunaut.dk/images/film/7104752/plakat.jpg",
+		"Filmvurdering": "t.o.15",
+		"Nautanb": null,
+		"Nautanmeld": null,
+		"Playdk": null,
+		"Slutdato": "2025-02-27",
+		"Startdato": "2025-02-27",
+		"StedNavn": "Svaneke Bio",
+		"kulthash": "25a73ab561da1b1147391d88e3425632",
+		"Starter": "2025-02-27 19:45",
+		"Startformat": "Thu. d. 27/2 kl. 19:45"
+	},
+	{
+		"Category": "Action/Drama",
+		"Censur": "t.o.15",
+		"Desc": "Pigen med nålen (2024) er en dansk thriller instrueret af Jeanette Nordahl. Filmen følger en ung kvinde, spillet af Sofie Gråbøl, der kæmper for at afsløre en morder i en intens, psykologisk jagt. Mørk, intens og spændingsfyldt.",
+		"Imdb": "10236164",
+		"OrgTitle": "Pigen med nålen",
+		"Poster": "https://www.kultunaut.dk/images/film/7104752/plakat.jpg",
+		"Runtime": "115",
+		"Title": "Pigen med nålen",
+		"Year": "2024"
+	}
+]

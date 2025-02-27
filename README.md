@@ -1,5 +1,7 @@
 # Kultunaut libs
 
+TEST: python3 -m http.server
+
 kultunaut_libs
 
 Kultunaut Events services for movie theaters
@@ -19,3 +21,18 @@ pip install poetry
 poetry run pytest
 poetry add request
 poetry new --name kultunaut.bio kultunaut-bio
+
+select CONCAT((SELECT REPLACE(GROUP_CONCAT(COLUMN_NAME), 'ainfonr', '') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'kultevents' AND TABLE_SCHEMA = 'bio'));
+
+create view curEvents as
+select e.AinfoNr, min(e.ArrNr) marrnr, min(e.vStarter) mstart, group_concat(e.ArrNr) arrnums, group_concat(e.vStarter) arrstarter from kultevents e
+where e.vStarter> now()
+group by e.AinfoNr
+order by e.vStarter;
+
+create or replace view curArrs as
+select c.AinfoNr, c.marrnr, c.mstart,c.arrnums, c.arrstarter,
+a.kjson,a.kulthash,a.kultfilm,a.tmdb,a.created,a.updated,a.vStarter,a.vTitle,
+e.kjson ekjson, e.vTitle evTitle from curEvents c
+left join kultevents e on e.ArrNr=c.marrnr
+left join kultarrs a on a.AinfoNr=c.AinfoNr;
