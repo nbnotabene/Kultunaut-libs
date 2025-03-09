@@ -1,0 +1,8 @@
+# https://www.statichost.eu/docs/git/#supported-providers-and-features
+
+# Docker image to use for 1building
+#image: jekyll/jekyll:3.8
+# Build command
+#command: jekyll build
+# Public directory
+public: webroot
