@@ -111,7 +111,7 @@ async def main():
     myUI = UI()
     await myUI.getEvents()
     #await myUI.pagesFromDB()
-    #await myUI.createArrFolders()
+    await myUI.createArrFolders()
     await myUI.createIndex()
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ class Event:
     def __str__(self):
         return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
 
-    def updateJSONvalues(self):
+    async def updateJSONvalues(self):
         # kulthash - before values are changed
         eventStr = "".join(str(v) for v in self._event.values())
         self._event["kulthash"] = hashlib.md5(eventStr.encode()).hexdigest()
@@ -34,7 +34,11 @@ class Event:
 
         #AinfoNr
         if self._event["AinfoNr"] is None:
-            self._event["AinfoNr"] = self._event["ArrNr"]
+            Ainfo = await self.parent._db.fetchOneDict(f"select AinfoNr from kultevents where vTitle like '{self._event['ArrKunstner']}' order by ArrNr desc") 
+            if Ainfo is not None:
+                self._event["AinfoNr"] = Ainfo["AinfoNr"]
+            else:
+                self._event["AinfoNr"] = self._event["ArrNr"]
 
         # Aarhus universitet
         tmpA = self._event["ArrKunstner"].split(
@@ -51,7 +55,7 @@ class Event:
             self._event[largeVal] = self._event[largeVal].replace('"', '\\"')
 
     async def dbUpsert(self, eventDbDict, forceUpdate=False):
-        self.updateJSONvalues()
+        await self.updateJSONvalues()
         # eventDbDict from DB - eventually None
         if eventDbDict is None or len(eventDbDict) == 0:
             # INSERT
