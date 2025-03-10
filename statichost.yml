@@ -1,5 +1,11 @@
 # https://www.statichost.eu/docs/git/#supported-providers-and-features
 
+domains:
+# Primary domain
+  - svanekebio.dk
+# Domains that redirect to the primary
+  - www.svanekebio.dk
+
 # Docker image to use for 1building
 #image: jekyll/jekyll:3.8
 # Build command
