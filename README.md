@@ -57,3 +57,5 @@ Processing /home/nb/repos/kultunaut/Kultunaut-libs
   Getting requirements to build wheel ... done
   Preparing metadata (pyproject.toml) ... done
 Collecting jinja2<4.0.0,>=3.1.5 (from kultunaut-lib==0.1.0)
+
+Jinja2 3.1.6
