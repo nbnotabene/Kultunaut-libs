@@ -1,26 +1,26 @@
 <header>
-  <div id="myNav" class="overlay">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div class="overlay-content">
-      <a href="{{ data['relativeUrl'] }}">Svaneke Bio - Film oversigt</a>
-      <a href="{{ data['relativeUrl'] }}pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
-      <a href="{{ data['relativeUrl'] }}pages/omBio.html">Om Svaneke Bio</a>
-      <a target="_new" href="https://www.kultunaut.dk">
-        <span>
-          Kultunaut
-          <img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
-            src="{{ data['relativeUrl'] }}img/kultunaut.png" class="infologos" />
-          (Arrangements-database)
-        </span>
-      </a>
-      <a target="_new" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">
-        <span>
-          Facebook
-          <img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
-            src="{{ data['relativeUrl'] }}img/facebook.png" class="infologos" />
-        </span>
-      </a>
-      <!--
+	<div id="myNav" class="overlay">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="overlay-content">
+			<a href="{{ data['relativeUrl'] }}">Svaneke Bio - Film oversigt</a>
+			<a href="{{ data['relativeUrl'] }}pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
+			<a href="{{ data['relativeUrl'] }}pages/omBio.html">Om Svaneke Bio</a>
+			<a target="_new" href="https://www.kultunaut.dk">
+				<span>
+					Kultunaut
+					<img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
+						src="{{ data['relativeUrl'] }}img/kultunaut.png" class="infologos" />
+					(Arrangements-database)
+				</span>
+			</a>
+			<a target="_new" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">
+				<span>
+					Facebook
+					<img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
+						src="{{ data['relativeUrl'] }}img/facebook.png" class="infologos" />
+				</span>
+			</a>
+			<!--
       <a href="{{ data['relativeUrl'] }}pages/lyd.html" class="">
         <span>
           Om lydanlæget
@@ -29,35 +29,45 @@
         </span>
       </a>  
       -->
-    </div>
-  </div>
-  <nav class="top-nav">
-    <div class="sub left" id="biologo">
-      <a href="{{ data['relativeUrl'] }}">
-        <img src="{{ data['relativeUrl'] }}img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
-      </a>
-    </div>
-    <div class="sub center" id="navmiddle">
- 
-    </div>
-    <div class="sub right" id="navright">
-      <!--<span style="font-size:30px;cursor:pointer;vertical-align:bottom;" onclick="openNav()">&#9776;</span>-->
-      <i style="font-size:30px;cursor:pointer;vertical-align:bottom;" title="Bio Menu" onclick="openNav()" class="material-icons">menu</i>
-    </div>   
-  </nav>
-  <script>
-    function closeNav() {
-      document.getElementById("myNav").style.width = "0%";
-    }
+		</div>
+	</div>
+	<nav class="top-nav">
+		<div class="sub left" id="biologo">
+			<a href="{{ data['relativeUrl'] }}">
+				<img src="{{ data['relativeUrl'] }}img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
+			</a>
+		</div>
+		<div class="sub center" id="navmiddle">
 
-    function openNav() {
-      document.getElementById("myNav").style.width = "100%";
-      window.onkeydown = function (event) {
-        if (event.keyCode == 27) {          
-          console.log('escape pressed');
-          closeNav()
-        }
-      };
-    }
-  </script>
+		</div>
+		<div class="sub right" id="navright">
+			<!--<span style="font-size:30px;cursor:pointer;vertical-align:bottom;" onclick="openNav()">&#9776;</span>-->
+			<i style="font-size:30px;cursor:pointer;vertical-align:bottom;" title="Bio Menu" onclick="openNav()"
+				class="material-icons">menu</i>
+		</div>
+	</nav>
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/sw.js').then(function (registration) {
+					console.log('Service Worker registered with scope:', registration.scope);
+				}, function (err) {
+					console.log('Service Worker registration failed:', err);
+				});
+			});
+		}
+		function closeNav () {
+			document.getElementById("myNav").style.width = "0%";
+		}
+
+		function openNav () {
+			document.getElementById("myNav").style.width = "100%";
+			window.onkeydown = function (event) {
+				if (event.keyCode == 27) {
+					console.log('escape pressed');
+					closeNav()
+				}
+			};
+		}
+	</script>
 </header>

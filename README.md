@@ -37,16 +37,14 @@ e.kjson ekjson, e.vTitle evTitle from curEvents c
 left join kultevents e on e.ArrNr=c.marrnr
 left join kultarrs a on a.AinfoNr=c.AinfoNr;
 
-
 Ikoner:
-         <!--<i class="material-icons">movie</i>-->					
+         <!--<i class="material-icons">movie</i>-->     
           {% if starter[3] != None %}
           {% from "macro_defs.html" import popup_gen -%}
           {{ popup_gen("Baby-bio!", "Denne visning er specielt tilpasset for forældre, som medtager babyer til filmen")
           }}
               </a><button onclick="document.getElementById('popup').style.display = 'block'">Baby-bio</button>&nbsp;
           {% endif %}
-
 
 pip freeze > requirements.txt
 pip install -r  requirements.txt

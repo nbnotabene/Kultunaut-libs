@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1006)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(1.09375,0,0,1.09375,150,237.5)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="640" height="480"><svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer">
+  <title>Layer 1</title>
+  <polygon cx="204.5" cy="129.5" fill="#eba307" id="svg_1" orient="point" point="5" points="321.9999937999564,24.204648971557617 375.8040160190285,185.9097263269532 539.6418512067212,189.39770812959887 409.0567234976734,292.8249483086065 456.5100327664004,456.68571111686015 321.9999937999564,358.9021425239289 187.48995483351246,456.68571111686015 234.94326410223948,292.8249483086065 104.35816955566406,189.39770812959887 268.19597158088436,185.9097263269532 321.9999937999564,24.204648971557617 375.8040160190285,185.9097263269532 " r="105.295352" r2="42.118141" shape="star" stroke-width="5" strokewidth="5" strokecolor="none"></polygon>
+ </g>
+</svg></svg></g></g><defs><clipPath id="SvgjsClipPath1006"><rect width="1000" height="1000" x="0" y="0" rx="350" ry="350"></rect></clipPath></defs></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g><g transform="matrix(1.5625,0,0,1.5625,0,125)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="640" height="480"><svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer">
+  <title>Layer 1</title>
+  <polygon cx="204.5" cy="129.5" fill="#eba307" id="svg_1" orient="point" point="5" points="321.9999937999564,24.204648971557617 375.8040160190285,185.9097263269532 539.6418512067212,189.39770812959887 409.0567234976734,292.8249483086065 456.5100327664004,456.68571111686015 321.9999937999564,358.9021425239289 187.48995483351246,456.68571111686015 234.94326410223948,292.8249483086065 104.35816955566406,189.39770812959887 268.19597158088436,185.9097263269532 321.9999937999564,24.204648971557617 375.8040160190285,185.9097263269532 " r="105.295352" r2="42.118141" shape="star" stroke-width="5" strokewidth="5" strokecolor="none"></polygon>
+ </g>
+</svg></svg></g></g></svg></g></svg>
