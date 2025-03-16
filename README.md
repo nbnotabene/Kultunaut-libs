@@ -47,3 +47,13 @@ Ikoner:
               </a><button onclick="document.getElementById('popup').style.display = 'block'">Baby-bio</button>&nbsp;
           {% endif %}
 
+
+pip freeze > requirements.txt
+pip install -r  requirements.txt
+
+(.venv) nb@ubuntu-s-1vcpu-1gb-fra1-01:~/repos/kultunaut/Kultunaut-libs$    pip install .
+Processing /home/nb/repos/kultunaut/Kultunaut-libs
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting jinja2<4.0.0,>=3.1.5 (from kultunaut-lib==0.1.0)
