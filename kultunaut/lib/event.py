@@ -14,7 +14,7 @@ class Event:
     def __init__(self, jevent: dict, parent):
         self._event = jevent
         self.parent = parent
-        locale.setlocale(locale.LC_ALL, 'da_DK')        
+        locale.setlocale(locale.LC_ALL, 'da_DK.utf8')        
 
     def __str__(self):
         return f"Event: {self._event['ArrNr']} / {self._event['AinfoNr']}, {self._event['Starter']} {self._event['ArrKunstner']}"
