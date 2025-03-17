@@ -57,3 +57,17 @@ Processing /home/nb/repos/kultunaut/Kultunaut-libs
 Collecting jinja2<4.0.0,>=3.1.5 (from kultunaut-lib==0.1.0)
 
 Jinja2 3.1.6
+
+35 20 * * * /home/nb/repos/kultunaut/generateUI.sh
+#!/bin/bash
+#generateUI.sh
+
+cd /home/nb/repos/kultunaut/Kultunaut-libs
+source /home/nb/repos/kultunaut/Kultunaut-libs/.venv/bin/activate
+.venv/bin/python3 kultunaut/lib/UI.py
+
+timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+/usr/bin/git add .
+/usr/bin/git commit -m "$timestamp commit"
+/usr/bin/git push origin main
+
