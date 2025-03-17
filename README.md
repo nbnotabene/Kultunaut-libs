@@ -71,3 +71,8 @@ timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 /usr/bin/git commit -m "$timestamp commit"
 /usr/bin/git push origin main
 
+DUMP
+sudo mariadb-dump bio > ../bioDB.sql
+sudo mariadb fromSQL < ../bioDB.sql
+sudo mariadb-dump bio | gzip -c > ../bioDB.sql.gz
+gunzip bioDB.sql.gz
