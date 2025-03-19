@@ -17,7 +17,7 @@ build/
 .vscode/
 *.dump
 main-private.py
-filecache/
+#filecache/
 .env.secret
 bak/
 *-BAK
