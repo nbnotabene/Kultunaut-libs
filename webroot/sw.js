@@ -1,7 +1,7 @@
 const CACHE_NAME = 'svanekebio-cache-v1';
+// no cache   '/','/index.html',
+
 const urlsToCache = [
-  '/',
-  '/index.html',
   '/css/basic.css',
 	'/css/page.css',
 	'/css/overlay.css',
