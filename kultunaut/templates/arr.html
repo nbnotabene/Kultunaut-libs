@@ -53,9 +53,9 @@
     {% endif %}
 
     {% if data.tmdb and data.tmdb.videoid %}
-    {% from "macro_defs.html" import video_gen -%}
-    <p style="color: #fff;"><i>Dobbelklik for at se trailer "Fuld skærm" - Esc for at returnere!</i></p>
-    {{ video_gen(data.tmdb.videoid) }}
+      {% from "macro_defs.html" import video_gen -%}
+        <p style="color: #fff;"><i>Dobbelklik for at se trailer "Fuld skærm" - Esc for at returnere!</i></p>
+      {{ video_gen(data.tmdb.videoid) }}
     {% endif %}
     <hr/>
     <p>

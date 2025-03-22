@@ -1,5 +1,16 @@
 {% macro video_gen(videoID) %}
   {% if videoID is number %}
+    <iframe src="https://player.vimeo.com/video/{{ videoID }}"
+    width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+  {% else %}
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}"
+    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>
+  {% endif %}
+{% endmacro %}
+
+{% macro video_gen1(videoID) %}
+  {% if videoID is number %}
     {% set videourl = "https://player.vimeo.com/video/" %}
   {% else %}
     {% set videourl = "https://www.youtube.com/embed/" %}
