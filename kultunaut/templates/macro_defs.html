@@ -1,6 +1,5 @@
-{% macro video_gen(videoVar) %}
-  {% set videoID = int(videoVar) %}
-	{% if videoID is defined and videoID is not none %}
+{% macro video_gen(videoID) %}
+	{% if (videoID|int != 0) %}
     <iframe src="https://player.vimeo.com/video/{{ videoID }}"
     width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
   {% else %}

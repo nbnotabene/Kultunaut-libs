@@ -64,9 +64,9 @@ Jinja2 3.1.6
 
 35 20 ** * /home/nb/repos/kultunaut/generateUI.sh
 
-# !/bin/bash
+// !/bin/bash
 
-# generateUI.sh
+// generateUI.sh
 
 cd /home/nb/repos/kultunaut/Kultunaut-libs
 source /home/nb/repos/kultunaut/Kultunaut-libs/.venv/bin/activate
