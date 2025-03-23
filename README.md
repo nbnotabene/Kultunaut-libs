@@ -38,7 +38,7 @@ left join kultevents e on e.ArrNr=c.marrnr
 left join kultarrs a on a.AinfoNr=c.AinfoNr;
 
 Ikoner:
-         <!--<i class="material-icons">movie</i>-->     
+         <!--<i class="material-icons">movie</i>-->
           {% if starter[3] != None %}
           {% from "macro_defs.html" import popup_gen -%}
           {{ popup_gen("Baby-bio!", "Denne visning er specielt tilpasset for forældre, som medtager babyer til filmen")
@@ -46,8 +46,12 @@ Ikoner:
               </a><button onclick="document.getElementById('popup').style.display = 'block'">Baby-bio</button>&nbsp;
           {% endif %}
 
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
 pip freeze > requirements.txt
 pip install -r  requirements.txt
+pip install .
 
 (.venv) nb@ubuntu-s-1vcpu-1gb-fra1-01:~/repos/kultunaut/Kultunaut-libs$    pip install .
 Processing /home/nb/repos/kultunaut/Kultunaut-libs
@@ -58,9 +62,11 @@ Collecting jinja2<4.0.0,>=3.1.5 (from kultunaut-lib==0.1.0)
 
 Jinja2 3.1.6
 
-35 20 * * * /home/nb/repos/kultunaut/generateUI.sh
-#!/bin/bash
-#generateUI.sh
+35 20 ** * /home/nb/repos/kultunaut/generateUI.sh
+
+# !/bin/bash
+
+# generateUI.sh
 
 cd /home/nb/repos/kultunaut/Kultunaut-libs
 source /home/nb/repos/kultunaut/Kultunaut-libs/.venv/bin/activate
