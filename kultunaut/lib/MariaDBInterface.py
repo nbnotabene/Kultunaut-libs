@@ -18,12 +18,21 @@ class MariaDBInterface(metaclass=lib.Singleton):
         SINGLETON DB Client
         """
     connVars = lib.sqlconn()
+    testConn = False
     #branch = lib.conf['BRANCH']    
     #db_config = connVars[branch]['mysqlcon']
     
     def __init__(self):  #self, host, user, password, database
+        self.testConn = self.__connect__()
+
+    def __connect__(self):
+      try:
         self.conn = mariadb.connect(**self.connVars)
         self.cursor = self.conn.cursor()
+      except mariadb.Error as e:
+        print(f"Error connecting to MariaDB Platform: {e}")
+        return False
+      return True
 
     def __del__(self):
         self.cursor.close()
