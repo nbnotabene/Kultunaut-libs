@@ -82,3 +82,6 @@ sudo mariadb-dump bio > ../bioDB.sql
 sudo mariadb fromSQL < ../bioDB.sql
 sudo mariadb-dump bio | gzip -c > ../bioDB.sql.gz
 gunzip bioDB.sql.gz
+
+STATICHOST
+https://builder.statichost.eu/login
