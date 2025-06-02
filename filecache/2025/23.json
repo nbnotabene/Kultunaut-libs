@@ -1,6 +1,24 @@
 [
   {
-    "AinfoNr": "7105478",
+    "AinfoNr": "7105421",
+    "ArrBeskrivelse": "",
+    "ArrGenre": "Film",
+    "ArrKunstner": "Sidste Paradis på Jord",
+    "ArrLangBeskriv": "",
+    "ArrNr": 18785395,
+    "ArrTidspunkt": "kl. 16:00",
+    "ArrUGenre": "Action/Drama",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7105421/plakat.jpg",
+    "Filmvurdering": "f.u.7",
+    "Nautanb": null,
+    "Nautanmeld": null,
+    "Playdk": null,
+    "Slutdato": "2025-06-01",
+    "Startdato": "2025-06-01",
+    "StedNavn": "Svaneke Bio"
+  },
+  {
+    "AinfoNr": null,
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Sauna (2025)",
@@ -8,7 +26,7 @@
     "ArrNr": 18792369,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Komedie/Romantik",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7105478/plakat.jpg",
+    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
     "Filmvurdering": "t.o.15",
     "Nautanb": null,
     "Nautanmeld": null,
@@ -36,7 +54,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": "7105478",
+    "AinfoNr": null,
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Sauna (2025)",
@@ -44,7 +62,7 @@
     "ArrNr": 18792370,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Komedie/Romantik",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7105478/plakat.jpg",
+    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
     "Filmvurdering": "t.o.15",
     "Nautanb": null,
     "Nautanmeld": null,
