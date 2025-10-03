@@ -51,6 +51,7 @@ a:link, a:visited {
 h1 {
   margin-block-start: 5px; /*  */
   margin-block-end: 0;
+  color:#f08c00;
 }
 
 h2 {

@@ -1,5 +1,5 @@
 {% extends "baselayout.html" %}
-{% block title %}{{ data.tittle }}{% endblock %}
+{% block title %}{{ data.title }}{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -12,7 +12,7 @@
     {% if data['img'] != None %}
       <img title="{{ data.tittle }}" src="../img/{{data.img}}">
     {% endif %}
-    <h1>{{data['tittle']}}</h1>
+    <h1>{{data['title']}}</h1>
   </div>
   {{ data.pagehtml|safe }}
 </div>

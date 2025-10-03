@@ -15,8 +15,55 @@
   <link rel="stylesheet" href="./css/overlay.css">
   <link rel="stylesheet" href="./css/basic.css">
   
+<link rel="stylesheet" href="./css/inforow.css">
 <link rel="stylesheet" href="./css/films.css">
 
+  
+      <style>
+        .info-row {
+          background-color: #ffe0b2; /* Light orange/yellow background */
+          color: #333;
+          padding: 10px 20px;
+          margin: 10px 0;
+          border: 1px solid #ffcc80;
+          border-radius: 4px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          /* Add transition for smooth dismissal */
+          transition: opacity 0.5s ease-out; 
+        }
+        
+        .info-row p {
+          margin: 0;
+          font-weight: bold;
+        }
+        
+        .info-row button {
+          background-color: #ff9800;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 3px;
+          cursor: pointer;
+          margin-left: 15px;
+          flex-shrink: 0;
+        }
+        .info-row button:hover {
+          background-color: #fb8c00;
+        }
+
+        .info-row a {
+          color: #c62828; /* A darker, attention-grabbing color for the link */
+          font-weight: bold;
+          text-decoration: underline;
+          margin: 0 5px; /* Add some space around the link */
+        }
+        .info-row a:hover {
+          color: #880e4f;
+        }
+    </style>
+  
 </head>
 
 <body>
@@ -28,6 +75,13 @@
 			<a href="./">Svaneke Bio - Film oversigt</a>
 			<a href="./pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
 			<a href="./pages/omBio.html">Om Svaneke Bio</a>
+			<a href="./pages/medlem.html">
+				<span>
+					Bliv medlem og få fordele!
+					<img width="38" height="38" style="vertical-align:bottom" id="medlem_image" title="Bliv medlem"
+						src="./img/megafon.png" class="infologos" />
+				</span>
+			</a>
 			<a target="_new" href="https://www.kultunaut.dk">
 				<span>
 					Kultunaut
@@ -96,6 +150,60 @@
 </header>
     <div id="content">
       
+  
+      <style>
+        .info-row {
+          background-color: #ffe0b2; /* Light orange/yellow background */
+          color: #333;
+          padding: 10px 20px;
+          margin: 10px 0;
+          border: 1px solid #ffcc80;
+          border-radius: 4px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          /* Add transition for smooth dismissal */
+          transition: opacity 0.5s ease-out; 
+        }
+        
+        .info-row p {
+          margin: 0;
+          font-weight: bold;
+        }
+        
+        .info-row button {
+          background-color: #ff9800;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 3px;
+          cursor: pointer;
+          margin-left: 15px;
+          flex-shrink: 0;
+        }
+        .info-row button:hover {
+          background-color: #fb8c00;
+        }
+
+        .info-row a {
+          color: #c62828; /* A darker, attention-grabbing color for the link */
+          font-weight: bold;
+          text-decoration: underline;
+          margin: 0 5px; /* Add some space around the link */
+        }
+        .info-row a:hover {
+          color: #880e4f;
+        }
+    </style>
+  
+  
+  
+    <div id="temporary-info" class="inforow">
+      <p>Har du lyst til at være støtte-medlem? Eller vælge din favoritfilm til visning i biografen? Check <a href='/pages/medlem.html'>dette link</a></p>
+      <button title="OK & Luk" onclick="dismissInfoRow()">X</button>
+    </div>
+  
+
   <section id="bio-list">
     <ul id="filmcards" class="listing">
     
@@ -449,6 +557,37 @@
       
     </div>
   </div>
+  
+  <script>
+    const infoRowId = 'temporary-info';
+    const storageKey = 'info_acknowledged';
+
+    // 1. Function to dismiss and remember the choice
+    function dismissInfoRow() {
+      const infoRow = document.getElementById(infoRowId);
+      if (infoRow) {
+        localStorage.setItem(storageKey, 'true', { expires: 2 }); // Expires in 2 days
+        // Optional: Animate the fade-out before removal
+        infoRow.style.opacity = '0';
+        setTimeout(() => {
+          infoRow.remove();
+        }, 500); // Wait for the fade transition (adjust CSS transition time)        
+      }
+    }
+    // 2. Code to check localStorage and hide the row on page load
+    (function() {
+      // Check if the dismissal key exists in localStorage
+      if (localStorage.getItem(storageKey) === 'true') {
+        const infoRow = document.getElementById(infoRowId);        
+        // If the element exists, immediately hide it
+        if (infoRow) {
+          infoRow.style.display = 'none';
+        }
+      }
+    })();
+
+  </script>
+
   <script src="./sw.js"></script>
 </body>
 

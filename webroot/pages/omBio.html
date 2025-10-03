@@ -9,7 +9,7 @@
   <link rel="manifest" href="../manifest.json">
   <link rel="icon" href="../favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title>Svaneke Bio - </title>  
+  <title>Svaneke Bio - Om biografen</title>  
   <!--<link rel="stylesheet" href="../css/normalize.css">-->
   <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/overlay.css">
@@ -17,33 +17,41 @@
   
 <link rel="stylesheet" href="../css/page.css">
 
+  
 </head>
 
 <body>
   <div class="container">
     <header>
-  <div id="myNav" class="overlay">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div class="overlay-content">
-      <a href="../">Svaneke Bio - Film oversigt</a>
-      <a href="../pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
-      <a href="../pages/omBio.html">Om Svaneke Bio</a>
-      <a target="_new" href="https://www.kultunaut.dk">
-        <span>
-          Kultunaut
-          <img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
-            src="../img/kultunaut.png" class="infologos" />
-          (Arrangements-database)
-        </span>
-      </a>
-      <a target="_new" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">
-        <span>
-          Facebook
-          <img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
-            src="../img/facebook.png" class="infologos" />
-        </span>
-      </a>
-      <!--
+	<div id="myNav" class="overlay">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="overlay-content">
+			<a href="../">Svaneke Bio - Film oversigt</a>
+			<a href="../pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
+			<a href="../pages/omBio.html">Om Svaneke Bio</a>
+			<a href="../pages/medlem.html">
+				<span>
+					Bliv medlem og få fordele!
+					<img width="38" height="38" style="vertical-align:bottom" id="medlem_image" title="Bliv medlem"
+						src="../img/megafon.png" class="infologos" />
+				</span>
+			</a>
+			<a target="_new" href="https://www.kultunaut.dk">
+				<span>
+					Kultunaut
+					<img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
+						src="../img/kultunaut.png" class="infologos" />
+					(Arrangements-database)
+				</span>
+			</a>
+			<a target="_new" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">
+				<span>
+					Facebook
+					<img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
+						src="../img/facebook.png" class="infologos" />
+				</span>
+			</a>
+			<!--
       <a href="../pages/lyd.html" class="">
         <span>
           Om lydanlæget
@@ -52,44 +60,54 @@
         </span>
       </a>  
       -->
-    </div>
-  </div>
-  <nav class="top-nav">
-    <div class="sub left" id="biologo">
-      <a href="../">
-        <img src="../img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
-      </a>
-    </div>
-    <div class="sub center" id="navmiddle">
- 
-    </div>
-    <div class="sub right" id="navright">
-      <!--<span style="font-size:30px;cursor:pointer;vertical-align:bottom;" onclick="openNav()">&#9776;</span>-->
-      <i style="font-size:30px;cursor:pointer;vertical-align:bottom;" title="Bio Menu" onclick="openNav()" class="material-icons">menu</i>
-    </div>   
-  </nav>
-  <script>
-    function closeNav() {
-      document.getElementById("myNav").style.width = "0%";
-    }
+		</div>
+	</div>
+	<nav class="top-nav">
+		<div class="sub left" id="biologo">
+			<a href="../">
+				<img src="../img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
+			</a>
+		</div>
+		<div class="sub center" id="navmiddle">
 
-    function openNav() {
-      document.getElementById("myNav").style.width = "100%";
-      window.onkeydown = function (event) {
-        if (event.keyCode == 27) {          
-          console.log('escape pressed');
-          closeNav()
-        }
-      };
-    }
-  </script>
+		</div>
+		<div class="sub right" id="navright">
+			<!--<span style="font-size:30px;cursor:pointer;vertical-align:bottom;" onclick="openNav()">&#9776;</span>-->
+			<i style="font-size:30px;cursor:pointer;vertical-align:bottom;" title="Bio Menu" onclick="openNav()"
+				class="material-icons">menu</i>
+		</div>
+	</nav>
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/sw.js').then(function (registration) {
+					console.log('Service Worker registered with scope:', registration.scope);
+				}, function (err) {
+					console.log('Service Worker registration failed:', err);
+				});
+			});
+		}
+		function closeNav () {
+			document.getElementById("myNav").style.width = "0%";
+		}
+
+		function openNav () {
+			document.getElementById("myNav").style.width = "100%";
+			window.onkeydown = function (event) {
+				if (event.keyCode == 27) {
+					console.log('escape pressed');
+					closeNav()
+				}
+			};
+		}
+	</script>
 </header>
     <div id="content">
       
 <div class="page" style="color: white;">
   <div class="column items-center">
     
-    <h1></h1>
+    <h1>Om biografen</h1>
   </div>
   <div class="omtext">
   <div>
@@ -106,14 +124,16 @@
     <p> Bemærk: <b>Du kan ikke bestille billetter</b>, da vi ikke har nummererede pladser. Kom i stedet i god tid, så
       kan du få en god plads. </p>
   </div>
-  <div><b> Kulturhuset Frem / Svaneke Bio,<br> Brænderigænget 10<br> 3740 Svaneke<br><br> Tlf.: 61148295</b></div>
   <!-- <br><br><img src="../img/bio-map.jpg">-->
   <hr/>
+  <div>Hvordan bliver jeg <b><a alt="støttemedlem" href="medlem.html">støttemedlem</a></b></div>
   <div>Bemærk: <b>Svaneke Bio</b> hører til i - og er en del af - <b><a href="./frem.html">Kulturhuset Frem</a></b></div>
   <div>Film-arrangementer er registreret og hentet fra <b><a alt="Svaneke Bio på Kultunaut" target="_blank" href="https://www.kultunaut.dk/perl/sted/type-nynaut/nr-201428">Kultunaut</a></b></div>
   <div>Du kan se mere om Svaneke Bio på <a alt="Svaneke Bio på Facebook" target="_blank" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">Facebook</a></div>
   <div>Her kan du se mere om de film vi viser på forskellige <a href="./links.html">film-sites</a></div>
   <div>Læs mere om vores fantastiske <a href="./lyd.html">lyd-anlæg</a></div>
+  <hr/>
+  <div><b> Kulturhuset Frem / Svaneke Bio,<br> Brænderigænget 10<br> 3740 Svaneke<br><br> Tlf.: 61148295</b></div>
 </div>
 </div>
 
@@ -124,6 +144,7 @@
       
     </div>
   </div>
+  
   <script src="../sw.js"></script>
 </body>
 

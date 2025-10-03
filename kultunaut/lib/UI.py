@@ -96,7 +96,13 @@ class UI():
         #data = jsonpickle.encode(self._events, unpicklable=False)
         #data = self._events.values()
         #[17386703: 2024-03-16 19:45 Den grænseløse, .....
+
+        info_message = (
+           "Har du lyst til at være støtte-medlem? "
+           "Eller vælge din favoritfilm til visning i biografen? Check <a href='/pages/medlem.html'>dette link</a>"
+           )
         data={ 
+            'info_message': info_message,
             'relativeUrl': './',
             'events': list(self.dbEvents)
         }
@@ -110,7 +116,7 @@ class UI():
 async def main():
     myUI = UI()
     await myUI.getEvents()
-    #await myUI.pagesFromDB()
+    await myUI.pagesFromDB()
     await myUI.createArrFolders()
     await myUI.createIndex()
 

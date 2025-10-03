@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ data['relativeUrl'] }}css/overlay.css">
   <link rel="stylesheet" href="{{ data['relativeUrl'] }}css/basic.css">
   {% endblock %}
+  {% block page_css %}{% endblock %}
 </head>
 
 <body>
@@ -29,6 +30,7 @@
       {% endblock %}
     </div>
   </div>
+  {% block page_js %}{% endblock %}
   <script src="{{ data['relativeUrl'] }}sw.js"></script>
 </body>
 
