@@ -4,11 +4,16 @@ from kultunaut.lib.PosterImage import PosterImage
 import asyncio
 import json
 import os
+import sys
 from dotenv import dotenv_values
 conf = {**dotenv_values(".env"),**dotenv_values(".env.secret")}
 #from kultunaut.lib import lib
 
-ROOTDIR = f"{conf['ROOTDIR']}"    #/home/nb/repos/kultunaut/kultunaut-libs"
+CURDIR = os.path.dirname(os.path.abspath(os.path.realpath(sys.argv[0])))
+print(CURDIR)
+exit()
+ROOTDIR = os.path.dirname(os.path.dirname(CURDIR))
+# ROOTDIR = f"{conf['ROOTDIR']}"    #/home/nb/repos/kultunaut/kultunaut-libs"
 WEBROOT = f"{ROOTDIR}/{conf['WEBROOT']}"
 TEMPLATES = f"{ROOTDIR}/{conf['TEMPLATES']}"
 

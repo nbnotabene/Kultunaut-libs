@@ -86,3 +86,5 @@ gunzip bioDB.sql.gz
 
 STATICHOST
 https://builder.statichost.eu/login
+
+GRANT ALL PRIVILEGES ON *.* TO 'nb'@'%' IDENTIFIED BY '' WITH GRANT OPTION;
