@@ -1,6 +1,7 @@
 # Kultunaut libs
 
 TEST: python3 -m http.server
+LIVE: http://local.svanekebio.dk i MS Edge
 
 kultunaut_libs
 
