@@ -26,6 +26,8 @@ class Arrangements(MutableMapping):
         #for dbev in Dbevents:
         for (ainfonr, jev) in Dbevents:  
             jevent = json.loads(jev)
+            if 19235727 == ainfonr or 18928524 == ainfonr:
+                print (ainfonr)
             if ainfonr not in self._arrangs.keys():
                 # jevent = DICT Hentet fra DB kultevents
                 self.__setitem__(ainfonr,jevent)

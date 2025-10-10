@@ -9,13 +9,13 @@ from dotenv import dotenv_values
 conf = {**dotenv_values(".env"),**dotenv_values(".env.secret")}
 #from kultunaut.lib import lib
 
-CURDIR = os.path.dirname(os.path.abspath(os.path.realpath(sys.argv[0])))
-print(CURDIR)
-exit()
-ROOTDIR = os.path.dirname(os.path.dirname(CURDIR))
+CURDIR = os.path.dirname(os.path.abspath(os.path.realpath(sys.argv[0])))    
+#print(CURDIR)
+# exit()
+# ROOTDIR = os.path.dirname(os.path.dirname(CURDIR))
 # ROOTDIR = f"{conf['ROOTDIR']}"    #/home/nb/repos/kultunaut/kultunaut-libs"
-WEBROOT = f"{ROOTDIR}/{conf['WEBROOT']}"
-TEMPLATES = f"{ROOTDIR}/{conf['TEMPLATES']}"
+WEBROOT = f"{CURDIR}/{conf['WEBROOT']}"
+TEMPLATES = f"{CURDIR}/{conf['TEMPLATES']}"
 
 
 # metaclass=lib.Singleton
@@ -47,8 +47,8 @@ class UI():
 
     async def createArrFolders(self):
         for arr in self.dbEvents:
-            if arr['AinfoNr'] == 7092924:
-                print (7092924)
+            if arr['AinfoNr'] == 19235727:
+                print ("JAWS")
             newFolder = f"{WEBROOT}/arr/{arr['AinfoNr']}"
             os.makedirs(newFolder,exist_ok=True)
             kjson = json.loads(arr['ekjson'])   #json.loads(arr['Kjson'])
@@ -125,5 +125,5 @@ async def main():
     await myUI.createArrFolders()
     await myUI.createIndex()
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+    # asyncio.run(main())
