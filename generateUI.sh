@@ -10,7 +10,7 @@ source $CURDIR/.venv/bin/activate
 /usr/bin/git pull
 .venv/bin/python3 UI_root.py
 
-# /usr/bin/git add .
-# /usr/bin/git commit -m "$timestamp commit"
-# /usr/bin/git push origin main
+/usr/bin/git add .
+/usr/bin/git commit -m "$timestamp commit"
+/usr/bin/git push origin main
 

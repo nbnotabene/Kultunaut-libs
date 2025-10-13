@@ -9,4 +9,8 @@ source $CURDIR/.venv/bin/activate
 /usr/bin/git pull
 $CURDIR/.venv/bin/python3 fetchKult.py
 
+/usr/bin/git add .
+/usr/bin/git commit -m "$timestamp commit"
+/usr/bin/git push origin main
+
 
