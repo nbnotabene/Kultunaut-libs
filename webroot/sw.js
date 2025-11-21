@@ -2,6 +2,23 @@
 const CACHE_NAME = 'svanekebio-cache-v1';
 // no cache   '/','/index.html',
 
+// ...existing code...
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    // Unregister this service worker
+    await self.registration.unregister();
+    // Clear caches
+    if ('caches' in self) {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map(name => caches.delete(name)));
+    }
+    // Optionally claim clients so pages reload without this SW
+    try { await self.clients.claim(); } catch(e) {}
+  })());
+});
+// ...existing code...
+
+/*
 window.addEventListener('load', function() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
@@ -25,7 +42,7 @@ window.addEventListener('load', function() {
     });
   }
 });
-
+*/
 
 
 // if ('serviceWorker' in navigator) {
