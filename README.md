@@ -1,5 +1,22 @@
 # Kultunaut libs
 
+crontab -e on nb@nb-miniPC
+35 20 * * * /mnt/sda3/nfs/repos/kultunaut/Kultunaut-libs/generateUI.sh >> /var/log/cronjob.log 2>&1
+15 16 * * 0 /mnt/sda3/nfs/repos/kultunaut/Kultunaut-libs/generateUI.sh >> /var/log/cronjob.log 2>&1
+35 03 * * * /mnt/sda3/nfs/repos/kultunaut/Kultunaut-libs/fetchKult.sh >> /var/log/cronjob.log 2>&1
+45 03 * * * /mnt/sda3/nfs/repos/kultunaut/Kultunaut-libs/generateUI.sh >> /var/log/cronjob.log 2>&1
+
+https://builder.statichost.eu/nbnotabene-kultunaut-libs
+
+https://github.com/nbnotabene/Kultunaut-libs
+
+Click on the **Add webhook** button.
+Enter https://builder.statichost.eu/YOUR_SITE_NAME in the payload URL field.
+Select application/json as the content type.
+Select Just the push event.
+Press Add webhook.
+
+
 TEST: python3 -m http.server
 LIVE: http://local.svanekebio.dk i MS Edge
 
