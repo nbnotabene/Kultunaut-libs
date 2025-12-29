@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel="manifest" href="../../manifest.json">
+  <link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Svaneke Bio - Svaneke Skole</title>  
+  <!--<link rel="stylesheet" href="../../css/normalize.css">-->
+  <link rel="stylesheet" href="../../css/header.css">
+  <link rel="stylesheet" href="../../css/overlay.css">
+  <link rel="stylesheet" href="../../css/basic.css">
+  
+
+<link rel="stylesheet" href="../../css/arr.css">
+
+  
+</head>
+
+<body>
+  <div class="container">
+    <header>
+	<div id="myNav" class="overlay">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="overlay-content">
+			<a href="../../">Svaneke Bio - Film oversigt</a>
+			<a href="../../pages/nyt.html">Svaneke Bio - <b>Sidste nyt - sidste nyt!</b></a>
+			<a href="../../pages/omBio.html">Om Svaneke Bio</a>
+			<a href="../../pages/medlem.html">
+				<span>
+					Bliv medlem og få fordele!
+					<img width="38" height="38" style="vertical-align:bottom" id="medlem_image" title="Bliv medlem"
+						src="../../img/megafon.png" class="infologos" />
+				</span>
+			</a>
+			<a target="_new" href="https://www.kultunaut.dk">
+				<span>
+					Kultunaut
+					<img width="38" height="38" style="vertical-align:bottom" id="kult_image" title="Kultunaut Local v. 2.3.5"
+						src="../../img/kultunaut.png" class="infologos" />
+					(Arrangements-database)
+				</span>
+			</a>
+			<a target="_new" href="https://www.facebook.com/Svaneke-Bio-1965202630369128/">
+				<span>
+					Facebook
+					<img width="38" height="38" style="vertical-align:bottom" alt="Svaneke Bio på Facebook"
+						src="../../img/facebook.png" class="infologos" />
+				</span>
+			</a>
+			<!--
+      <a href="../../pages/lyd.html" class="">
+        <span>
+          Om lydanlæget
+          <img width="38" height="38" style="vertical-align:bottom" id="megafon_image"
+            title="Lyt til din film - i Svaneke Bio!" src="../../img/megafon.png" class="infologos" />
+        </span>
+      </a>  
+      -->
+		</div>
+	</div>
+	<nav class="top-nav">
+		<div class="sub left" id="biologo">
+			<a href="../../">
+				<img src="../../img/biologo.png" alt="Svaneke Bio Logo" title="Svaneke Bio Logo" />
+			</a>
+		</div>
+		<div class="sub center" id="navmiddle">
+
+		</div>
+		<div class="sub right" id="navright">
+			<!--<span style="font-size:30px;cursor:pointer;vertical-align:bottom;" onclick="openNav()">&#9776;</span>-->
+			<i style="font-size:30px;cursor:pointer;vertical-align:bottom;" title="Bio Menu" onclick="openNav()"
+				class="material-icons">menu</i>
+		</div>
+	</nav>
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/sw.js').then(function (registration) {
+					console.log('Service Worker registered with scope:', registration.scope);
+				}, function (err) {
+					console.log('Service Worker registration failed:', err);
+				});
+			});
+		}
+		function closeNav () {
+			document.getElementById("myNav").style.width = "0%";
+		}
+
+		function openNav () {
+			document.getElementById("myNav").style.width = "100%";
+			window.onkeydown = function (event) {
+				if (event.keyCode == 27) {
+					console.log('escape pressed');
+					closeNav()
+				}
+			};
+		}
+	</script>
+</header>
+    <div id="content">
+      
+<div id="level1" class="arrcontainer">
+  <div class="arrsplititem">
+    <picture>
+      <source media="(min-width: 600px)" srcset="poster.jpg">
+      <img src="posterMini.jpg" alt="Svaneke Skole" />
+    </picture>
+  </div>
+  <div class="arrsplititem">
+    <!--<ul id="arrdetail" class="listing">
+      <li> 
+            </li>
+            <li>
+            </li>
+            </ul>
+    -->
+    <div id="level2" class="arrcontainer">
+      <div class="ctalist1">
+        <h1>Svaneke Skole</h1>
+        <p><span>Andet</span>
+          <span> - </span>
+          
+        </p>
+      </div>
+      <div class="ctalist2">
+        
+        <div class="cta">
+           man. d. 19/1 kl. 16:00
+          <!--<a href="index.html?arrnr=1001">man. d. 19/1 kl. 16:00</a>-->
+        </div>
+        
+      </div>
+    </div>
+
+    
+    <div>Hele denne uge bruger skolen FREM til at øve en kabaret forestilling</div>
+    
+    
+    <div></div>
+    
+    
+    <hr />
+    <div></div>
+    
+
+    
+    <hr/>
+    <p>
+      Her kan du se relevante links om <a target="_blank" href="https://www.google.com/search?q=Svaneke%20Skole+film">filmen</a>
+    </p>
+    <div class="share">
+      <h4>Del med andre!</h4>
+      <a onclick="window.open('https://www.kultunaut.dk/perl/share/type-nynaut/facebook?ArrNr=17715296', '_blank', 'scrollbars=yes,resizable=0,width=560,height=600,alwaysRaised=yes');return false"  target="_blank" href="https://www.kultunaut.dk/perl/share/type-nynaut/facebook?ArrNr=17715296"><span class="fab fa-facebook"></span> Facebook</a>
+  
+      <a onclick="window.open('https://www.kultunaut.dk/perl/share/type-nynaut/twitter?ArrNr=17715296', '_blank', 'scrollbars=yes,resizable=1,width=560,height=435,alwaysRaised=yes');return false" target="_blank"  href="https://www.kultunaut.dk/perl/share/type-nynaut/twitter?ArrNr=17715296"><span class="fab fa-twitter"></span> Twitter</a>
+  
+      <a  target="_blank" href="https://www.kultunaut.dk/perl/share/type-nynaut/googlecal?ArrNr=17715296"><span class="fa-stack" style="width: 1.7em;font-size: 0.5em;"><i class="far fa-calendar fa-stack-2x" style="margin-top:-0.13em;"></i><i class="fab fa-google fa-stack-1x"></i></span>
+   Google calendar</a>
+      <a title="ical"  href="https://www.kultunaut.dk/perl/share/type-nynaut/ical?ArrNr=17715296"><i class="far fa-calendar-alt"></i> ical</a>
+      <a target="_blank" href="https://www.kultunaut.dk/perl/share/type-nynaut/mail?ArrNr=17715296"><span class="far fa-envelope"></span> Email</a>
+  </div>
+
+  </div>
+</div>
+
+    </div>
+    <div id="footer">
+      
+        <h3>&copy; Copyright 2024 <a href="https://svanekebio.dk/">Svaneke Bio</a>.</h3>
+      
+    </div>
+  </div>
+  
+  <script src="../../sw.js"></script>  
+</body>
+
+</html>
