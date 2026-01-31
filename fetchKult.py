@@ -17,6 +17,6 @@ if __name__ == "__main__":
 
     # SKAL FJERNES
     asyncio.run(ev.fetch_from_kult())
-    # asyncio.run(ev.cacheToDBevents())
+    asyncio.run(ev.cacheToDBevents())
     ars = Arrangements()
     asyncio.run(ars.DBEventsToArrangs(forceUpdate=False))
