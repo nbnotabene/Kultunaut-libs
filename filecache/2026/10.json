@@ -1,23 +1,5 @@
 [
   {
-    "AinfoNr": "7105885",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "Begyndelser",
-    "ArrLangBeskriv": "",
-    "ArrNr": 19590485,
-    "ArrTidspunkt": "kl. 16:00",
-    "ArrUGenre": "Familiefilm",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7105885/plakat.jpg",
-    "Filmvurdering": "t.o.11",
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-03-01",
-    "Startdato": "2026-03-01",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
     "AinfoNr": "7106408",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
@@ -33,24 +15,6 @@
     "Playdk": null,
     "Slutdato": "2026-03-05",
     "Startdato": "2026-03-05",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
-    "AinfoNr": "7106408",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "No Other Choice",
-    "ArrLangBeskriv": "",
-    "ArrNr": 19692974,
-    "ArrTidspunkt": "kl. 19:45",
-    "ArrUGenre": "Thriller/Gyser",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106408/plakat.jpg",
-    "Filmvurdering": "t.o.15",
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-03-07",
-    "Startdato": "2026-03-07",
     "StedNavn": "Svaneke Bio"
   },
   {
@@ -270,7 +234,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": null,
+    "AinfoNr": "7106532",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Paradis (2026)",
@@ -278,7 +242,7 @@
     "ArrNr": 19692988,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106532/plakat.jpg",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
@@ -306,7 +270,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": null,
+    "AinfoNr": "7106532",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Paradis (2026)",
@@ -314,7 +278,7 @@
     "ArrNr": 19692990,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106532/plakat.jpg",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
@@ -324,7 +288,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": null,
+    "AinfoNr": "7106532",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Paradis (2026)",
@@ -332,7 +296,7 @@
     "ArrNr": 19692989,
     "ArrTidspunkt": "kl. 16:00",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106532/plakat.jpg",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
