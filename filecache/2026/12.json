@@ -1,5 +1,41 @@
 [
   {
+    "AinfoNr": "7106366",
+    "ArrBeskrivelse": "",
+    "ArrGenre": "Film",
+    "ArrKunstner": "Rental Family",
+    "ArrLangBeskriv": "",
+    "ArrNr": 19692978,
+    "ArrTidspunkt": "kl. 16:00",
+    "ArrUGenre": "Komedie/Romantik",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106366/plakat.jpg",
+    "Filmvurdering": "f.u.7",
+    "Nautanb": null,
+    "Nautanmeld": null,
+    "Playdk": null,
+    "Slutdato": "2026-03-15",
+    "Startdato": "2026-03-15",
+    "StedNavn": "Svaneke Bio"
+  },
+  {
+    "AinfoNr": null,
+    "ArrBeskrivelse": "Kim Laybourn præsenterer en surprisefilm for os Forestillingen varer ca. 2 time og 30 minutter",
+    "ArrGenre": "Film",
+    "ArrKunstner": "Surprisefilm!",
+    "ArrLangBeskriv": "",
+    "ArrNr": 19731846,
+    "ArrTidspunkt": "kl. 19:00",
+    "ArrUGenre": "Andre Film",
+    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "Filmvurdering": null,
+    "Nautanb": null,
+    "Nautanmeld": null,
+    "Playdk": null,
+    "Slutdato": "2026-03-15",
+    "Startdato": "2026-03-15",
+    "StedNavn": "Svaneke Bio"
+  },
+  {
     "AinfoNr": "7106169",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
@@ -144,6 +180,24 @@
     "StedNavn": "Svaneke Bio"
   },
   {
+    "AinfoNr": "7089090",
+    "ArrBeskrivelse": "Rick Gerner og Johanne Jahncke præsenterer filmen fra 2009 af Luca Guadagnini. Forestillingen varer ca. 1 time og 55 minutter (104 min + 10 min introduktion)",
+    "ArrGenre": "Film",
+    "ArrKunstner": "Io sono l'amore",
+    "ArrLangBeskriv": "",
+    "ArrNr": 19731857,
+    "ArrTidspunkt": "kl. 19:00",
+    "ArrUGenre": "Komedie/Romantik",
+    "BilledeUrl": "http://www.kultunaut.dk/images/user/TEAj-H8AAQEAABvhYY-aal36GJD5fX2jN68vTtU0QAAACA.jpg",
+    "Filmvurdering": "t.o.11",
+    "Nautanb": "5",
+    "Nautanmeld": "9736",
+    "Playdk": null,
+    "Slutdato": "2026-03-29",
+    "Startdato": "2026-03-29",
+    "StedNavn": "Svaneke Bio"
+  },
+  {
     "AinfoNr": "7106126",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
@@ -162,7 +216,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": null,
+    "AinfoNr": "7106532",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Paradis",
@@ -170,7 +224,7 @@
     "ArrNr": 19692988,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106532/plakat.jpg",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
@@ -198,7 +252,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": null,
+    "AinfoNr": "7106532",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Paradis",
@@ -206,7 +260,7 @@
     "ArrNr": 19692990,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106532/plakat.jpg",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
@@ -216,7 +270,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": null,
+    "AinfoNr": "7106532",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "Paradis",
@@ -224,7 +278,7 @@
     "ArrNr": 19692989,
     "ArrTidspunkt": "kl. 16:00",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106532/plakat.jpg",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
