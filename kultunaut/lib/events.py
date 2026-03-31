@@ -42,7 +42,7 @@ class Events(MutableMapping):
                     f"select * from kultevents where ArrNr={arrnr}"
                 )
                 # forceUpdate = False
-                await self._events[arrnr].dbUpsert(eventDbDict, forceUpdate=False)
+                await self._events[arrnr].dbUpsert(db_interface=self._db, eventDbDict=eventDbDict, forceUpdate=False)
 
     def __len__(self):
         len(self._events)
@@ -60,9 +60,27 @@ class Events(MutableMapping):
 
     def __setitem__(self, key, value: dict):
         if key == value["ArrNr"] and key not in self._events.keys():
-            E = Event(value, parent=self)
+            E = Event(value, db_interface=self._db, parent=self)
             # self._events.__setitem__(key, E)
             self._events[key] = E
+
+    async def get_locked_events_summary(self):
+        """Get summary of all locked events from database."""
+        results = await self._db.fetchDict("SELECT ArrNr, ArrKunstner, is_locked, manual_edit_timestamp FROM kultevents WHERE is_locked = TRUE ORDER BY ArrNr")
+        return results
+
+    async def get_manually_edited_events(self):
+        """Get all manually edited events from database."""
+        results = await self._db.fetchDict("SELECT ArrNr, ArrKunstner, is_manually_edited, manual_edit_timestamp FROM kultevents WHERE is_manually_edited = TRUE ORDER BY ArrNr")
+        return results
+
+    async def get_edit_history(self, arrnr=None):
+        """Get edit history. If arrnr provided, get history for specific event."""
+        if arrnr:
+            results = await self._db.fetchDict(f"SELECT * FROM kultevents_edit_history WHERE ArrNr = {arrnr} ORDER BY edited_at DESC")
+        else:
+            results = await self._db.fetchDict("SELECT * FROM kultevents_edit_history ORDER BY edited_at DESC LIMIT 100")
+        return results
 
     def print(self):
         for value in self._events.values():
