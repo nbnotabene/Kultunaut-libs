@@ -115,11 +115,10 @@ class UI:
 
 async def main():
     myUI = UI()
-    # await myUI.getEvents()
+    await myUI.getEvents()
     await myUI.pagesFromDB()
-    # await myUI.createArrFolders()
-    # await myUI.createIndex()
-
+    await myUI.createArrFolders()
+    await myUI.createIndex()
 
 if __name__ == "__main__":
     import asyncio
