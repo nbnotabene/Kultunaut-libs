@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS arrsdata (
     AinfoNr         BIGINT          NOT NULL,
     ArrGenre        VARCHAR(50)     NULL,
     ArrKunstner     VARCHAR(255)    NOT NULL,
+    ArrBeskrivelse  TEXT            NULL,
+    StedNavn        VARCHAR(100)    NULL,
     ArrLangBeskriv  TEXT            NULL,
     ArrUGenre       VARCHAR(100)    NULL,
     BilledeUrl      VARCHAR(500)    NULL,
@@ -17,8 +19,8 @@ CREATE TABLE IF NOT EXISTS arrsdata (
     Nautanb         TEXT            NULL,
     Nautanmeld      TEXT            NULL,
     Playdk          TEXT            NULL,
-    tmdb            LONGTEXT        NULL COMMENT 'TMDB API JSON blob',
-    kulthash        VARCHAR(32)     NULL COMMENT 'MD5 of source data, used for change detection',
+    tmdb            JSON        NULL COMMENT 'TMDB API JSON blob',
+    created_at      DATETIME        DEFAULT CURRENT_TIMESTAMP,
     updated_at      DATETIME        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (AinfoNr),
     INDEX idx_arrsdata_genre (ArrGenre),
@@ -30,9 +32,8 @@ CREATE TABLE IF NOT EXISTS eventsdata (
     ArrNr           BIGINT          NOT NULL,
     AinfoNr         BIGINT          NOT NULL,
     ArrStart        DATETIME        NOT NULL COMMENT 'Startdato + ArrTidspunkt combined',
-    ArrBeskrivelse  TEXT            NULL,
-    StedNavn        VARCHAR(100)    NULL,
     kulthash        VARCHAR(32)     NULL COMMENT 'MD5 of source data, used for change detection',
+    created_at      DATETIME        DEFAULT CURRENT_TIMESTAMP,
     updated_at      DATETIME        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     extra           JSON            NULL COMMENT 'Additional event-level data not in arrsdata',
     PRIMARY KEY (ArrNr),
@@ -42,3 +43,24 @@ CREATE TABLE IF NOT EXISTS eventsdata (
         FOREIGN KEY (AinfoNr) REFERENCES arrsdata (AinfoNr)
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE OR REPLACE VIEW arrevent AS
+    SELECT
+        e.ArrNr,
+        e.ArrStart,
+        e.AinfoNr,
+        e.extra,
+        a.ArrGenre,
+        a.ArrKunstner,
+        a.ArrBeskrivelse,
+        a.StedNavn,
+        a.ArrLangBeskriv,
+        a.ArrUGenre,
+        a.BilledeUrl,
+        a.Filmvurdering,
+        a.Nautanb,
+        a.Nautanmeld,
+        a.Playdk
+
+    FROM eventsdata e
+    JOIN arrsdata a USING (AinfoNr);
