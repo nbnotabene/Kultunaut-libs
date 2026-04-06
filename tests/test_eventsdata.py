@@ -7,8 +7,6 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from datetime import datetime
 from kultunaut.lib.eventsdata import EventsData, parse_time, calc_kulthash, esc
 
-pytestmark = pytest.mark.asyncio
-
 
 class MockDB:
     """Mock database interface for testing"""
