@@ -88,7 +88,14 @@ async def migrate():
         Nautanmeld     = j.get("Nautanmeld")
         Playdk         = j.get("Playdk")
 
-        tmdb = arr["tmdb"] if arr else None
+        # Validate TMDB JSON if present
+        tmdb = None
+        if arr and arr.get("tmdb"):
+            try:
+                json.loads(arr["tmdb"])  # Validate it's valid JSON
+                tmdb = arr["tmdb"]
+            except (json.JSONDecodeError, TypeError):
+                print(f"  WARN arrsdata {ainfo}: invalid TMDB JSON, will skip tmdb field")
 
         stmt = f"""INSERT INTO arrsdata
             (AinfoNr, ArrGenre, ArrKunstner, ArrBeskrivelse, StedNavn,
@@ -101,12 +108,12 @@ async def migrate():
                 {esc(Nautanb)}, {esc(Nautanmeld)}, {esc(Playdk)},
                 {esc(tmdb)}
             )"""
-        result = await db.execute(stmt)
-        if result > 0:
+        try:
+            await db.execute(stmt)
             print(f"  INSERT arrsdata {ainfo}: {ArrKunstner}")
             inserted_arrs += 1
-        else:
-            # db.execute() already printed the error, just count it
+        except Exception:
+            # db.execute() catches errors and prints them
             skipped_arrs += 1
 
     print(f"arrsdata: {inserted_arrs} inserted, {skipped_arrs} skipped/failed")
@@ -145,11 +152,11 @@ async def migrate():
 
         stmt = f"""INSERT INTO eventsdata (ArrNr, AinfoNr, ArrStart, kulthash)
             VALUES ({ArrNr}, {AinfoNr}, '{arr_start.strftime('%Y-%m-%d %H:%M:%S')}', {esc(kulthash)})"""
-        result = await db.execute(stmt)
-        if result > 0:
+        try:
+            await db.execute(stmt)
             inserted_evs += 1
-        else:
-            # db.execute() already printed the error, just count it
+        except Exception:
+            # db.execute() catches errors and prints them
             skipped_evs += 1
 
     print(f"eventsdata: {inserted_evs} inserted, {skipped_evs} skipped/failed")
