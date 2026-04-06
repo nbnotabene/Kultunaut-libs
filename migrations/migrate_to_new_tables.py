@@ -31,9 +31,6 @@ def esc(val):
 
 async def migrate():
     db = MariaDBInterface()
-    if not db.testConn:
-        print("DB connection failed")
-        return
 
     # ------------------------------------------------------------------ #
     # 1. Load all data from kultevents
@@ -105,11 +102,11 @@ async def migrate():
                 {esc(tmdb)}
             )"""
         result = await db.execute(stmt)
-        if result:
+        if result > 0:
             print(f"  INSERT arrsdata {ainfo}: {ArrKunstner}")
             inserted_arrs += 1
         else:
-            print(f"  FAILED arrsdata {ainfo}: {ArrKunstner}")
+            # db.execute() already printed the error, just count it
             skipped_arrs += 1
 
     print(f"arrsdata: {inserted_arrs} inserted, {skipped_arrs} skipped/failed")
@@ -149,10 +146,10 @@ async def migrate():
         stmt = f"""INSERT INTO eventsdata (ArrNr, AinfoNr, ArrStart, kulthash)
             VALUES ({ArrNr}, {AinfoNr}, '{arr_start.strftime('%Y-%m-%d %H:%M:%S')}', {esc(kulthash)})"""
         result = await db.execute(stmt)
-        if result:
+        if result > 0:
             inserted_evs += 1
         else:
-            print(f"  FAILED event {ArrNr}")
+            # db.execute() already printed the error, just count it
             skipped_evs += 1
 
     print(f"eventsdata: {inserted_evs} inserted, {skipped_evs} skipped/failed")
