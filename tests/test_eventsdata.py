@@ -2,9 +2,7 @@
 Tests for EventsData sync functionality
 """
 import pytest
-import json
-from unittest.mock import AsyncMock, patch, MagicMock
-from datetime import datetime
+from unittest.mock import AsyncMock, patch
 from kultunaut.lib.eventsdata import EventsData, parse_time, calc_kulthash, esc
 
 

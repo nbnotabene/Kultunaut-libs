@@ -9,7 +9,6 @@ import asyncio
 import json
 import requests
 import hashlib
-import re
 from datetime import datetime
 from kultunaut.lib import lib
 from kultunaut.lib.MariaDBInterface import MariaDBInterface
@@ -224,7 +223,7 @@ class EventsData:
             ainfo = json_event.get("AinfoNr")
 
             if not arrnr:
-                print(f"  SKIP event: missing ArrNr")
+                print("  SKIP event: missing ArrNr")
                 skipped += 1
                 continue
 
