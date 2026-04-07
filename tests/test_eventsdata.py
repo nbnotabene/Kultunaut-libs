@@ -139,6 +139,8 @@ class TestEventsSyncArrangements:
             ainfos = {7106037: sample_json_event}
             await ed._sync_arrangements(ainfos, forceUpdate=False)
 
+            breakpoint()  # Debugger stops here
+
             # Verify TMDB was called
             mock_tmdb.assert_called_once()
 

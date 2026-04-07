@@ -40,6 +40,17 @@ poetry run pytest
 poetry add request
 poetry new --name kultunaut.bio kultunaut-bio
 
+poetry run pytest tests/test_eventsdata.py -v -s --pdb
+Stops at the first failure (or breakpoint) and show (Pdb) prompt
+Let you type commands like:
+p ed — print the ed variable
+p ainfos — print test data
+n — next line
+s — step into function
+c — continue
+q — quit debugger
+
+
 select CONCAT((SELECT REPLACE(GROUP_CONCAT(COLUMN_NAME), 'ainfonr', '') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'kultevents' AND TABLE_SCHEMA = 'bio'));
 
 create view curEvents as
