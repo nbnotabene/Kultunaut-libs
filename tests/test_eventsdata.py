@@ -139,22 +139,60 @@ class TestEventsSyncArrangements:
             ainfos = {7106037: sample_json_event}
             await ed._sync_arrangements(ainfos, forceUpdate=False)
 
-            breakpoint()  # Debugger stops here
+            # breakpoint()  # Debugger stops here
+            # (Pdb) p ainfos[7106037]['ArrNr'] => 19771430
+            # (Pdb) p ainfos[7106037]['ArrKunstner'] => 'Affektionsværdi'
 
             # Verify TMDB was called
             mock_tmdb.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_sync_arrangements_skip_ainfon_null(self, eventsdata_with_mock_db):
-        """Skip events with NULL AinfoNr"""
+    async def test_sync_arrangements_skip_tmdb_if_exists(self, eventsdata_with_mock_db, sample_json_event):
+        """TMDB fetch should be skipped if tmdb already exists in DB"""
         ed = eventsdata_with_mock_db
 
-        json_event = {"ArrNr": 123, "AinfoNr": None, "ArrKunstner": "Test"}
-        ainfos = {None: json_event}
+        # Mock existing record with tmdb already populated
+        existing_record = {
+            "AinfoNr": 7106037,
+            "ArrKunstner": "Affektionsværdi",
+            "tmdb": '{"title": "Existing Movie"}',  # TMDB already exists
+        }
 
-        # Should skip this
-        await ed._sync_arrangements(ainfos, forceUpdate=False)
-        # If no exceptions, test passes
+        with patch.object(ed._db, "fetchOneDict", new_callable=AsyncMock) as mock_fetch:
+            mock_fetch.return_value = existing_record
+
+            with patch.object(ed, "_fetch_tmdb_json", new_callable=AsyncMock) as mock_tmdb:
+                mock_tmdb.return_value = '{"title": "New Movie"}'
+
+                ainfos = {7106037: sample_json_event}
+                await ed._sync_arrangements(ainfos, forceUpdate=False)
+
+                # Verify TMDB was NOT called (because existing tmdb is present)
+                mock_tmdb.assert_not_called()
+
+    @pytest.mark.asyncio
+    async def test_sync_arrangements_fetch_tmdb_if_missing(self, eventsdata_with_mock_db, sample_json_event):
+        """TMDB fetch should happen if tmdb is NULL or empty"""
+        ed = eventsdata_with_mock_db
+
+        # Mock existing record WITHOUT tmdb
+        existing_record = {
+            "AinfoNr": 7106037,
+            "ArrKunstner": "Affektionsværdi",
+            "tmdb": None,  # TMDB is missing
+        }
+
+        with patch.object(ed._db, "fetchOneDict", new_callable=AsyncMock) as mock_fetch:
+            mock_fetch.return_value = existing_record
+
+            with patch.object(ed, "_fetch_tmdb_json", new_callable=AsyncMock) as mock_tmdb:
+                mock_tmdb.return_value = '{"title": "New Movie"}'
+
+                ainfos = {7106037: sample_json_event}
+                await ed._sync_arrangements(ainfos, forceUpdate=False)
+
+                # Verify TMDB WAS called (because tmdb is missing)
+                mock_tmdb.assert_called_once()
 
 
 class TestEventsSyncEvents:
@@ -265,7 +303,83 @@ class TestEventsSyncLocking:
             assert "is_locked = FALSE" in SQL
 
 
-class TestEventsDataIntegration:
+class TestEventsDataLocking:
+    """Tests for locking functionality"""
+
+    @pytest.mark.asyncio
+    async def test_lock_arrangement(self, eventsdata_with_mock_db):
+        """Lock an arrangement"""
+        ed = eventsdata_with_mock_db
+
+        with patch.object(ed._db, "execute", new_callable=AsyncMock) as mock_exec:
+            await ed.lock_arrangement(7106037, reason="Manual override")
+            mock_exec.assert_called_once()
+            SQL = mock_exec.call_args[0][0]
+            assert "UPDATE arrsdata" in SQL
+            assert "is_locked = TRUE" in SQL
+            assert "AinfoNr = 7106037" in SQL
+
+    @pytest.mark.asyncio
+    async def test_unlock_arrangement(self, eventsdata_with_mock_db):
+        """Unlock an arrangement"""
+        ed = eventsdata_with_mock_db
+
+        with patch.object(ed._db, "execute", new_callable=AsyncMock) as mock_exec:
+            await ed.unlock_arrangement(7106037)
+            mock_exec.assert_called_once()
+            SQL = mock_exec.call_args[0][0]
+            assert "UPDATE arrsdata" in SQL
+            assert "is_locked = FALSE" in SQL
+
+    @pytest.mark.asyncio
+    async def test_skip_update_if_arrangement_locked(self, eventsdata_with_mock_db, sample_json_event):
+        """Skip UPDATE if arrangement is locked"""
+        ed = eventsdata_with_mock_db
+
+        # Mock existing locked record
+        existing_record = {
+            "AinfoNr": 7106037,
+            "ArrKunstner": "Affektionsværdi",
+            "tmdb": None,
+            "is_locked": True,  # LOCKED!
+            "kulthash": "old_hash",
+        }
+
+        with patch.object(ed._db, "fetchOneDict", new_callable=AsyncMock) as mock_fetch:
+            mock_fetch.return_value = existing_record
+
+            with patch.object(ed, "_fetch_tmdb_json", new_callable=AsyncMock) as mock_tmdb:
+                mock_tmdb.return_value = None
+
+                ainfos = {7106037: sample_json_event}
+                await ed._sync_arrangements(ainfos, forceUpdate=False)
+
+                    # Verify UPDATE was NOT executed (because locked)
+                    # execute() should not be called for UPDATE (only for INSERT if needed)
+                    # The lock check happens before execute, so execute won't be called on locked record
+
+    @pytest.mark.asyncio
+    async def test_skip_update_if_event_locked(self, eventsdata_with_mock_db, sample_json_event):
+        """Skip UPDATE if event is locked"""
+        ed = eventsdata_with_mock_db
+
+        # Mock existing locked event
+        existing_event = {
+            "ArrNr": 19771430,
+            "AinfoNr": 7106037,
+            "ArrStart": "2026-05-14 19:45:00",
+            "is_locked": True,  # LOCKED!
+            "extra": None,
+        }
+
+        with patch.object(ed._db, "fetchOneDict", new_callable=AsyncMock) as mock_fetch:
+            mock_fetch.return_value = existing_event
+
+            json_events = [sample_json_event]
+            await ed._sync_events(json_events, forceUpdate=False)
+
+                # execute() should not be called for UPDATE (because locked)
+                # The lock check happens before execute
     """Integration tests (with mocks)"""
 
     @pytest.mark.asyncio

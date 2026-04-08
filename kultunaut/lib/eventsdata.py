@@ -80,6 +80,7 @@ class EventsData:
     async def sync(self, forceUpdate=False):
         """Main entry point: fetch cache → parse → enrich TMDB → insert both tables."""
         print("\n=== EventsData Sync ===\n")
+        self._kultfilm_cache = {}  # Clear cache at start of sync   
 
         # 1. Fetch JSON cache
         json_events = await jsoncache.fetch_jsoncache()
@@ -122,7 +123,11 @@ class EventsData:
         skipped = 0
 
         for ainfo, json_event in ainfos.items():
-            ainfo = int(ainfo) if isinstance(ainfo, str) else ainfo
+            try:
+                ainfo = int(ainfo)
+            except (ValueError, TypeError):
+                print(f"  SKIP arrsdata: Invalid AinfoNr '{ainfo}'")
+                continue
 
             try:
                 # Extract arrangement-level fields from JSON
@@ -141,17 +146,21 @@ class EventsData:
                     "Playdk": json_event.get("Playdk"),
                 }
 
-                # Fetch TMDB data
-                tmdb_json = await self._fetch_tmdb_json(ainfo, json_event)
+                # Check existing record FIRST to see if TMDB already exists
+                existing = await self._db.fetchOneDict(
+                    f"SELECT * FROM arrsdata WHERE AinfoNr = {ainfo}"
+                )
+
+                # Only fetch TMDB if it's missing (empty, null, or new record)
+                if existing is None or not existing.get("tmdb"):
+                    tmdb_json = await self._fetch_tmdb_json(ainfo, json_event)
+                else:
+                    # Keep existing TMDB
+                    tmdb_json = existing.get("tmdb")
 
                 # Calculate hash
                 hash_data = {**arr_row}
                 kulthash = calc_kulthash(hash_data)
-
-                # Check existing record
-                existing = await self._db.fetchOneDict(
-                    f"SELECT * FROM arrsdata WHERE AinfoNr = {ainfo}"
-                )
 
                 # Determine action
                 if existing is None:
@@ -159,7 +168,7 @@ class EventsData:
                     stmt = f"""INSERT INTO arrsdata
                         (AinfoNr, ArrGenre, ArrKunstner, ArrBeskrivelse, StedNavn,
                          ArrLangBeskriv, ArrUGenre, BilledeUrl, Filmvurdering,
-                         Nautanb, Nautanmeld, Playdk, tmdb)
+                         Nautanb, Nautanmeld, Playdk, tmdb, kulthash)
                         VALUES (
                             {ainfo},
                             {esc(arr_row["ArrGenre"])}, {esc(arr_row["ArrKunstner"])},
@@ -167,7 +176,7 @@ class EventsData:
                             {esc(arr_row["ArrLangBeskriv"])}, {esc(arr_row["ArrUGenre"])},
                             {esc(arr_row["BilledeUrl"])}, {esc(arr_row["Filmvurdering"])},
                             {esc(arr_row["Nautanb"])}, {esc(arr_row["Nautanmeld"])},
-                            {esc(arr_row["Playdk"])}, {esc(tmdb_json)}
+                            {esc(arr_row["Playdk"])}, {esc(tmdb_json)}, {esc(kulthash)}
                         )"""
                     try:
                         await self._db.execute(stmt)
@@ -178,28 +187,34 @@ class EventsData:
                         skipped += 1
 
                 elif forceUpdate or (kulthash != existing.get("kulthash")):
-                    # UPDATE changed
-                    stmt = f"""UPDATE arrsdata
-                        SET ArrGenre = {esc(arr_row["ArrGenre"])},
-                            ArrKunstner = {esc(arr_row["ArrKunstner"])},
-                            ArrBeskrivelse = {esc(arr_row["ArrBeskrivelse"])},
-                            StedNavn = {esc(arr_row["StedNavn"])},
-                            ArrLangBeskriv = {esc(arr_row["ArrLangBeskriv"])},
-                            ArrUGenre = {esc(arr_row["ArrUGenre"])},
-                            BilledeUrl = {esc(arr_row["BilledeUrl"])},
-                            Filmvurdering = {esc(arr_row["Filmvurdering"])},
-                            Nautanb = {esc(arr_row["Nautanb"])},
-                            Nautanmeld = {esc(arr_row["Nautanmeld"])},
-                            Playdk = {esc(arr_row["Playdk"])},
-                            tmdb = {esc(tmdb_json)}
-                        WHERE AinfoNr = {ainfo}"""
-                    try:
-                        await self._db.execute(stmt)
-                        print(f"  UPDATE arrsdata {ainfo}: {arr_row['ArrKunstner']}")
-                        updated += 1
-                    except Exception as e:
-                        print(f"  FAILED UPDATE arrsdata {ainfo}: {e}")
+                    # Check if locked before updating
+                    if existing.get("is_locked"):
+                        print(f"  LOCKED arrsdata {ainfo}: {arr_row['ArrKunstner']} (skipping update)")
                         skipped += 1
+                    else:
+                        # UPDATE changed
+                        stmt = f"""UPDATE arrsdata
+                            SET ArrGenre = {esc(arr_row["ArrGenre"])},
+                                ArrKunstner = {esc(arr_row["ArrKunstner"])},
+                                ArrBeskrivelse = {esc(arr_row["ArrBeskrivelse"])},
+                                StedNavn = {esc(arr_row["StedNavn"])},
+                                ArrLangBeskriv = {esc(arr_row["ArrLangBeskriv"])},
+                                ArrUGenre = {esc(arr_row["ArrUGenre"])},
+                                BilledeUrl = {esc(arr_row["BilledeUrl"])},
+                                Filmvurdering = {esc(arr_row["Filmvurdering"])},
+                                Nautanb = {esc(arr_row["Nautanb"])},
+                                Nautanmeld = {esc(arr_row["Nautanmeld"])},
+                                Playdk = {esc(arr_row["Playdk"])},
+                                tmdb = {esc(tmdb_json)},
+                                kulthash = {esc(kulthash)}
+                            WHERE AinfoNr = {ainfo}"""
+                        try:
+                            await self._db.execute(stmt)
+                            print(f"  UPDATE arrsdata {ainfo}: {arr_row['ArrKunstner']}")
+                            updated += 1
+                        except Exception as e:
+                            print(f"  FAILED UPDATE arrsdata {ainfo}: {e}")
+                            skipped += 1
 
                 else:
                     # No change
@@ -212,23 +227,24 @@ class EventsData:
         print(f"arrsdata: {inserted} inserted, {updated} updated, {skipped} skipped/failed")
 
     async def _sync_events(self, json_events, forceUpdate=False):
-        """Parse event fields (with combined ArrStart) → eventsdata INSERT/UPDATE."""
+        """Parse event fields (with combined ArrStart) → eventsdata INSERT/UPDATE.
+
+        Only UPDATE if ArrStart, AinfoNr, or extra changed (not kulthash-based).
+        """
         inserted = 0
         updated = 0
         skipped = 0
         fk_errors = 0
 
         for json_event in json_events:
-            arrnr = json_event.get("ArrNr")
-            ainfo = json_event.get("AinfoNr")
-
-            if not arrnr:
-                print("  SKIP event: missing ArrNr")
+            try:
+                arrnr = int(json_event.get("ArrNr"))
+                ainfo = int(json_event.get("AinfoNr")) if json_event.get("AinfoNr") is not None else None
+            except (ValueError, TypeError):
+                print("  SKIP event: missing or invalid ArrNr/AinfoNr")
                 skipped += 1
                 continue
 
-            if ainfo is None:
-                print(f"  SKIP event {arrnr}: AinfoNr is NULL")
                 skipped += 1
                 continue
 
@@ -253,29 +269,28 @@ class EventsData:
                     skipped += 1
                     continue
 
-                # Calculate hash
-                hash_data = {
-                    "ArrNr": arrnr,
-                    "AinfoNr": ainfo,
-                    "Startdato": startdato,
-                    "ArrTidspunkt": tidspunkt,
+                # Extract extra (event-specific data) as JSON
+                # Can include fields not in arrsdata, user edits, etc.
+                extra_data = {
+                    # Add any event-level fields here if needed
+                    # For now, keep it empty but can be populated later
                 }
-                kulthash = calc_kulthash(hash_data)
+                extra_json = json.dumps(extra_data, ensure_ascii=False) if extra_data else None
 
                 # Check existing
                 existing = await self._db.fetchOneDict(
                     f"SELECT * FROM eventsdata WHERE ArrNr = {arrnr}"
                 )
 
-                # Determine action
+                # Determine action: only UPDATE if core fields changed
                 if existing is None:
                     # INSERT new
                     stmt = f"""INSERT INTO eventsdata
-                        (ArrNr, AinfoNr, ArrStart, kulthash)
+                        (ArrNr, AinfoNr, ArrStart, extra)
                         VALUES (
                             {arrnr}, {ainfo},
-                            '{arr_start.strftime('%Y-%m-%d %H:%M:%S')}',
-                            {esc(kulthash)}
+                            '{arr_start.strftime('%Y-%m-%d %H:%M')}',
+                            {esc(extra_json)}
                         )"""
                     try:
                         await self._db.execute(stmt)
@@ -289,18 +304,28 @@ class EventsData:
                             print(f"  FAILED INSERT event {arrnr}: {e}")
                             skipped += 1
 
-                elif forceUpdate or (kulthash != existing.get("kulthash")):
-                    # UPDATE changed
-                    stmt = f"""UPDATE eventsdata
-                        SET ArrStart = '{arr_start.strftime('%Y-%m-%d %H:%M:%S')}',
-                            kulthash = {esc(kulthash)}
-                        WHERE ArrNr = {arrnr}"""
-                    try:
-                        await self._db.execute(stmt)
-                        updated += 1
-                    except Exception as e:
-                        print(f"  FAILED UPDATE event {arrnr}: {e}")
+                elif forceUpdate or (
+                    arr_start_str != (existing.get("ArrStart").strftime('%Y-%m-%d %H:%M') if hasattr(existing.get("ArrStart"), 'strftime') else existing.get("ArrStart")) or
+                    ainfo != existing.get("AinfoNr") or
+                    extra_json != existing.get("extra")
+                ):
+                    # Check if locked before updating
+                    if existing.get("is_locked"):
+                        print(f"  LOCKED event {arrnr} (skipping update)")
                         skipped += 1
+                    else:
+                        # UPDATE changed (if any of the core fields differ)
+                        stmt = f"""UPDATE eventsdata
+                            SET ArrStart = '{arr_start.strftime('%Y-%m-%d %H:%M')}',
+                                AinfoNr = {ainfo},
+                                extra = {esc(extra_json)}
+                            WHERE ArrNr = {arrnr}"""
+                        try:
+                            await self._db.execute(stmt)
+                            updated += 1
+                        except Exception as e:
+                            print(f"  FAILED UPDATE event {arrnr}: {e}")
+                            skipped += 1
 
                 else:
                     # No change
@@ -456,6 +481,22 @@ class EventsData:
     async def get_locked_events(self):
         """Query all locked events."""
         return await self._db.fetchDict("SELECT ArrNr, ArrStart FROM eventsdata WHERE is_locked = TRUE")
+
+    async def lock_arrangement(self, ainfo, reason=""):
+        """Lock arrangement to prevent accidental overwrites during sync."""
+        stmt = f"UPDATE arrsdata SET is_locked = TRUE WHERE AinfoNr = {ainfo}"
+        await self._db.execute(stmt)
+        print(f"LOCKED arrangement {ainfo}" + (f": {reason}" if reason else ""))
+
+    async def unlock_arrangement(self, ainfo):
+        """Unlock arrangement to allow sync overwrites."""
+        stmt = f"UPDATE arrsdata SET is_locked = FALSE WHERE AinfoNr = {ainfo}"
+        await self._db.execute(stmt)
+        print(f"UNLOCKED arrangement {ainfo}")
+
+    async def get_locked_arrangements(self):
+        """Query all locked arrangements."""
+        return await self._db.fetchDict("SELECT AinfoNr, ArrKunstner FROM arrsdata WHERE is_locked = TRUE")
 
 
 async def main():
