@@ -398,3 +398,102 @@ class TestEventsDataLocking:
 
                 # Verify jsoncache was called
                 mock_cache.assert_called_once()
+
+
+class TestAinfoNrNormalization:
+    """Tests for AinfoNr normalization in sync()"""
+
+    @pytest.mark.asyncio
+    async def test_ainfonr_none_set_to_arrnr(self, eventsdata_with_mock_db):
+        """AinfoNr=None → set to ArrNr before processing"""
+        ed = eventsdata_with_mock_db
+
+        event = {
+            "ArrNr": 999,
+            "AinfoNr": None,
+            "Startdato": "2026-05-14",
+            "ArrTidspunkt": "kl. 19:45",
+            "ArrGenre": "Film",
+            "ArrKunstner": "Test",
+            "StedNavn": "Svaneke Bio",
+        }
+
+        with patch("kultunaut.lib.eventsdata.jsoncache.fetch_jsoncache", new_callable=AsyncMock) as mock_cache:
+            mock_cache.return_value = [event]
+
+            with patch.object(ed, "_fetch_tmdb_json", new_callable=AsyncMock) as mock_tmdb:
+                mock_tmdb.return_value = None
+
+                await ed.sync()
+
+                # After normalization AinfoNr should equal ArrNr
+                assert event["AinfoNr"] == event["ArrNr"]
+
+    @pytest.mark.asyncio
+    async def test_ainfonr_missing_set_to_arrnr(self, eventsdata_with_mock_db):
+        """AinfoNr key absent → set to ArrNr before processing"""
+        ed = eventsdata_with_mock_db
+
+        event = {
+            "ArrNr": 888,
+            # AinfoNr intentionally omitted
+            "Startdato": "2026-05-14",
+            "ArrTidspunkt": "kl. 19:45",
+            "ArrGenre": "Film",
+            "ArrKunstner": "Test",
+            "StedNavn": "Svaneke Bio",
+        }
+
+        with patch("kultunaut.lib.eventsdata.jsoncache.fetch_jsoncache", new_callable=AsyncMock) as mock_cache:
+            mock_cache.return_value = [event]
+
+            with patch.object(ed, "_fetch_tmdb_json", new_callable=AsyncMock) as mock_tmdb:
+                mock_tmdb.return_value = None
+
+                await ed.sync()
+
+                assert event["AinfoNr"] == 888
+
+    @pytest.mark.asyncio
+    async def test_ainfonr_present_unchanged(self, eventsdata_with_mock_db, sample_json_event):
+        """AinfoNr already set → not overwritten"""
+        ed = eventsdata_with_mock_db
+
+        with patch("kultunaut.lib.eventsdata.jsoncache.fetch_jsoncache", new_callable=AsyncMock) as mock_cache:
+            mock_cache.return_value = [sample_json_event]
+
+            with patch.object(ed, "_fetch_tmdb_json", new_callable=AsyncMock) as mock_tmdb:
+                mock_tmdb.return_value = None
+
+                await ed.sync()
+
+                assert sample_json_event["AinfoNr"] == "7106037"
+
+    @pytest.mark.asyncio
+    async def test_ainfonr_equals_arrnr_tmdb_is_none(self, eventsdata_with_mock_db):
+        """Singleton event (AinfoNr == ArrNr after normalization) → tmdb stays None"""
+        ed = eventsdata_with_mock_db
+
+        event = {
+            "ArrNr": 777,
+            "AinfoNr": None,
+            "Startdato": "2026-05-14",
+            "ArrTidspunkt": "kl. 19:45",
+            "ArrGenre": "Film",
+            "ArrKunstner": "Singleton",
+            "StedNavn": "Svaneke Bio",
+        }
+
+        with patch("kultunaut.lib.eventsdata.jsoncache.fetch_jsoncache", new_callable=AsyncMock) as mock_cache:
+            mock_cache.return_value = [event]
+
+            # _fetch_tmdb_json is NOT patched — let it run the real singleton check
+            with patch.object(ed, "_fetch_kultfilm", new_callable=AsyncMock) as mock_kf:
+                mock_kf.return_value = None  # Should never be called for singleton
+
+                await ed.sync()
+
+                # Normalization sets AinfoNr = ArrNr
+                assert event["AinfoNr"] == 777
+                # kultfilm API should not be called for singleton
+                mock_kf.assert_not_called()

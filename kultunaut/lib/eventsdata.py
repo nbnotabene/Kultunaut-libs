@@ -84,6 +84,10 @@ class EventsData:
 
         # 1. Fetch JSON cache
         json_events = await jsoncache.fetch_jsoncache()
+        # Normalize: set AinfoNr = ArrNr when AinfoNr is missing
+        for e in json_events:
+            if not e.get("AinfoNr"):
+                e["AinfoNr"] = e.get("ArrNr")
         print(f"Loaded {len(json_events)} events from cache")
 
         if not json_events:
@@ -239,14 +243,15 @@ class EventsData:
         for json_event in json_events:
             try:
                 arrnr = int(json_event.get("ArrNr"))
-                ainfo = int(json_event.get("AinfoNr")) if json_event.get("AinfoNr") is not None else None
             except (ValueError, TypeError):
-                print("  SKIP event: missing or invalid ArrNr/AinfoNr")
+                print("  SKIP event: missing or invalid ArrNr")
                 skipped += 1
                 continue
 
-                skipped += 1
-                continue
+            try:
+                ainfo = int(json_event.get("AinfoNr") or 0) or arrnr
+            except (ValueError, TypeError):
+                ainfo = arrnr
 
             try:
                 # Parse ArrStart = Startdato + ArrTidspunkt
@@ -306,7 +311,7 @@ class EventsData:
 
                 elif forceUpdate or (
                     arr_start_str != (existing.get("ArrStart").strftime('%Y-%m-%d %H:%M') if hasattr(existing.get("ArrStart"), 'strftime') else existing.get("ArrStart")) or
-                    ainfo != existing.get("AinfoNr") or
+                    ainfo != int(existing.get("AinfoNr") or 0) or
                     extra_json != existing.get("extra")
                 ):
                     # Check if locked before updating
