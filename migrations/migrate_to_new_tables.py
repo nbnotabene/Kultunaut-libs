@@ -167,10 +167,10 @@ async def migrate():
     print("\n--- Verification ---")
     r1 = await db.fetchall("SELECT COUNT(*) FROM arrsdata")
     r2 = await db.fetchall("SELECT COUNT(*) FROM eventsdata")
-    r3 = await db.fetchall("SELECT COUNT(*) FROM arrevent")
+    r3 = await db.fetchall("SELECT COUNT(*) FROM eventsArr")
     print(f"arrsdata rows:  {r1[0][0]}")
     print(f"eventsdata rows: {r2[0][0]}")
-    print(f"arrevent (view) rows: {r3[0][0]}")
+    print(f"eventsArr (view) rows: {r3[0][0]}")
 
 
 if __name__ == "__main__":
