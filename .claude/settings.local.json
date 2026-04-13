@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(poetry run:*)"
+      "Bash(poetry run:*)",
+      "Bash(grep -r \"WS=\" /mnt/miniPC1/repos/kultunaut/Kultunaut-libs/.env*)",
+      "Bash(mysql -h 192.168.1.71 -P 3306 -u nb -pbulder bio)",
+      "Bash(mysql -h 192.168.1.71 -P 3306 -u nb -pbulder bio -e \"SHOW FULL TABLES WHERE Table_type = 'VIEW'; SELECT COUNT\\(*\\) AS eventsArr_rows FROM eventsArr;\")",
+      "Bash(mysql -h 192.168.1.71 -P 3306 -u nb -pbulder bio -e \"SELECT COUNT\\(*\\) AS eventsArr_rows FROM eventsArr;\")"
     ]
   }
 }

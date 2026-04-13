@@ -40,4 +40,6 @@ CREATE OR REPLACE VIEW eventsArr AS
         a.is_locked         AS arr_is_locked
 
     FROM eventsdata e
-    LEFT OUTER JOIN arrsdata a ON e.AinfoNr = a.AinfoNr;
+    LEFT OUTER JOIN arrsdata a ON e.AinfoNr = a.AinfoNr
+    WHERE e.ArrStart BETWEEN DATE_SUB(NOW(), INTERVAL 3 HOUR) AND DATE_ADD(NOW(), INTERVAL 6 WEEK)
+    order by e.ArrStart DESC;
