@@ -32,6 +32,7 @@ class Event:
             + " "
             + self._event["ArrTidspunkt"]
         )
+        self._event["startformat"] = self._event["Startformat"] 
 
         #AinfoNr
         if self._event["AinfoNr"] is None:

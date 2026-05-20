@@ -60,7 +60,7 @@ class UI:
 
             startArr = []
             starterA = arr["arrstarter"].split(",")
-            startformatA = arr["startformat"].split(",")
+            startformatA = arr["startformat"].split(",")            
             # arrNrA = arr['arrnums'].split(',')
             for i, eventnr in enumerate(arr["arrnums"].split(",")):
                 # startArr.append([int(eventnr), starterA[i], startformatA[i],'00000000'])
