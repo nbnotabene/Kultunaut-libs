@@ -5,24 +5,6 @@
     "ArrGenre": "Film",
     "ArrKunstner": "Manon og kilden",
     "ArrLangBeskriv": "",
-    "ArrNr": 20164334,
-    "ArrTidspunkt": "kl. 19:45",
-    "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7105634/plakat.jpg",
-    "Filmvurdering": "t.o.11",
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-08-18",
-    "Startdato": "2026-08-18",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
-    "AinfoNr": "7105634",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "Manon og kilden",
-    "ArrLangBeskriv": "",
     "ArrNr": 20164335,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
@@ -108,7 +90,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": "7106936",
+    "AinfoNr": null,
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "The Odyssey",
@@ -116,7 +98,7 @@
     "ArrNr": 20227110,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106936/plakat.jpg",
+    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
@@ -126,7 +108,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": "7106936",
+    "AinfoNr": null,
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "The Odyssey",
@@ -134,7 +116,7 @@
     "ArrNr": 20227112,
     "ArrTidspunkt": "kl. 19:45",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106936/plakat.jpg",
+    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
@@ -144,7 +126,7 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": "7106936",
+    "AinfoNr": null,
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
     "ArrKunstner": "The Odyssey",
@@ -152,7 +134,7 @@
     "ArrNr": 20227111,
     "ArrTidspunkt": "kl. 16:00",
     "ArrUGenre": "Action/Drama",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106936/plakat.jpg",
+    "BilledeUrl": "https://www.kultunaut.dk/images/steduploadlogo/201428.png",
     "Filmvurdering": null,
     "Nautanb": null,
     "Nautanmeld": null,
