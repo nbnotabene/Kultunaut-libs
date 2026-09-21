@@ -1,5 +1,23 @@
 [
   {
+    "AinfoNr": "7106976",
+    "ArrBeskrivelse": "",
+    "ArrGenre": "Film",
+    "ArrKunstner": "The Invite",
+    "ArrLangBeskriv": "",
+    "ArrNr": 20259241,
+    "ArrTidspunkt": "kl. 16:00",
+    "ArrUGenre": "Komedie/Romantik",
+    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106976/plakat.jpg",
+    "Filmvurdering": "f.u.7",
+    "Nautanb": null,
+    "Nautanmeld": null,
+    "Playdk": null,
+    "Slutdato": "2026-09-20",
+    "Startdato": "2026-09-20",
+    "StedNavn": "Svaneke Bio"
+  },
+  {
     "AinfoNr": "7106319",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
@@ -144,24 +162,6 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": "7107232",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "Monsterfabrikken",
-    "ArrLangBeskriv": "",
-    "ArrNr": 20364445,
-    "ArrTidspunkt": "kl. 16:00",
-    "ArrUGenre": "Tegnefilm/Animation",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7107232/plakat.jpg",
-    "Filmvurdering": "f.u.7",
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-10-10",
-    "Startdato": "2026-10-10",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
     "AinfoNr": "7105896",
     "ArrBeskrivelse": "",
     "ArrGenre": "Film",
@@ -195,24 +195,6 @@
     "Playdk": null,
     "Slutdato": "2026-10-11",
     "Startdato": "2026-10-11",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
-    "AinfoNr": "7107232",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "Monsterfabrikken",
-    "ArrLangBeskriv": "",
-    "ArrNr": 20364446,
-    "ArrTidspunkt": "kl. 16:00",
-    "ArrUGenre": "Tegnefilm/Animation",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7107232/plakat.jpg",
-    "Filmvurdering": "f.u.7",
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-10-14",
-    "Startdato": "2026-10-14",
     "StedNavn": "Svaneke Bio"
   },
   {
@@ -270,24 +252,6 @@
     "StedNavn": "Svaneke Bio"
   },
   {
-    "AinfoNr": "7107232",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "Monsterfabrikken",
-    "ArrLangBeskriv": "",
-    "ArrNr": 20364447,
-    "ArrTidspunkt": "kl. 16:00",
-    "ArrUGenre": "Tegnefilm/Animation",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7107232/plakat.jpg",
-    "Filmvurdering": "f.u.7",
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-10-18",
-    "Startdato": "2026-10-18",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
     "AinfoNr": null,
     "ArrBeskrivelse": "Få en intro til kvantefysikkens verden, og hør om den nye \"kvanterevolution\" som udvikler teknologier der bygger på de mest paradoksale kvantefænomener. Hør om hvordan kvantecomputere virker og hvad de kan bruges til",
     "ArrGenre": "Diverse",
@@ -303,24 +267,6 @@
     "Playdk": null,
     "Slutdato": "2026-10-20",
     "Startdato": "2026-10-20",
-    "StedNavn": "Svaneke Bio"
-  },
-  {
-    "AinfoNr": "7106727",
-    "ArrBeskrivelse": "",
-    "ArrGenre": "Film",
-    "ArrKunstner": "Siri Hustvedt - Dance around the self",
-    "ArrLangBeskriv": "",
-    "ArrNr": 20364448,
-    "ArrTidspunkt": "kl. 19:45",
-    "ArrUGenre": "Dokumentar",
-    "BilledeUrl": "http://www.kultunaut.dk/images/film/7106727/plakat.jpg",
-    "Filmvurdering": null,
-    "Nautanb": null,
-    "Nautanmeld": null,
-    "Playdk": null,
-    "Slutdato": "2026-10-21",
-    "Startdato": "2026-10-21",
     "StedNavn": "Svaneke Bio"
   },
   {
